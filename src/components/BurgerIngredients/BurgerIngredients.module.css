@@ -1,0 +1,10 @@
+.ingridientsContainer {
+    width: 600px;
+    height: 912px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction:column;
+    border: solid black;
+    border-radius: 25px;
+}
