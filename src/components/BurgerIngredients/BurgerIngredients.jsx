@@ -1,8 +1,7 @@
 import React, { Component, useState } from 'react'
 import burgerIngredientsStyles from './BurgerIngredients.module.css'
-import { Tab  } from '@ya.praktikum/react-developer-burger-ui-components'
-import { Counter  } from '@ya.praktikum/react-developer-burger-ui-components'
-import { CurrencyIcon   } from '@ya.praktikum/react-developer-burger-ui-components'
+import { Tab,Counter,CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+
 function BurgerIngredients (props) {
   const [current, setCurrent] = React.useState('one');
     return (
