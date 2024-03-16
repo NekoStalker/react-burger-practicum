@@ -9,19 +9,16 @@
     display: flex;
     flex: 1;
     justify-content: flex-end;
-
-
 }
-.menuItem {
+.menu_item {
     width: 180px;
     height: 20px;
-    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
 }
-.listMenu {
+.list_menu {
     justify-content: space-between;
     display: flex;
     list-style: none;

@@ -4,7 +4,7 @@ import burgerConstructorStyles from './BurgerConstructor.module.css'
 function BurgerConstructor () {
     return (
       <div className={burgerConstructorStyles.burgerContainer}>
-       
+        
       </div>
     )
 }
