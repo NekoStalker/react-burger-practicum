@@ -210,3 +210,76 @@
        "__v":0
     }
  ]
+export const burger = [ 
+   {
+   "_id":"60666c42cc7b410027a1a9b1",
+   "name":"Краторная булка N-200i",
+   "type":"bun",
+   "proteins":80,
+   "fat":24,
+   "carbohydrates":53,
+   "calories":420,
+   "price":1255,
+   "image":"https://code.s3.yandex.net/react/code/bun-02.png",
+   "image_mobile":"https://code.s3.yandex.net/react/code/bun-02-mobile.png",
+   "image_large":"https://code.s3.yandex.net/react/code/bun-02-large.png",
+   "__v":0
+   },
+   {
+      "_id":"60666c42cc7b410027a1a9bf",
+      "name":"Сыр с астероидной плесенью",
+      "type":"main",
+      "proteins":84,
+      "fat":48,
+      "carbohydrates":420,
+      "calories":3377,
+      "price":4142,
+      "image":"https://code.s3.yandex.net/react/code/cheese.png",
+      "image_mobile":"https://code.s3.yandex.net/react/code/cheese-mobile.png",
+      "image_large":"https://code.s3.yandex.net/react/code/cheese-large.png",
+      "__v":0
+   },
+   {
+      "_id":"60666c42cc7b410027a1a9be",
+      "name":"Мини-салат Экзо-Плантаго",
+      "type":"main",
+      "proteins":1,
+      "fat":2,
+      "carbohydrates":3,
+      "calories":6,
+      "price":4400,
+      "image":"https://code.s3.yandex.net/react/code/salad.png",
+      "image_mobile":"https://code.s3.yandex.net/react/code/salad-mobile.png",
+      "image_large":"https://code.s3.yandex.net/react/code/salad-large.png",
+      "__v":0
+   },
+   {
+      "_id":"60666c42cc7b410027a1a9b5",
+      "name":"Говяжий метеорит (отбивная)",
+      "type":"main",
+      "proteins":800,
+      "fat":800,
+      "carbohydrates":300,
+      "calories":2674,
+      "price":3000,
+      "image":"https://code.s3.yandex.net/react/code/meat-04.png",
+      "image_mobile":"https://code.s3.yandex.net/react/code/meat-04-mobile.png",
+      "image_large":"https://code.s3.yandex.net/react/code/meat-04-large.png",
+      "__v":0
+   },
+   {
+      "_id":"60666c42cc7b410027a1a9b8",
+      "name":"Соус фирменный Space Sauce",
+      "type":"sauce",
+      "proteins":50,
+      "fat":22,
+      "carbohydrates":11,
+      "calories":14,
+      "price":80,
+      "image":"https://code.s3.yandex.net/react/code/sauce-04.png",
+      "image_mobile":"https://code.s3.yandex.net/react/code/sauce-04-mobile.png",
+      "image_large":"https://code.s3.yandex.net/react/code/sauce-04-large.png",
+      "__v":0
+   },
+   
+];

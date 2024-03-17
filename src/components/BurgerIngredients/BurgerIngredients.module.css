@@ -1,7 +1,8 @@
 .ingridients_modal {
-    width: 600px;
-    height: 912px;
-    border-radius: 25px;
+    width: 20vw;
+    height: 60vh;
+    min-width: 600px; ;
+    min-height: 912px;
     text-align: left;
 }
  .ingridients_container {
@@ -14,16 +15,3 @@
     margin-left: auto;
    
 } 
-
-.ingridients_container::-webkit-scrollbar {
-    width: 12px; /* Adjust scrollbar width */
-}
-
-.ingridients_container::-webkit-scrollbar-track {
-    background: #f1f1f1; /* Track color */
-}
-
-.ingridients_container::-webkit-scrollbar-thumb {
-    background: #888; /* Thumb color, change as needed */
-    border-radius: 6px; /* Optional: Adds rounded corners to the scrollbar thumb */
-}

@@ -1,18 +1,18 @@
 import React from 'react';
-import './App.css';
+import appStyle from './App.module.css';
 import AppHeader from '../AppHeader/AppHeader';
-import {data} from '../../utils/data';
+import {data,burger} from '../../utils/data';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
-import BurgerIngredientsGroup from '../BurgerIngredientsGroup/BurgerIngredientsGroup';
-import BurgerIngridient from '../BurgerIngridient/BurgerIngridient';
+
 
 function App() {
   return (
-    <div className="App">
+    <div className={appStyle.App}>
       <AppHeader />
-      <main>
-        <BurgerIngredients data={data} />
+      <main className={appStyle.main}>
+        <BurgerIngredients ingredients={data} />
+        <BurgerConstructor ingredients={burger} initPrice={0} />
       </main>
       
     </div>
