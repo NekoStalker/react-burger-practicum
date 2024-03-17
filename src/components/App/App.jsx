@@ -5,7 +5,6 @@ import {data,burger} from '../../utils/data';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 
-
 function App() {
   return (
     <div className={appStyle.App}>
