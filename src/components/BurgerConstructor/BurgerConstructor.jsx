@@ -2,6 +2,7 @@ import React from 'react'
 import {Button, ConstructorElement, CurrencyIcon,DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorStyles from './BurgerConstructor.module.css'
 import PropTypes from 'prop-types';
+import {ingredientType} from '../../utils/types';
 function BurgerConstructor ({ingredients, initPrice}) {
     const [internalIngredients,setInternalIngredients] = React.useState(ingredients.filter((ingredient) => ingredient.type !== "bun"));
     // const [selectedBun,setSelectedBun] = React.useState(ingredients.find((ingredient) => ingredient.type === "bun"));
@@ -19,7 +20,7 @@ function BurgerConstructor ({ingredients, initPrice}) {
 
               type="top"
               isLocked={true}
-              text={selectedBun.name}
+              text={`${selectedBun.name} (верх)`}
               price={selectedBun.price}
               thumbnail={selectedBun.image}
               className="mr-2"
@@ -29,7 +30,6 @@ function BurgerConstructor ({ingredients, initPrice}) {
                 <li className={burgerConstructorStyles.internal_item} key={ingredient._id}>
                   <DragIcon type="primary" />
                   <ConstructorElement
-                    
                     isLocked={false}
                     text={ingredient.name}
                     price={ingredient.price}
@@ -42,7 +42,7 @@ function BurgerConstructor ({ingredients, initPrice}) {
             <ConstructorElement
               type="bottom"
               isLocked={true}
-              text={selectedBun.name}
+              text={`${selectedBun.name} (низ)`}
               price={selectedBun.price}
               thumbnail={selectedBun.image}
             />
@@ -58,22 +58,7 @@ function BurgerConstructor ({ingredients, initPrice}) {
     )
 }
 BurgerConstructor.propTypes = {
-  ingredients: PropTypes.arrayOf(
-    PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.oneOf(['main', 'sauce', 'bun']).isRequired,
-        proteins: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-        calories: PropTypes.number.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-        image_mobile: PropTypes.string.isRequired,
-        image_large: PropTypes.string.isRequired,
-        __v: PropTypes.number
-    })
-  ),
+  ingredients: PropTypes.arrayOf(ingredientType),
   initPrice: PropTypes.number.isRequired,
 };
 

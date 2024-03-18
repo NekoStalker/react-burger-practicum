@@ -1,11 +1,11 @@
-.ingridients_modal {
+.ingredients_modal {
     width: 20vw;
     height: 60vh;
     min-width: 600px; ;
     min-height: 912px;
     text-align: left;
 }
- .ingridients_container {
+ .ingredients_container {
     overflow-y: scroll;
     overflow-x: hidden;
     max-height: 900px;
@@ -15,3 +15,6 @@
     margin-left: auto;
    
 } 
+.ingredients_tab {
+    display: flex;
+}

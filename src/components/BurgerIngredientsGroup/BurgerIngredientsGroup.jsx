@@ -1,14 +1,20 @@
 import React from 'react'
-import BurgerIngridient from '../BurgerIngridient/BurgerIngridient';
+import Burgeringredient from '../BurgerIngredient/BurgerIngredient';
 import burgerIngredientsGroupStyle from './BurgerIngredientsGroup.module.css'
-function BurgerIngredientsGroup({groupName, burgerIngridients}) {
+import PropTypes from 'prop-types';
+import {ingredientType} from '../../utils/types';
+function BurgerIngredientsGroup({groupName, burgeringredients}) {
   return (
     <>
       <h2 className="mt-6 text text_type_main-medium">{groupName}</h2>
       <ul className={burgerIngredientsGroupStyle.card_list}>
-        {burgerIngridients.map((ingredient)=>{return <BurgerIngridient key={ingredient._id} id={ingredient._id} count={ingredient.__v} price={ingredient.price} name={ingredient.name} image={ingredient.image}/>})}
+        {burgeringredients.map((ingredient)=>{return <Burgeringredient key={ingredient._id} id={ingredient._id} count={ingredient.__v} price={ingredient.price} name={ingredient.name} image={ingredient.image}/>})}
       </ul>
     </>
   )
+}
+BurgerIngredientsGroup.propTypes = {
+  groupName: PropTypes.string.isRequired,
+  burgeringredients: PropTypes.arrayOf(ingredientType),
 }
 export default BurgerIngredientsGroup;

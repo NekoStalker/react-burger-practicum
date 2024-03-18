@@ -3,6 +3,7 @@ import BurgerIngredientsGroup from '../BurgerIngredientsGroup/BurgerIngredientsG
 import burgerIngredientsStyles from './BurgerIngredients.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types';
+import {ingredientType} from '../../utils/types';
 function BurgerIngredients ({ingredients}) {
   const [current, setCurrent] = React.useState('bun');
   const bunRef = React.useRef(null);
@@ -53,11 +54,11 @@ function BurgerIngredients ({ingredients}) {
     }
   };
     return (
-      <section className={burgerIngredientsStyles.ingridients_modal}>
-        <p className="mt-10 text text text_type_main-large ">
+      <section className={burgerIngredientsStyles.ingredients_modal}>
+        <p className="text text text_type_main-large mt-10">
               Соберите бургер
         </p>
-        <div className="pt-5 pb-4 "  style={{ display: 'flex' }}>
+        <div className={`${burgerIngredientsStyles.ingredients_tab} pt-5 pb-4 `} >
           <Tab value="bun" active={current === 'bun'} onClick={() => handleTabClick('bun')}>
             Булки
           </Tab>
@@ -68,36 +69,21 @@ function BurgerIngredients ({ingredients}) {
             Начинки
           </Tab>
         </div>
-        <div ref={containerRef} className={burgerIngredientsStyles.ingridients_container} onScroll={handleScroll}>
+        <div ref={containerRef} className={burgerIngredientsStyles.ingredients_container} onScroll={handleScroll}>
           <div ref={bunRef}>
-            <BurgerIngredientsGroup key={"Булки"} groupName={"Булки"} burgerIngridients={ingredients.filter((item)=>item.type === "bun")} />
+            <BurgerIngredientsGroup key={"Булки"} groupName={"Булки"} burgeringredients={ingredients.filter((item)=>item.type === "bun")} />
           </div>
           <div ref={sauceRef}>
-            <BurgerIngredientsGroup key={"Соусы"} groupName={"Соусы"} burgerIngridients={ingredients.filter((item)=>item.type === "sauce")} />
+            <BurgerIngredientsGroup key={"Соусы"} groupName={"Соусы"} burgeringredients={ingredients.filter((item)=>item.type === "sauce")} />
           </div>
           <div ref={mainRef}>
-            <BurgerIngredientsGroup key={"Начинки"} groupName={"Начинки"} burgerIngridients={ingredients.filter((item)=>item.type === "main")} />
+            <BurgerIngredientsGroup key={"Начинки"} groupName={"Начинки"} burgeringredients={ingredients.filter((item)=>item.type === "main")} />
           </div>
         </div>
       </section>
     );
 }
 BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(
-    PropTypes.shape({
-        _id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
-        type: PropTypes.oneOf(['main', 'sauce', 'bun']).isRequired,
-        proteins: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        carbohydrates: PropTypes.number.isRequired,
-        calories: PropTypes.number.isRequired,
-        price: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
-        image_mobile: PropTypes.string.isRequired,
-        image_large: PropTypes.string.isRequired,
-        __v: PropTypes.number
-    })
-  ),
+  ingredients: PropTypes.arrayOf(ingredientType),
 };
 export default BurgerIngredients;
