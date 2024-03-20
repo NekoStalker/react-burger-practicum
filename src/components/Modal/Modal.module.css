@@ -1,0 +1,28 @@
+.modal {
+    position: fixed; 
+    flex-direction: column;
+    box-shadow: 0 0 10px hsla(0,0%,100%,.2);
+    width: 720px;
+    height: 539px;
+    border: 1px #4C4CFF 1px;
+    border-radius: 40px;
+    border-radius: solid ;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+.modal_content {
+    display: flex;
+    flex-direction: column;
+}
+.modal_header {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+.modal_body {
+    display: flex;
+}

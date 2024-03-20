@@ -4,11 +4,17 @@ import burgerConstructorStyles from './BurgerConstructor.module.css'
 import PropTypes from 'prop-types';
 import {ingredientType} from '../../utils/types';
 function BurgerConstructor ({ingredients, initPrice}) {
-    const [internalIngredients,setInternalIngredients] = React.useState(ingredients.filter((ingredient) => ingredient.type !== "bun"));
+
     // const [selectedBun,setSelectedBun] = React.useState(ingredients.find((ingredient) => ingredient.type === "bun"));
     // const [totalPrice,setTotalPrice] = React.useState(ingredients.reduce((accumulator, ingredient) => accumulator + ingredient.price,initPrice)); 
     const selectedBun = ingredients.find((ingredient) => ingredient.type === "bun");
-    const totalPrice = ingredients.reduce((accumulator, ingredient) => accumulator + ingredient.price,initPrice); 
+    const [totalPrice, setTotalPrice] = React.useState(0);
+    const [internalIngredients, setInternalIngredients] = React.useState([]);
+    React.useEffect(() => {
+      const totalPrice = ingredients.reduce((accumulator, ingredient) => accumulator + ingredient.price,initPrice);
+      setInternalIngredients(ingredients.filter((ingredient) => ingredient.type !== "bun"));
+      setTotalPrice(totalPrice);
+    }, [internalIngredients,initPrice]);
     const handleClose = (id) => {
         setInternalIngredients(internalIngredients.filter((internalIngredients) => internalIngredients._id !== id));
     }
