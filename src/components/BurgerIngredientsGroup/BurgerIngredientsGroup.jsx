@@ -8,7 +8,7 @@ function BurgerIngredientsGroup({groupName, burgeringredients}) {
     <>
       <h2 className="mt-6 text text_type_main-medium">{groupName}</h2>
       <ul className={burgerIngredientsGroupStyle.card_list}>
-        {burgeringredients.map((ingredient)=>{return <Burgeringredient key={ingredient._id} id={ingredient._id} count={ingredient.__v} price={ingredient.price} name={ingredient.name} image={ingredient.image}/>})}
+        {burgeringredients.map((ingredient)=>{return <Burgeringredient key={ingredient._id} ingredient={ingredient}/>})}
       </ul>
     </>
   )

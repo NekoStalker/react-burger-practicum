@@ -29,14 +29,14 @@ function App() {
         }
     }
     getIngredientsData();
-  },[])
+  },[]);
   return (
     <div className={appStyle.App}>
       <AppHeader />
       <main className={appStyle.main}>
-        <Modal />
-        {/* <BurgerIngredients ingredients={ingredients} />
-        <BurgerConstructor ingredients={ingredients} initPrice={0} /> */}
+        {/* <Modal title="title"><IngredientDetails ingredient={testIngredient} /></Modal> */}
+        <BurgerIngredients ingredients={ingredients} />
+        <BurgerConstructor ingredients={ingredients} initPrice={0} />
       </main>
       
     </div>

@@ -1,25 +1,37 @@
 import React from 'react';
 import burgeringredientStyles from './BurgerIngredient.module.css';
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import Modal from '../Modal/Modal';
+import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import PropTypes from 'prop-types';
-function Burgeringredient({id, count,price,name,image}) {
+import {ingredientType} from '../../utils/types';
+function Burgeringredient({ingredient}) {
+    const [openModal, setOpenModal] = React.useState(false);
+    const handleOpenModal = () => {
+      setOpenModal(true);
+    }
+    const handleCloseModal = () => {
+      setOpenModal(false);
+    }
+    const modal = (
+      <Modal title="Детали ингредиента" onClose={handleCloseModal}>
+        <IngredientDetails ingredient={ingredient} />
+      </Modal>
+    );
     return ( 
     <li>
+       {openModal && modal}
         <div className={burgeringredientStyles.card_item}>
-          <div className={burgeringredientStyles.card_item__counter}><Counter count={count} size="default" /></div>
-          <a className={burgeringredientStyles.card_item__link} href="#">
-            <img className={`${burgeringredientStyles.card_item__img} mr-4 ml-4`} src={image} aria-labelledby="title_1" alt={name} width="240" height="120" />
+          <div className={burgeringredientStyles.card_item__counter}><Counter count={ingredient.__v} size="default" /></div>
+          <a className={burgeringredientStyles.card_item__link} href="#" onClick={handleOpenModal}>
+            <img className={`${burgeringredientStyles.card_item__img} mr-4 ml-4`} src={ingredient.image}  alt={ingredient.name} width="240" height="120" />
           </a>
-          <p className="text text_type_digits-default mt-1 mb-1">{price} <CurrencyIcon/></p>
-          <p className="text text_type_main-small">{name}</p>
+          <p className="text text_type_digits-default mt-1 mb-1">{ingredient.price} <CurrencyIcon/></p>
+          <p className="text text_type_main-small">{ingredient.name}</p>
         </div>
     </li> );
 }
 Burgeringredient.propTypes = {
-  id: PropTypes.string.isRequired,
-  count: PropTypes.number.isRequired,
-  price: PropTypes.number.isRequired,
-  name: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
+  ingredient: ingredientType,
 }
 export default Burgeringredient;
