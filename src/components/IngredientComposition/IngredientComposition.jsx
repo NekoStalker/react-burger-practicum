@@ -10,7 +10,7 @@ function IngredientComposition({composition, value}) {
 }
 IngredientComposition.propTypes = {
     composition: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.number.isRequired,
 };
   
 export default IngredientComposition;

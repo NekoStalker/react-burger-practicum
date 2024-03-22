@@ -11,25 +11,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-/* Скрываем кнопки скроллбара */
-::-webkit-scrollbar-button {
-  display: none;
-}
 
-/* Стилизуем скроллбар */
-::-webkit-scrollbar {
-  width: 10px; /* или любая другая ширина */
-}
-
-::-webkit-scrollbar-thumb {
-  background: #8585AD; /* цвет ползунка */
-  border-radius: 25%; /* закругление углов ползунка */
-}
-
-::-webkit-scrollbar-track {
-  border-radius: 6px; /* закругление углов дорожки */
-  box-shadow: inset 0 0 5px grey; /* добавляем тень для дорожки, если нужно */
-}
 * {
   scrollbar-width: thin; /* "auto", "thin" или "none" */
   scrollbar-color: #8585AD transparent; /* цвет ползунка и дорожки */

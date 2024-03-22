@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from 'prop-types'; // Импортируйте PropTypes
 import modalOvelayStyles from './ModalOverlay.module.css'
-function ModalOverlay(props) {
+function ModalOverlay({onClose,...props}) {
     return ( 
         <>
-            <div className={modalOvelayStyles.overlay} onClick={props.onClose}></div>
+            <div className={modalOvelayStyles.overlay} onClick={onClose}></div>
         </>
      );
 }
