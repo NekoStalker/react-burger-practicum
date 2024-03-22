@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import appStyle from './App.module.css';
 import AppHeader from '../AppHeader/AppHeader';
-import {burger} from '../../utils/data';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
-import Modal from '../Modal/Modal';
 
 function App() {
   const [ingredients, setIngredients] = useState([]);
@@ -34,7 +32,6 @@ function App() {
     <div className={appStyle.App}>
       <AppHeader />
       <main className={appStyle.main}>
-        {/* <Modal title="title"><IngredientDetails ingredient={testIngredient} /></Modal> */}
         <BurgerIngredients ingredients={ingredients} />
         <BurgerConstructor ingredients={ingredients} initPrice={0} />
       </main>
