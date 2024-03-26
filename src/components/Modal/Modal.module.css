@@ -1,0 +1,54 @@
+.modal {
+    position: fixed; 
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 10px hsla(0,0%,100%,.2);
+    width: 60vw; 
+    min-height: 35vh;
+    max-width: 720px;
+    max-height: 720px;
+    border: 1px solid #1C1C21;
+    border-radius: 40px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #1C1C21;
+    z-index: 1000;
+    overflow-y: auto; 
+    
+}
+.modal_close_button{
+    background-color: unset;
+    border: none;
+    cursor: pointer;
+}
+@media (max-width: 600px) {
+    .modal {
+        max-width: 350px;
+        min-height: 60vh; 
+        border-radius: 20px; 
+    }
+}
+@media (max-width: 425px) {
+    .modal {
+        max-width: 250px;
+        min-height: 60vh; 
+        border-radius: 20px; 
+    }
+}
+.modal_content {
+    display: flex;
+    flex-direction: column;
+}
+.modal_header {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+.modal_body {
+    display: flex;
+    flex-grow: 1; /* Тело модального окна займет всё доступное пространство */
+    overflow-y: auto; 
+}
