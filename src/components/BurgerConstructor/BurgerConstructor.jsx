@@ -9,73 +9,70 @@ import {BurgerContext} from '../../services/BurgerContext';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import BurgerConstructorPrice from '../BurgerConstructorPrice/BurgerConstructorPrice';
 
+function reducer(state, action) {
+  switch (action.type) {
+   case "SET_INGREDIENTS":
+    const bunCount = action.ingredients.filter((ingredient) => ingredient.type === "bun").length;
+    const selectedBun = action.ingredients.find((ingredient) => ingredient.type === "bun");
+    const bunPrice = selectedBun ? selectedBun.price * 2 : 0;
+    const internalIngredients = action.ingredients.filter((ingredient) => ingredient.type !== "bun");
+    const totalPrice = internalIngredients.reduce((acc,ingredient) => acc + ingredient.price, bunPrice );
+    return {
+      ...state,
+      ingredients: action.ingredients,
+      totalPrice,
+      internalIngredients,
+      bunCount,
+    };
+    case 'REMOVE_INGREDIENT':
+      const ingredientToRemove = state.internalIngredients.find(ingredient => ingredient._id === action.id);
+      console.log(ingredientToRemove);
+      const newInternalIngredients = state.internalIngredients.filter(ingredient => ingredient._id !== action.id);
+      const newTotalPrice = ingredientToRemove ? state.totalPrice - ingredientToRemove.price : state.totalPrice;
+      return {
+        ...state,
+        internalIngredients: newInternalIngredients,
+        totalPrice: newTotalPrice,
+      };
+   default:
+     throw new Error(`Wrong type of action: ${action.type}`);
+  }
+}
 
-function BurgerConstructor ({ingredients, initPrice}) {
-    
+function init(setIngredients, initPrice) {
+  const bunCount = setIngredients.filter((ingredient) => ingredient.type === "bun").length;
+  const selectedBun = setIngredients.find((ingredient) => ingredient.type === "bun");
+  const bunPrice = selectedBun ? selectedBun.price * 2 : 0;
+  const internalIngredients = setIngredients.filter((ingredient) => ingredient.type !== "bun");
+  const totalPrice = internalIngredients.reduce((acc,ingredient) => acc + ingredient.price, bunPrice+initPrice );
+  return {
+    ingredients: setIngredients,
+    selectedBun,
+    internalIngredients,
+    totalPrice,
+    bunCount,
+  };
+}
+
+function BurgerConstructor ({ingredients, initPrice = 0}) {
+    const [burgerState, burgerDispatch] = React.useReducer(reducer, ingredients, () => init(ingredients,initPrice));
     // const [selectedBun,setSelectedBun] = React.useState(ingredients.find((ingredient) => ingredient.type === "bun"));
     // const [totalPrice,setTotalPrice] = React.useState(ingredients.reduce((accumulator, ingredient) => accumulator + ingredient.price,initPrice)); 
     
-    const selectedBun = ingredients.find((ingredient) => ingredient.type === "bun");
-    const [totalPrice, setTotalPrice] = React.useState(0);
-    const [internalIngredients, setInternalIngredients] = React.useState(ingredients.filter((ingredient) => ingredient.type !== "bun"));
-    const [isLoading, setIsLoading] = React.useState(false);
-    const [error, setError] = React.useState(null);
-    const addr = "https://norma.nomoreparties.space/api/orders";
-  // useEffect(() => {
-  //   const getOrderDetails = async () => {
-  //       setIsLoading(true);
-  //       setError(null);
-  //       try{
-    //       const reqBody = ingredients;
-  //         const res = await fetch(addr, {
-  //           method: 'POST',
-  //           headers: {
-  //             'Content-Type': 'application/json',
-  //           },
-  //           body: JSON.stringify(requestBody),
-  // });
-  //         if(!res.ok){
-  //           throw new Error('Ошибка запроса  заказа');
-  //         }
-  //         const data = await res.json();
-  //         console.log(data);
-  //       } catch (error) {
-  //         setError(error);
-  //       } finally {
-  //         setIsLoading(false);
-  //       }
-  //   }
-  //   getIngredientsData();
-  // },[]);
     //const [BurgerIngredients, setBurgerIngredients ] = React.
   
     React.useEffect(() => {
-      setInternalIngredients(ingredients.filter((ingredient) => ingredient.type !== "bun"));
-      const totalPrice = ingredients.reduce((accumulator, ingredient) => accumulator + ingredient.price,initPrice);
-      setTotalPrice(totalPrice);
-    }, [ingredients,initPrice]);
+      burgerDispatch({ type: 'SET_INGREDIENTS', ingredients });
+    }, [ingredients]);
 
-    React.useEffect(() => {
-      const totalPrice = internalIngredients.reduce((accumulator, ingredient) => accumulator + ingredient.price,initPrice);
-      setTotalPrice(totalPrice);
-    },[internalIngredients, initPrice]);
-
-    const removeIngredient = (id) => {
-        console.log(totalPrice);
-        setInternalIngredients(internalIngredients.filter((internalIngredients) => internalIngredients._id !== id));
-        console.log(totalPrice);
-    }
     const value = {
-      ingredients,
-      selectedBun,
-      internalIngredients,
-      totalPrice,
-      removeIngredient,
+      burgerState, 
+      burgerDispatch,
     }
     return (
       <BurgerContext.Provider value={value}>
         <section className={`${burgerConstructorStyles.burgerContainer}`}>
-            {ingredients.length > 0 && selectedBun &&
+            {burgerState.ingredients.length > 0 && burgerState.selectedBun && burgerState.bunCount===1 &&
             <BurgerConstructorIngredients />
             }
             <BurgerConstructorPrice />

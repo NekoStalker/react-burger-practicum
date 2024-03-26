@@ -2,7 +2,7 @@ import React from "react";
 import DoneIcon from './icons/done.svg'
 import orderDetailStyles from "./OrderDetails.module.css"
 import PropTypes from 'prop-types';
-function OrderDetails({orderID, orderStatus}) {
+function OrderDetails({orderID, orderStatus = ""}) {
     return (
         <div className={orderDetailStyles.order_details}>
             <div className={orderDetailStyles.order_details_header}>
@@ -26,7 +26,7 @@ function OrderDetails({orderID, orderStatus}) {
      );
 }
 OrderDetails.propTypes = {
-    orderID: PropTypes.string.isRequired,
+    orderID: PropTypes.number.isRequired,
     orderStatus: PropTypes.string,
 }
 export default OrderDetails;
