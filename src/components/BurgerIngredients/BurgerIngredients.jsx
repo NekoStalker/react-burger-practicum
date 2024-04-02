@@ -4,7 +4,9 @@ import burgerIngredientsStyles from './BurgerIngredients.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types';
 import {ingredientType} from '../../utils/types';
-function BurgerIngredients ({ingredients}) {
+import { useSelector } from 'react-redux';
+function BurgerIngredients () {
+  const ingredients = useSelector((store) => store.ingredients.allIngredients)
   const [current, setCurrent] = React.useState('bun');
   const bunRef = React.useRef(null);
   const sauceRef = React.useRef(null);

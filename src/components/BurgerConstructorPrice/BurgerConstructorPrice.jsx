@@ -3,11 +3,16 @@ import burgerConstructorPriceStyle from './BurgerConstructorPrice.module.css';
 import Modal from '../Modal/Modal';
 import OrderDetails from '../OrderDetails/OrderDetails';
 import {Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import {BurgerContext} from '../../services/BurgerContext';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import {ingredientType} from '../../utils/types';
 function BurgerConstructorPrice() {
-    const {burgerState} = React.useContext(BurgerContext);
+    const {ingredients, selectedBun, price} = useSelector((store)=> ({
+      ingredients: store.burgerConstructor.burgerConstructorIngredients,
+      selectedBun: store.burgerConstructor.selectedBun,
+      price: store.burgerConstructor.price,
+    }));
+
     const [openModal, setOpenModal] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false);
     const [error, setError] = React.useState(null);
@@ -23,7 +28,7 @@ function BurgerConstructorPrice() {
           {
             const reqBody = 
             {
-              "ingredients": Array.from(burgerState.ingredients).map(element => element._id).filter(id => id),
+              "ingredients": Array.from(ingredients).map(element => element._id).filter(id => id),
             }
             const res = await fetch(addr, {
               method: 'POST',
@@ -48,7 +53,7 @@ function BurgerConstructorPrice() {
             }
         }
         getOrderDetails();
-      },[burgerState.ingredients,burgerState.internalIngredients ]);
+      },[ingredients ]);
     const handleOpenModal = () => {
       setOpenModal(true);
       console.log(orderNum);
@@ -64,7 +69,7 @@ function BurgerConstructorPrice() {
     return (
     <div className={`${burgerConstructorPriceStyle.burger_price} pt-10`}>
          {openModal && modal }
-        <p className="text text_type_digits-medium  mt-1 mb-1">{burgerState.totalPrice} <CurrencyIcon className="pl-1" /></p>
+        <p className="text text_type_digits-medium  mt-1 mb-1">{price} <CurrencyIcon className="pl-1" /></p>
         <Button htmlType="button" type="primary" size="medium" onClick={handleOpenModal} >
             Оформить заказ
         </Button>
@@ -72,12 +77,11 @@ function BurgerConstructorPrice() {
   );
 }
 BurgerConstructorPrice.propTypes = {
-  burgerState: PropTypes.shape({
     ingredients: PropTypes.arrayOf(ingredientType),
     selectedBun: ingredientType,
     internalIngredients: PropTypes.arrayOf(ingredientType),
     totalPrice: PropTypes.number.isRequired,
     bunCount: PropTypes.number,
-  }),
+
 };
 export default BurgerConstructorPrice;

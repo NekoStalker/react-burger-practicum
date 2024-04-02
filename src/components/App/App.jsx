@@ -3,32 +3,21 @@ import appStyle from './App.module.css';
 import AppHeader from '../AppHeader/AppHeader';
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
-//import {data} from '../../utils/data'
+import { useSelector, useDispatch } from 'react-redux';
+import {getAllIngredients} from '../../services/ingredients/ingredientsRequests'
+import { data } from '../../utils/data';
+
 function App() {
-  //Контекст использую внутри компонента BurgerConstructor потому что передавать один пропс мне показалось странно
-  const [ingredients, setIngredients] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const addr = "https://norma.nomoreparties.space/api/ingredients";
+  const dispatch = useDispatch();
+  const ingredients = data;
+  const {isLoading,error} = useSelector((store) => ({
+    isLoading: store.ingredients.isLoading,
+    error: store.ingredients.error,
+  }));
   useEffect(() => {
-    const getIngredientsData = async () => {
-        setIsLoading(true);
-        setError(null);
-        try {
-          const res = await fetch(addr);
-          if(!res.ok){
-            throw new Error('Ошибка запроса ингредиентов');
-          }
-          const data = await res.json();
-          setIngredients(data.data);
-        } catch (error) {
-          setError(error);
-        } finally {
-          setIsLoading(false);
-        }
-    }
-    getIngredientsData();
-  },[]);
+    dispatch(getAllIngredients())
+  },[dispatch]);
+ 
   return (
     <div className={appStyle.App}>
       <AppHeader />
@@ -37,8 +26,8 @@ function App() {
         {error && <p>Ошибка: {error}</p>} 
         {!isLoading && !error && (
           <>
-            <BurgerIngredients ingredients={ingredients} />
-            <BurgerConstructor ingredients={ingredients.slice(0,3)} initPrice={0} /> 
+            <BurgerIngredients />
+            <BurgerConstructor /> 
           </>
         )}
       </main>
