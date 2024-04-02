@@ -6,6 +6,7 @@ import {Provider} from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import ingredientsReducer from './services/ingredients/ingredientsSlice';
 import burgerConstructorReducer from './services/burgerConstructor/burgerConstructorSlice';
+import currentIngredientSlice from './services/currentIngredient/currentIngredientSlice';
 import reportWebVitals from './reportWebVitals';
 //import { rootReducer } from './services/reducers';
 
@@ -13,7 +14,7 @@ const store = configureStore({
   reducer: {
     ingredients: ingredientsReducer,
     burgerConstructor: burgerConstructorReducer,
-
+    currentIngredient: currentIngredientSlice,
   }, 
 });
 const root = ReactDOM.createRoot(document.getElementById('root'));

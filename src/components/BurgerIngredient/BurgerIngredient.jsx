@@ -4,18 +4,21 @@ import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-c
 import Modal from '../Modal/Modal';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import PropTypes from 'prop-types';
+import { useSelector, useDispatch } from 'react-redux';
 import {ingredientType} from '../../utils/types';
+import {openModalIngredient,closeModalIngredient} from '../../services/currentIngredient/currentIngredientSlice'
 function Burgeringredient({ingredient}) {
-    const [openModal, setOpenModal] = React.useState(false);
+    const dispatch = useDispatch();
+    const openModal = useSelector((store) => store.currentIngredient.openModal)
     const handleOpenModal = () => {
-      setOpenModal(true);
-    }
+        dispatch(openModalIngredient(ingredient));
+     }
     const handleCloseModal = () => {
-      setOpenModal(false);
+      dispatch(closeModalIngredient());
     }
     const modal = (
       <Modal title="Детали ингредиента" onClose={handleCloseModal}>
-        <IngredientDetails ingredient={ingredient} />
+        <IngredientDetails />
       </Modal>
     );
     return ( 

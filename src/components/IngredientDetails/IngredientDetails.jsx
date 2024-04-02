@@ -2,8 +2,10 @@ import React from "react";
 import ingredientDetailsStyle from './IngredientDetails.module.css'
 import IngredientComposition from "../IngredientComposition/IngredientComposition";
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 import {ingredientType} from '../../utils/types';
-function IngredientDetails({ingredient}) {
+function IngredientDetails() {
+    const ingredient = useSelector((store) => store.currentIngredient);
     return ( 
     <div className={ingredientDetailsStyle.ingredient_details}>
         <div className={ingredientDetailsStyle.ingredient_image}><img src={ingredient.image_large}  alt={ingredient.name} /></div>

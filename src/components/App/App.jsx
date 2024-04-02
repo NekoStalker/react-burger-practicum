@@ -5,11 +5,9 @@ import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
 import { useSelector, useDispatch } from 'react-redux';
 import {getAllIngredients} from '../../services/ingredients/ingredientsRequests'
-import { data } from '../../utils/data';
 
 function App() {
   const dispatch = useDispatch();
-  const ingredients = data;
   const {isLoading,error} = useSelector((store) => ({
     isLoading: store.ingredients.isLoading,
     error: store.ingredients.error,
