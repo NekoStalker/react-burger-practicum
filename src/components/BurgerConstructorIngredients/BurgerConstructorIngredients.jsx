@@ -2,15 +2,25 @@ import React from 'react'
 import { ConstructorElement,DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerConstructorIngredientsStyles from './BurgerConstructorIngredients.module.css'
 import PropTypes from 'prop-types'
-import { useSelector, useDispatch } from 'react-redux'
+import BurgerConstructorItem from '../BurgerConstructorItem/BurgerConstructorItem'
+import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import {removeBurgerIngredient} from '../../services/burgerConstructor/burgerConstructorSlice'
 import {ingredientType} from '../../utils/types'
 function BurgerConstructorIngredients() {
   const dispatch = useDispatch();
+  // const [{isDragged}, drag] =  useDrag(() => ({
+  //   type: 'INGREDIENT',
+  //   item: {id},
+  //   collect: (monitor) => ({
+  //     isDragged: !!monitor.isDragging(),
+  //   }),
+  // }));
+
   const {ingredients, selectedBun} = useSelector((store)=> ({
     ingredients: store.burgerConstructor.burgerConstructorIngredients,
     selectedBun: store.burgerConstructor.selectedBun,
-  }));
+  }),shallowEqual);
+  const removeItem = (id) =>{dispatch(removeBurgerIngredient(id))}
   const internalIngredients = ingredients.filter((ingredient) => ingredient.type !== "bun");
   return(
     <div className={`${burgerConstructorIngredientsStyles.burger_ingredients} `} >
@@ -23,17 +33,11 @@ function BurgerConstructorIngredients() {
       className="mr-2"
     />
     <ul className={burgerConstructorIngredientsStyles.burger_ingredients__internal}>
-      { internalIngredients.map((ingredient) =>
-        <li className={burgerConstructorIngredientsStyles.internal_item} key={ingredient._id}>
-          <DragIcon type="primary" />
-          <ConstructorElement
-            isLocked={false}
-            text={ingredient.name}
-            price={ingredient.price}
-            thumbnail={ingredient.image}
-            handleClose={()=>{dispatch(removeBurgerIngredient(ingredient._id))}}
-          />
-        </li>
+
+      { internalIngredients.map((ingredient) => 
+        
+        <BurgerConstructorItem ingredient={ingredient} removeItem={removeItem}  key={ingredient._id}/>
+      
       )}
     </ul>
     <ConstructorElement
@@ -46,12 +50,4 @@ function BurgerConstructorIngredients() {
   </div>
   )
 }
-BurgerConstructorIngredients.propTypes = {
-
-    ingredients: PropTypes.arrayOf(ingredientType),
-    selectedBun: ingredientType,
-    internalIngredients: PropTypes.arrayOf(ingredientType),
-    totalPrice: PropTypes.number.isRequired,
-    bunCount: PropTypes.number,
-};
 export default BurgerConstructorIngredients;

@@ -4,7 +4,7 @@ import Modal from '../Modal/Modal'
 import OrderDetails from '../OrderDetails/OrderDetails'
 import {Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import PropTypes from 'prop-types'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import {ingredientType} from '../../utils/types'
 import {getOrderModal} from '../../services/order/orderRequests'
 import {closeModalOrder} from '../../services/order/orderSlice'
@@ -14,7 +14,7 @@ function BurgerConstructorPrice() {
       ingredients: store.burgerConstructor.burgerConstructorIngredients,
       price: store.burgerConstructor.price,
       openModal: store.order.openModal,
-    }));
+    }),shallowEqual);
 
     const handleOpenModal = () => {
       dispatch(getOrderModal(ingredients));
@@ -38,8 +38,5 @@ function BurgerConstructorPrice() {
     </div>
   );
 }
-BurgerConstructorPrice.propTypes = {
-    ingredients: PropTypes.arrayOf(ingredientType),
-    price: PropTypes.number.isRequired,
-};
+
 export default BurgerConstructorPrice;
