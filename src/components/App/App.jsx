@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import appStyle from './App.module.css';
-import AppHeader from '../AppHeader/AppHeader';
-import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
-import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react'
+import appStyle from './App.module.css'
+import AppHeader from '../AppHeader/AppHeader'
+import BurgerConstructor from '../BurgerConstructor/BurgerConstructor'
+import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
+import { useSelector, useDispatch } from 'react-redux'
 import {getAllIngredients} from '../../services/ingredients/ingredientsRequests'
 
 function App() {

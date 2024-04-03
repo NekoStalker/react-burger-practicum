@@ -1,15 +1,15 @@
 import React from 'react'
-import {Button, ConstructorElement, CurrencyIcon,DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import {Button, ConstructorElement, CurrencyIcon,DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerConstructorStyles from './BurgerConstructor.module.css'
-import PropTypes from 'prop-types';
-import BurgerConstructorIngredients from '../BurgerConstructorIngredients/BurgerConstructorIngredients';
-import OrderDetails from '../OrderDetails/OrderDetails';
-import {ingredientType} from '../../utils/types';
-import { useSelector, useDispatch } from 'react-redux';
-import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
-import BurgerConstructorPrice from '../BurgerConstructorPrice/BurgerConstructorPrice';
+import PropTypes from 'prop-types'
+import BurgerConstructorIngredients from '../BurgerConstructorIngredients/BurgerConstructorIngredients'
+import OrderDetails from '../OrderDetails/OrderDetails'
+import {ingredientType} from '../../utils/types'
+import { useSelector, useDispatch } from 'react-redux'
+import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
+import BurgerConstructorPrice from '../BurgerConstructorPrice/BurgerConstructorPrice'
 import {setBurgerConstructorIngredients} from '../../services/burgerConstructor/burgerConstructorSlice'
-import { data } from '../../utils/data';
+import { data } from '../../utils/data'
 // function reducer(state, action) {
 //   switch (action.type) {
 //    case "SET_INGREDIENTS":

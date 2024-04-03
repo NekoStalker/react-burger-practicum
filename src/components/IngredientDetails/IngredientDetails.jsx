@@ -1,9 +1,9 @@
-import React from "react";
+import React from "react"
 import ingredientDetailsStyle from './IngredientDetails.module.css'
-import IngredientComposition from "../IngredientComposition/IngredientComposition";
-import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
-import {ingredientType} from '../../utils/types';
+import IngredientComposition from "../IngredientComposition/IngredientComposition"
+import PropTypes from 'prop-types'
+import { useSelector } from 'react-redux'
+import {ingredientType} from '../../utils/types'
 function IngredientDetails() {
     const ingredient = useSelector((store) => store.currentIngredient);
     return ( 

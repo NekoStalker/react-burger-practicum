@@ -1,10 +1,10 @@
 import React from 'react'
-import { ConstructorElement,DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import burgerConstructorIngredientsStyles from './BurgerConstructorIngredients.module.css';
-import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
+import { ConstructorElement,DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import burgerConstructorIngredientsStyles from './BurgerConstructorIngredients.module.css'
+import PropTypes from 'prop-types'
+import { useSelector, useDispatch } from 'react-redux'
 import {removeBurgerIngredient} from '../../services/burgerConstructor/burgerConstructorSlice'
-import {ingredientType} from '../../utils/types';
+import {ingredientType} from '../../utils/types'
 function BurgerConstructorIngredients() {
   const dispatch = useDispatch();
   const {ingredients, selectedBun} = useSelector((store)=> ({

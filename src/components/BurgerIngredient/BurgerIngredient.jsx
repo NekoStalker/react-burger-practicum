@@ -1,11 +1,11 @@
-import React from 'react';
-import burgeringredientStyles from './BurgerIngredient.module.css';
-import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import Modal from '../Modal/Modal';
-import IngredientDetails from '../IngredientDetails/IngredientDetails';
-import PropTypes from 'prop-types';
-import { useSelector, useDispatch } from 'react-redux';
-import {ingredientType} from '../../utils/types';
+import React from 'react'
+import burgeringredientStyles from './BurgerIngredient.module.css'
+import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
+import Modal from '../Modal/Modal'
+import IngredientDetails from '../IngredientDetails/IngredientDetails'
+import PropTypes from 'prop-types'
+import { useSelector, useDispatch } from 'react-redux'
+import {ingredientType} from '../../utils/types'
 import {openModalIngredient,closeModalIngredient} from '../../services/currentIngredient/currentIngredientSlice'
 function Burgeringredient({ingredient}) {
     const dispatch = useDispatch();

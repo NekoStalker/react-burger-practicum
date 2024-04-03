@@ -1,4 +1,4 @@
-import {createAsyncThunk} from '@reduxjs/toolkit';
+import {createAsyncThunk} from '@reduxjs/toolkit'
 const apiIngredientsAddr = "https://norma.nomoreparties.space/api/ingredients";
 export const getAllIngredients = createAsyncThunk(
     'ingredients/getAllIngredients',

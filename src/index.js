@@ -1,12 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './components/App/App';
-import {Provider} from 'react-redux'; 
-import { configureStore } from '@reduxjs/toolkit';
-import ingredientsReducer from './services/ingredients/ingredientsSlice';
-import burgerConstructorReducer from './services/burgerConstructor/burgerConstructorSlice';
-import currentIngredientSlice from './services/currentIngredient/currentIngredientSlice';
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import './index.css'
+import App from './components/App/App'
+import {Provider} from 'react-redux'
+import { configureStore } from '@reduxjs/toolkit'
+import ingredientsReducer from './services/ingredients/ingredientsSlice'
+import burgerConstructorReducer from './services/burgerConstructor/burgerConstructorSlice'
+import currentIngredientSlice from './services/currentIngredient/currentIngredientSlice'
+import orderSlice from './services/order/orderSlice';
 import reportWebVitals from './reportWebVitals';
 //import { rootReducer } from './services/reducers';
 
@@ -15,6 +16,7 @@ const store = configureStore({
     ingredients: ingredientsReducer,
     burgerConstructor: burgerConstructorReducer,
     currentIngredient: currentIngredientSlice,
+    order: orderSlice,
   }, 
 });
 const root = ReactDOM.createRoot(document.getElementById('root'));

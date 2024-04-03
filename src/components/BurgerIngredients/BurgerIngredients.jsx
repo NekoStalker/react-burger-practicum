@@ -1,10 +1,10 @@
 import React from 'react'
-import BurgerIngredientsGroup from '../BurgerIngredientsGroup/BurgerIngredientsGroup';
+import BurgerIngredientsGroup from '../BurgerIngredientsGroup/BurgerIngredientsGroup'
 import burgerIngredientsStyles from './BurgerIngredients.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types';
-import {ingredientType} from '../../utils/types';
-import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types'
+import {ingredientType} from '../../utils/types'
+import { useSelector } from 'react-redux'
 function BurgerIngredients () {
   const ingredients = useSelector((store) => store.ingredients.allIngredients)
   const [current, setCurrent] = React.useState('bun');

@@ -1,30 +1,38 @@
 import {createSlice} from '@reduxjs/toolkit'
-import {getOrder} from './orderRequests'
+import {getOrderModal} from './orderRequests'
+const initialState = {
+    orderID: -1,
+    orderStatus: "",
+    createdOrder: {},
+    isLoading: false,
+    error: null,
+    openModal: false,
+}
 export const orderSlice = createSlice({
     name: 'order',
-    initialState: {
-        orderID: -1,
-        orderStatus: "",
-        createdOrder: {},
-        loading: false,
-        error: null
-    },
+    initialState,
     reducers: {
-       
+        closeModalOrder: (state, action) => {
+            return initialState;
+        },
     },
     extraReducers: (builder) => {
         builder
-            .addCase(getOrder.pending, (state) => {
+            .addCase(getOrderModal.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
             })
-            .addCase(getOrder.fulfilled, (state, action) => {
+            .addCase(getOrderModal.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.allIngredients = action.payload;
+                state.createdOrder = action.payload;
+                state.orderID = action.payload.number;
+                state.openModal = true;
             })
-            .addCase(getOrder.rejected, (state, action) => {
+            .addCase(getOrderModal.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.payload;
             })
     }
 });
+export const {closeModalOrder} = orderSlice.actions;
+export default orderSlice.reducer;
