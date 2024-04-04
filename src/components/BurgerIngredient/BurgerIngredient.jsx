@@ -7,9 +7,18 @@ import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux'
 import {ingredientType} from '../../utils/types'
 import {openModalIngredient,closeModalIngredient} from '../../services/currentIngredient/currentIngredientSlice'
+import {useDrag} from 'react-dnd';
 function Burgeringredient({ingredient}) {
+
     const dispatch = useDispatch();
     const openModal = useSelector((store) => store.currentIngredient.openModal)
+    const [{isDragged}, drag] =  useDrag(() => ({
+      type: 'ingredient',
+      item: ingredient,
+      collect: (monitor) => ({
+        isDragged: !!monitor.isDragging(),
+      }),
+    }));
     const handleOpenModal = () => {
         dispatch(openModalIngredient(ingredient));
      }
@@ -22,9 +31,9 @@ function Burgeringredient({ingredient}) {
       </Modal>
     );
     return ( 
-    <li>
+    <li >
        {openModal && modal}
-        <div className={burgeringredientStyles.card_item}>
+        <div className={`${burgeringredientStyles.card_item} ${isDragged ? burgeringredientStyles.card_opacity: ''}`} ref={drag}>
           <div className={burgeringredientStyles.card_item__counter}><Counter count={ingredient.__v} size="default" /></div>
           <a className={burgeringredientStyles.card_item__link} href="#" onClick={handleOpenModal}>
             <img className={`${burgeringredientStyles.card_item__img} mr-4 ml-4`} src={ingredient.image}  alt={ingredient.name} width="240" height="120" />

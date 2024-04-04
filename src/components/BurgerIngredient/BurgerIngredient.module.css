@@ -10,6 +10,9 @@
     position: relative;
     z-index: 2; 
 }
+.card_opacity {
+    opacity: 0.5;
+}
 .card_item__link {
 
 }

@@ -1,17 +1,20 @@
 import React from 'react'
-import { useDrag } from 'react-dnd';
+import { useDrag, useDrop } from 'react-dnd';
 import { ConstructorElement,DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerConstructorItemStyles from './BurgerConstructorItem.module.css'
-function BurgerConstructorItem({ingredient, removeItem}) {
-     const [{isDragged}, drag] =  useDrag(() => ({
-     type: 'INGREDIENT',
-     item: ingredient._id,
+import PropTypes from 'prop-types'
+import {ingredientType} from '../../utils/types'
+
+function BurgerConstructorItem({ingredient, removeItem, index}) {
+  const [{isDragged}, drag] =  useDrag(() => ({
+     type: 'ingredient',
+     item: { id: ingredient._id, index: index },
      collect: (monitor) => ({
        isDragged: !!monitor.isDragging(),
      }),
-   }));
+  }));
   return (
-    <li ref={drag} style={{opacity: isDragged ? 0.5 : 1}} className={burgerConstructorItemStyles.item} >
+    <li ref={drag} style={{display: isDragged ? 'none' : ''}} className={burgerConstructorItemStyles.item} >
           <DragIcon type="primary" />
           <ConstructorElement
             isLocked={false}
@@ -23,4 +26,10 @@ function BurgerConstructorItem({ingredient, removeItem}) {
     </li>
   )
 }
+
 export default BurgerConstructorItem;
+BurgerConstructorItem.propTypes = {
+  ingredient: ingredientType,
+  removeItem: PropTypes.func.isRequired,
+  index: PropTypes.number.isRequired
+};

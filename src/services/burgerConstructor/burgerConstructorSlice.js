@@ -21,8 +21,17 @@ export const burgerConstructor = createSlice({
             updateBurgerConstructorIngredients(state)
         },
         addBurgerIngredient: (state, action) => {
-            state.burgerConstructorIngredients = [...state.burgerConstructorIngredients, action.payload];
-            updateBurgerConstructorIngredients(state);
+            if(action.payload.type === "bun"){
+                state.selectedBun = action.payload;
+                const bunPrice = state.selectedBun ? state.selectedBun.price * 2 : 0;
+                state.price = state.internalIngredients.reduce((acc, ingredient) => acc + ingredient.price, bunPrice);
+            }
+            else {
+                state.burgerConstructorIngredients = [...state.burgerConstructorIngredients, action.payload];
+                updateBurgerConstructorIngredients(state);
+            }
+           
+            
         },
         removeBurgerIngredient: (state, action) => {
             state.burgerConstructorIngredients = state.burgerConstructorIngredients.filter((ingredient) => ingredient._id !== action.payload);

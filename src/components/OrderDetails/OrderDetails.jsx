@@ -1,7 +1,6 @@
 import React from "react"
 import DoneIcon from './icons/done.svg'
 import orderDetailStyles from "./OrderDetails.module.css"
-import PropTypes from 'prop-types'
 import { useSelector } from "react-redux"
 function OrderDetails() {
     const orderID = useSelector((store) => store.order.orderID);

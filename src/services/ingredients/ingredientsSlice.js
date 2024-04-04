@@ -15,6 +15,20 @@ export const ingredientsSlice = createSlice({
         removeIngredient: (state, action) => {
             state.allIngredients = state.allIngredients.filter((ingredient) => ingredient._id !== action.payload);
         },
+        addIngredientCount: (state, action) => {
+            const findElem = state.allIngredients.find((ingredient) => ingredient._id === action.payload._id)
+            if(action.payload.type !== "bun"){
+                findElem.__v +=1;
+            }
+            else{
+                state.allIngredients = state.allIngredients.map((ingredient) => ingredient.type === "bun" && ingredient._id !== findElem._id ? {...ingredient, __v: 0} : ingredient);
+                findElem.__v +=2;
+            }
+        },
+        removeIngredientCount: (state, action) => {
+            const findElem = state.allIngredients.find((ingredient) => ingredient._id === action.payload)
+            findElem.__v -=1;
+        }
     },
     extraReducers: (builder) => {
         builder
@@ -34,6 +48,6 @@ export const ingredientsSlice = createSlice({
 
 });
 
-export const {addIngredient, removeIngredient } = ingredientsSlice.actions;
+export const {addIngredient, removeIngredient,addIngredientCount,removeIngredientCount } = ingredientsSlice.actions;
 
 export default ingredientsSlice.reducer;
