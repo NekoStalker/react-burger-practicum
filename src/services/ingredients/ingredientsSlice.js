@@ -22,7 +22,7 @@ export const ingredientsSlice = createSlice({
             }
             else{
                 state.allIngredients = state.allIngredients.map((ingredient) => ingredient.type === "bun" && ingredient._id !== findElem._id ? {...ingredient, __v: 0} : ingredient);
-                findElem.__v +=2;
+                findElem.__v =2;
             }
         },
         removeIngredientCount: (state, action) => {

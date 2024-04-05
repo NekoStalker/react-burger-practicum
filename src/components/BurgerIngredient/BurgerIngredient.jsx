@@ -1,17 +1,14 @@
 import React from 'react'
 import burgeringredientStyles from './BurgerIngredient.module.css'
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
-import Modal from '../Modal/Modal'
-import IngredientDetails from '../IngredientDetails/IngredientDetails'
 import PropTypes from 'prop-types'
-import { useSelector, useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import {ingredientType} from '../../utils/types'
-import {openModalIngredient,closeModalIngredient} from '../../services/currentIngredient/currentIngredientSlice'
+import {openModalIngredient} from '../../services/currentIngredient/currentIngredientSlice'
 import {useDrag} from 'react-dnd';
 function Burgeringredient({ingredient}) {
 
     const dispatch = useDispatch();
-    const openModal = useSelector((store) => store.currentIngredient.openModal)
     const [{isDragged}, drag] =  useDrag(() => ({
       type: 'ingredient',
       item: ingredient,
@@ -21,18 +18,10 @@ function Burgeringredient({ingredient}) {
     }));
     const handleOpenModal = () => {
         dispatch(openModalIngredient(ingredient));
-     }
-    const handleCloseModal = () => {
-      dispatch(closeModalIngredient());
     }
-    const modal = (
-      <Modal title="Детали ингредиента" onClose={handleCloseModal}>
-        <IngredientDetails />
-      </Modal>
-    );
+
     return ( 
     <li >
-       {openModal && modal}
         <div className={`${burgeringredientStyles.card_item} ${isDragged ? burgeringredientStyles.card_opacity: ''}`} ref={drag}>
           <div className={burgeringredientStyles.card_item__counter}><Counter count={ingredient.__v} size="default" /></div>
           <a className={burgeringredientStyles.card_item__link} href="#" onClick={handleOpenModal}>

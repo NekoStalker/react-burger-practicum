@@ -1,59 +1,64 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { ConstructorElement,DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerConstructorIngredientsStyles from './BurgerConstructorIngredients.module.css'
 import PropTypes from 'prop-types'
 import BurgerConstructorItem from '../BurgerConstructorItem/BurgerConstructorItem'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
-import {removeBurgerIngredient,addBurgerIngredient} from '../../services/burgerConstructor/burgerConstructorSlice'
+import {removeBurgerIngredient,addBurgerIngredient,changeIngredientsOrder,BUN_NOT_SELECTED} from '../../services/burgerConstructor/burgerConstructorSlice'
 import {addIngredientCount,removeIngredientCount} from '../../services/ingredients/ingredientsSlice'
-import {ingredientType} from '../../utils/types'
+
 import {useDrop} from 'react-dnd';
 function BurgerConstructorIngredients() {
   const dispatch = useDispatch();
-  // const [{isDragged}, drag] =  useDrag(() => ({
-  //   type: 'INGREDIENT',
-  //   item: {id},
-  //   collect: (monitor) => ({
-  //     isDragged: !!monitor.isDragging(),
-  //   }),
-  // }));
   const [ , drop] = useDrop({
     accept: "ingredient",
     collect: monitor => ({
         isHover: monitor.isOver(),
     }),
-    // hover(item, monitor) {
-    //   const dragIndex = item.index; // Индекс перетаскиваемой задачи
-    //   const hoverIndex = index; //
-    // },
+
     drop(item) {
       dispatch(addBurgerIngredient(item));
       dispatch(addIngredientCount(item))
     },
   });
-  const {ingredients, selectedBun} = useSelector((store)=> ({
-    ingredients: store.burgerConstructor.burgerConstructorIngredients,
+  const { selectedBun, internalIngredients} = useSelector((store)=> ({
+    
     selectedBun: store.burgerConstructor.selectedBun,
+    internalIngredients: store.burgerConstructor.internalIngredients,
   }),shallowEqual);
-  const removeItem = (id) =>{dispatch(removeBurgerIngredient(id));  dispatch(removeIngredientCount(id))}
-  const internalIngredients = ingredients.filter((ingredient) => ingredient.type !== "bun");
+  const moveItem = (dragIndex, hoverIndex) => {
+    console.log({from:dragIndex, to:hoverIndex})
+    dispatch(changeIngredientsOrder({from:dragIndex, to:hoverIndex}));
+  };
+  const removeItem = (id,index) =>{
+    dispatch(removeBurgerIngredient(index)); 
+    dispatch(removeIngredientCount(id));
+  };
   return(
-    <div ref={drop} className={`${burgerConstructorIngredientsStyles.burger_ingredients} ` }>
+    <div ref={drop} className={`${burgerConstructorIngredientsStyles.burger_ingredients} 
+    ${selectedBun.name === BUN_NOT_SELECTED ? burgerConstructorIngredientsStyles.hide_img : '' } ` }>
     <ConstructorElement
       type="top"
       isLocked={true}
       text={`${ selectedBun.name} (верх)`}
       price={ selectedBun.price}
       thumbnail={selectedBun.image}
-      className="mr-2"
+      extraClass="mr-2"
     />
     <ul className={burgerConstructorIngredientsStyles.burger_ingredients__internal}>
 
-      { internalIngredients.map((ingredient,index) => 
-        
-        <BurgerConstructorItem ingredient={ingredient} removeItem={removeItem} index={index} key={ingredient._id+index}/>
-      
-      )}
+      {internalIngredients.length > 0 ? (internalIngredients.map((ingredient,index) => 
+        <BurgerConstructorItem ingredient={ingredient} removeItem={removeItem} index={index} key={ingredient._id+index} moveItem={moveItem} />
+      )) : (
+        <div className={burgerConstructorIngredientsStyles.hide_img}>
+            <ConstructorElement
+              text="Выберете ингредиенты бургера"
+              extraClass="mr-2"
+              isLocked="true"
+          />
+        </div>)
+
+      }
     </ul>
     <ConstructorElement
       type="bottom"

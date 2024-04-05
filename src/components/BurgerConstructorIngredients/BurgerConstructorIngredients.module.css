@@ -23,3 +23,9 @@
     justify-content: center;
     align-items: center;
 }
+.hide_img img {
+    visibility: hidden;
+}
+.hide_img {
+    overflow: hidden ;
+}
