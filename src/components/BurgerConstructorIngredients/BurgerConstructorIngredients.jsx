@@ -1,7 +1,6 @@
 import React, { useCallback } from 'react'
 import { ConstructorElement,DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerConstructorIngredientsStyles from './BurgerConstructorIngredients.module.css'
-import PropTypes from 'prop-types'
 import BurgerConstructorItem from '../BurgerConstructorItem/BurgerConstructorItem'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import {removeBurgerIngredient,addBurgerIngredient,changeIngredientsOrder,BUN_NOT_SELECTED} from '../../services/burgerConstructor/burgerConstructorSlice'
@@ -26,12 +25,11 @@ function BurgerConstructorIngredients() {
     selectedBun: store.burgerConstructor.selectedBun,
     internalIngredients: store.burgerConstructor.internalIngredients,
   }),shallowEqual);
-  const moveItem = (dragIndex, hoverIndex) => {
-    console.log({from:dragIndex, to:hoverIndex})
-    dispatch(changeIngredientsOrder({from:dragIndex, to:hoverIndex}));
+  const moveItem = (dragUid, hoverUid) => {
+    dispatch(changeIngredientsOrder({fromUid:dragUid, toUid:hoverUid}));
   };
-  const removeItem = (id,index) =>{
-    dispatch(removeBurgerIngredient(index)); 
+  const removeItem = (id,uid) =>{
+    dispatch(removeBurgerIngredient(uid)); 
     dispatch(removeIngredientCount(id));
   };
   return(
@@ -48,7 +46,7 @@ function BurgerConstructorIngredients() {
     <ul className={burgerConstructorIngredientsStyles.burger_ingredients__internal}>
 
       {internalIngredients.length > 0 ? (internalIngredients.map((ingredient,index) => 
-        <BurgerConstructorItem ingredient={ingredient} removeItem={removeItem} index={index} key={ingredient._id+index} moveItem={moveItem} />
+        <BurgerConstructorItem ingredient={ingredient} index={index} removeItem={removeItem} uid={ingredient.uid} key={ingredient.uid} moveItem={moveItem} />
       )) : (
         <div className={burgerConstructorIngredientsStyles.hide_img}>
             <ConstructorElement

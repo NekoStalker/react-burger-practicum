@@ -4,8 +4,9 @@ import AppHeader from '../AppHeader/AppHeader'
 import BurgerConstructor from '../BurgerConstructor/BurgerConstructor'
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
 import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
+import { HTML5Backend } from 'react-dnd-html5-backend'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+import { Puff } from 'react-loader-spinner'
 import {getAllIngredients} from '../../services/ingredients/ingredientsRequests'
 
 function App() {
@@ -23,7 +24,14 @@ function App() {
       <AppHeader />
       <DndProvider backend={HTML5Backend}>
       <main className={appStyle.main}>
-        {isLoading && <p>Загрузка...</p>} 
+        {isLoading && <Puff
+            visible={true}
+            height="180"
+            width="180"
+            color="blue"
+            ariaLabel="puff-loading"
+            wrapperClass={appStyle.loader}
+        />} 
         {error && <p>Ошибка: {error}</p>} 
         {!isLoading && !error && (
           <>

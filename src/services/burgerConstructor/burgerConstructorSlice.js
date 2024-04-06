@@ -1,13 +1,10 @@
-import {createSlice} from '@reduxjs/toolkit'
+import {createSlice,nanoid } from '@reduxjs/toolkit'
 import update from 'immutability-helper'
 export const BUN_NOT_SELECTED = "Выберете булки";
 function updatePrice(state) {
     const bunPrice = state.selectedBun.name !== BUN_NOT_SELECTED ? state.selectedBun.price * 2 : 0;
     state.price = state.internalIngredients.reduce((acc, ingredient) => acc + ingredient.price, bunPrice);
-    state.internalIngredients = state.internalIngredients.map((ingredient, index) => ({
-        ...ingredient, 
-        index: index
-    }));
+
 }
 
 export const burgerConstructor = createSlice({
@@ -18,31 +15,36 @@ export const burgerConstructor = createSlice({
         internalIngredients: [],
     },
     reducers: {
-        addBurgerIngredient: (state, action) => {
-            if(action.payload.type === "bun"){
-                state.selectedBun = action.payload;
-            } else {
-                state.internalIngredients.push(action.payload);
-            }
-            updatePrice(state);
-           
+        addBurgerIngredient: {
+            reducer(state, action) {
+              if(action.payload.ingredient.type === "bun"){
+                state.selectedBun = action.payload.ingredient;
+              } else {
+                state.internalIngredients.push(action.payload.ingredient);
+              }
+            
+              updatePrice(state);
+            },
+              prepare(ingredient) {
+              return { payload: { ingredient: { ...ingredient, uid: nanoid() } } };
+          },
         },
+   
         removeBurgerIngredient: (state, action) => {
-            state.internalIngredients = state.internalIngredients.filter((ingredient) => ingredient.index !== action.payload);
+            state.internalIngredients = state.internalIngredients.filter((ingredient) => ingredient.uid !== action.payload);
             updatePrice(state);
         },
         changeIngredientsOrder: (state, action) =>{
-            const {from, to} = action.payload;
+            const { fromUid, toUid } = action.payload;
+            const fromIndex = state.internalIngredients.findIndex(ingredient => ingredient.uid === fromUid);
+            const toIndex = state.internalIngredients.findIndex(ingredient => ingredient.uid === toUid);
             const newConstructorIngredients = update(state.internalIngredients, {
                 $splice: [
-                  [from, 1], 
-                  [to, 0, state.internalIngredients[from]],
+                  [fromIndex, 1], 
+                  [toIndex, 0, state.internalIngredients[fromIndex]],
                 ],
               });
-            state.internalIngredients = newConstructorIngredients.map((ingredient, index) => ({
-                ...ingredient, index: index
-            }));
-
+            state.internalIngredients = newConstructorIngredients;
         },
         resetConstructor: (state) => {
             state.selectedBun = { "name":BUN_NOT_SELECTED,"type":"bun"};

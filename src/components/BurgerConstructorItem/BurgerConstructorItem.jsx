@@ -5,10 +5,10 @@ import burgerConstructorItemStyles from './BurgerConstructorItem.module.css'
 import PropTypes from 'prop-types'
 import {ingredientType} from '../../utils/types'
 
-function BurgerConstructorItem({ingredient, removeItem, index, moveItem}) {
+function BurgerConstructorItem({ ingredient,index, removeItem, moveItem}) {
   const ref = useRef(null);
   const [{ handlerId }, drop] = useDrop({
-    accept:'ingredient1',
+    accept:'ingredientConstructor',
     collect(monitor) {
       return {
         handlerId: monitor.getHandlerId(),
@@ -20,7 +20,8 @@ function BurgerConstructorItem({ingredient, removeItem, index, moveItem}) {
       }
       const dragIndex = item.index
       const hoverIndex = index
-
+      const dragUid = item.uid; 
+      const hoverUid = ingredient.uid; 
       if (dragIndex === hoverIndex) {
         return
       }
@@ -38,13 +39,14 @@ function BurgerConstructorItem({ingredient, removeItem, index, moveItem}) {
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return
       }
-      moveItem(dragIndex, hoverIndex)
-      item.index = hoverIndex
+  
+      moveItem(dragUid, hoverUid);
+      item.index = hoverIndex;
     },
   });
   const [{isDragged}, drag] =  useDrag(() => ({
-     type: 'ingredient1',
-     item: { id: ingredient._id, index: ingredient.index },
+     type: 'ingredientConstructor',
+     item: { id: ingredient._id, uid: ingredient.uid },
      collect: (monitor) => ({
        isDragged: monitor.isDragging(),
      }),
@@ -58,7 +60,7 @@ function BurgerConstructorItem({ingredient, removeItem, index, moveItem}) {
             text={ingredient.name}
             price={ingredient.price}
             thumbnail={ingredient.image}
-            handleClose={()=>removeItem(ingredient._id, index)}
+            handleClose={()=>removeItem(ingredient._id, ingredient.uid)}
           />
     </li>
   )
@@ -67,7 +69,7 @@ function BurgerConstructorItem({ingredient, removeItem, index, moveItem}) {
 export default BurgerConstructorItem;
 BurgerConstructorItem.propTypes = {
   ingredient: ingredientType,
-  removeItem: PropTypes.func.isRequired,
   index: PropTypes.number.isRequired,
+  removeItem: PropTypes.func.isRequired,
   moveItem: PropTypes.func.isRequired
 };
