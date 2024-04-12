@@ -1,0 +1,46 @@
+  .App {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-top: 15vh;
+  }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+  }
+  .nav_item {
+    height: 60px;
+    justify-content: center;
+
+  }
+  
+  .form {
+    display: flex;
+    min-width: 800px;
+    flex-direction: column;
+    gap: 24px;
+
+   
+  }
+  .nav_section {
+    min-width: 500px;
+    margin-left: 15vw;
+    
+  }
+  .list_menu {
+    display: flex;
+    margin: 0 ;
+    flex-direction: column;
+    align-items: left;
+    list-style: none;
+  }
+  .description_container {
+    margin-top: 80px;
+    width: 400px;
+    margin-left: 17vw ;
+  }
+  .form_ref_button {
+    padding: 0px 10px;
+  }

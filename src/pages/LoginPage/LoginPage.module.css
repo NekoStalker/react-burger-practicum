@@ -1,0 +1,30 @@
+.container {
+    padding: 0;
+    height: calc(100vh - var(--container-padding)*2);
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  
+  .form {
+    display: flex;
+    width: 800px;
+    flex-direction: column;
+    gap: 24px;
+    padding-top: 15vh;
+    align-items: center;
+  }
+
+  .button_container {
+    margin-top: 80px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    justify-content: center;
+  }
+  .form_ref_button {
+    padding: 0px 10px;
+  }

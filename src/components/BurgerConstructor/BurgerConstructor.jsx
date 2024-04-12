@@ -15,7 +15,7 @@ function BurgerConstructor () {
 
 
     return (
-      <section className={`${burgerConstructorStyles.burgerContainer}`}>
+      <section className={`${burgerConstructorStyles.burger_constructor_container}`}>
           <BurgerConstructorIngredients />
           <BurgerConstructorPrice />
       </section>
