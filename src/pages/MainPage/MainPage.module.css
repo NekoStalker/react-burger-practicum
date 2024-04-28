@@ -2,10 +2,11 @@
   text-align: center;
   background-color: #131316;
 }
-main {
+.main {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: row;
   gap: 40px;
 }
 

@@ -8,8 +8,6 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import { Puff } from 'react-loader-spinner'
 import { useNavigate } from 'react-router-dom';
-import {getAllIngredients} from '../../services/ingredients/ingredientsRequests'
-
 function MainPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -17,9 +15,6 @@ function MainPage() {
     isLoading: store.ingredients.isLoading,
     error: store.ingredients.error,
   }),shallowEqual);
-  useEffect(() => {
-    dispatch(getAllIngredients())
-  },[dispatch]);
  
   return (
     <div className={mainPageStyle.App}>
@@ -32,7 +27,7 @@ function MainPage() {
             width="180"
             color="blue"
             ariaLabel="puff-loading"
-            wrapperClass={mainPageStyle.loader}
+            wrapperClass="loader"
         />} 
         {error && <p>Ошибка: {error}</p>} 
         {!isLoading && !error && (

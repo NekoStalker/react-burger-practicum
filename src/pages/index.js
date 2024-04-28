@@ -5,4 +5,5 @@ import RegisterPage from './RegisterPage/RegisterPage';
 import ForgotPasswordPage from './ForgotPassword/ForgotPassword';
 import RestorePasswordPage from './RestorePassword/RestorePassword';
 import ProfilePagePage from './ProfilePage/ProfilePage';
-export {MainPage,NotFound404,LoginPage, RegisterPage,ForgotPasswordPage,RestorePasswordPage,ProfilePagePage}
+import IngredientPage from './IngredientPage/IngredientPage';
+export {MainPage,NotFound404,LoginPage, RegisterPage,ForgotPasswordPage,RestorePasswordPage,ProfilePagePage, IngredientPage}

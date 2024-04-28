@@ -1,13 +1,16 @@
 import React from 'react'
 import burgeringredientStyles from './BurgerIngredient.module.css'
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import {ingredientType} from '../../utils/types'
 import {openModalIngredient} from '../../services/currentIngredient/currentIngredientSlice'
 import {useDrag} from 'react-dnd';
 function Burgeringredient({ingredient}) {
-
+    const location = useLocation();
+    const navigate = useNavigate();
+  
     const dispatch = useDispatch();
     const [{isDragged}, drag] =  useDrag(() => ({
       type: 'ingredient',
@@ -16,8 +19,10 @@ function Burgeringredient({ingredient}) {
         isDragged: !!monitor.isDragging(),
       }),
     }));
-    const handleOpenModal = () => {
+    const handleOpenModal = (e) => {
+        e.preventDefault(); // 
         dispatch(openModalIngredient(ingredient));
+        navigate(`/ingredients/${ingredient._id}`, { state: { background: location } });
     }
 
     return ( 

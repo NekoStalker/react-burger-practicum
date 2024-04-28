@@ -4,16 +4,8 @@ import BurgerConstructorIngredients from '../BurgerConstructorIngredients/Burger
 import { useDispatch} from 'react-redux'
 
 import BurgerConstructorPrice from '../BurgerConstructorPrice/BurgerConstructorPrice'
-import {resetConstructor} from '../../services/burgerConstructor/burgerConstructorSlice'
 
 function BurgerConstructor () {
-  const dispatch = useDispatch();
-  
-  React.useEffect(() => {
-    dispatch(resetConstructor());
-  }, [dispatch]);
-
-
     return (
       <section className={`${burgerConstructorStyles.burger_constructor_container}`}>
           <BurgerConstructorIngredients />

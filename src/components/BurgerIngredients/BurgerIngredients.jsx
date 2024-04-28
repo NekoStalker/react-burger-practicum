@@ -2,6 +2,7 @@ import React from 'react'
 import BurgerIngredientsGroup from '../BurgerIngredientsGroup/BurgerIngredientsGroup'
 import burgerIngredientsStyles from './BurgerIngredients.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import IngredientDetails from '../IngredientDetails/IngredientDetails'
 import {closeModalIngredient} from '../../services/currentIngredient/currentIngredientSlice'
@@ -15,14 +16,7 @@ function BurgerIngredients () {
   const containerRef = React.useRef(null);
   const dispatch = useDispatch();
   const openModal = useSelector((store) => store.currentIngredient.openModal)
-  const handleCloseModal = () => {
-    dispatch(closeModalIngredient());
-  }
-  const modal = (
-    <Modal title="Детали ингредиента" onClose={handleCloseModal}>
-      <IngredientDetails />
-    </Modal>
-  );
+
   const handleScroll = () => {
 
     const containerTop = containerRef.current?.getBoundingClientRect().top || 0;
@@ -67,7 +61,6 @@ function BurgerIngredients () {
   };
     return (
       <section className={burgerIngredientsStyles.ingredients_modal}>
-        {openModal && modal}
         <p className="text text text_type_main-large mt-10">
               Соберите бургер
         </p>

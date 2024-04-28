@@ -1,8 +1,9 @@
-  .App {
+  .main {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    padding-top: 15vh;
+    flex-direction: row;
+    padding-top: 10vh;
   }
   .container {
     display: flex;
@@ -15,14 +16,24 @@
     justify-content: center;
 
   }
+  .nav_item > a {
+    text-decoration: none; 
+    color: inherit;
+  }
   
   .form {
     display: flex;
-    min-width: 800px;
+    min-width: 600px;
     flex-direction: column;
     gap: 24px;
-
    
+  }
+  .form_button {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 40px;
+    padding-left: 40px;
   }
   .nav_section {
     min-width: 500px;

@@ -9,10 +9,8 @@ function NotFound404() {
     return ( 
         <>
         <AppHeader />
-        <main className={nfStyles.App}>
-            <main className={nfStyles.main}>
-                <img alt="page not found" src={pageNotFound} />
-            </main>
+        <main className={nfStyles.main}>
+            <img alt="page not found" src={pageNotFound} />
         </main>
         </>
     );
