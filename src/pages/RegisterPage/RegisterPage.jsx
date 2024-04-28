@@ -62,11 +62,11 @@ function RegisterPage() {
             </Button>
           </form >
           <div className={`${registerStyles.button_container}`}>
-            {error !== null &&
+            {/* {error !== null &&
               <p className="text text_type_main-medium">
                 {error.message}
               </p>
-            }
+            } */}
             <p className="text text_type_main-default text_color_inactive">Уже зарегестрированы?<Button onClick={loginNav} htmlType="button" type="secondary" size="medium" 
             extraClass={`${registerStyles.form_ref_button}`}>Войти</Button></p>
  
