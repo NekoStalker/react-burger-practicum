@@ -7,7 +7,11 @@ export function getCookie(name) {
   }
   
   export function setCookie(name, value, props) {
-    props = props || {};
+    props =  {
+      path: '/',
+      expires: 20 * 60,        
+      ...props      
+    };
     let exp = props.expires;
     if (typeof exp == 'number' && exp) {
       const d = new Date();

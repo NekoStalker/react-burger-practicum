@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit'
-import {registerUser,loginUser,resetPasswordUser,forgotPasswordUser,logoutUser,getUser,patchUser,refreshToken} from './userRequests'
+import {registerUser,loginUser,resetPasswordUser,forgotPasswordUser,logoutUser,getUser,patchUser} from './userRequests'
 const initialState = {
     userInfo: null,
     isLoggedIn: false,
@@ -108,18 +108,7 @@ export const userSlice = createSlice({
                 state.isLoading = false;
                 state.error = action.error || 'Ошибка обновления данных';
             })
-            .addCase(refreshToken.pending, (state) => {
-                state.isLoading = true;
-                state.error = null;
-            })
-            .addCase(refreshToken.fulfilled, (state, action) => {
-                state.isLoading = false;
-                state.response = action.payload;
-            })
-            .addCase(refreshToken.rejected, (state, action) => {
-                state.isLoading = false;
-                state.error = action.error || 'Ошибка обновления сессии';
-            })
+           
 
     }
 });

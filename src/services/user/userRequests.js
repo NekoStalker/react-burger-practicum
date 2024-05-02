@@ -1,9 +1,9 @@
 import {createAsyncThunk} from '@reduxjs/toolkit'
-import {BASE_URL} from '../api';
-import {request} from '../../utils/fetchRequest'
+
+import {request, fetchWithRefresh} from '../../utils/fetchRequest'
 import { setCookie,deleteCookie, getCookie } from '../../utils/cookie';
 
-import { userRegister, userLogin, userLogout, userToken, userForgotPassword, userResetPassword, userGet, userPatch } from '../api';
+import { userRegister, userLogin, userLogout, userForgotPassword, userResetPassword, userGet, userPatch } from '../api';
 export const registerUser = createAsyncThunk(
     'user/register',
     async (form) => {
@@ -17,24 +17,12 @@ export const registerUser = createAsyncThunk(
             headers: { 'Content-Type': 'application/json' },
             body: reqBody
         };
-        const response = await request(userRegister,registerOptions);
-        if (response.ok) {
+        const response = await fetchWithRefresh(userRegister,registerOptions);
+        if (response.success) {
             const accessToken = response.accessToken.split('Bearer ')[1];
-            setCookie('accessToken', accessToken, { path: '/' , expires: 20 * 60 });
+            setCookie('accessToken', accessToken);
             localStorage.setItem('refreshToken', response.refreshToken);
             return response.user;
-        }
-        if (response.message === "jwt malformed") {
-            const newAccessToken = await refreshToken(); 
-            if (newAccessToken) {
-                const retryResponse = await fetch(userLogin, registerOptions);
-                const retryData = await retryResponse.json();
-                if (retryResponse.ok) {
-                    setCookie('accessToken', retryData.accessToken.split('Bearer ')[1], { path: '/', expires: 20 * 60 });
-                    localStorage.setItem('refreshToken', retryData.refreshToken);
-                    return retryData.user; 
-                }
-            }
         }
         
         return response;
@@ -44,7 +32,7 @@ export const registerUser = createAsyncThunk(
 
 export const loginUser = createAsyncThunk(
     'user/login',
-    async (form ,  { dispatch }) => {
+    async (form ) => {
         const reqBody = JSON.stringify({
             email: form.email,
             password: form.password
@@ -56,25 +44,13 @@ export const loginUser = createAsyncThunk(
             body: reqBody
         };
 
-        const response = await fetch(userLogin, loginOptions);
-        const data = await response.json();
+        const response = await fetchWithRefresh(userLogin, loginOptions);
 
-        if (response.ok) {
-            setCookie('accessToken', data.accessToken.split('Bearer ')[1], { path: '/', expires: 20 * 60 });
-            localStorage.setItem('refreshToken', data.refreshToken);
-            return data.user; 
-        }
-        if (data.message === "jwt malformed") {
-            const newAccessToken = await dispatch(refreshToken()).unwrap();
-            if (newAccessToken) {
-                response = await fetch(userLogin, loginOptions);
-                data = await response.json();
-                if (response.ok) {
-                    setCookie('accessToken', data.accessToken.split('Bearer ')[1], { path: '/', expires: 20 * 60 });
-                    localStorage.setItem('refreshToken', data.refreshToken);
-                    return data.user;
-                }
-            }
+
+        if (response.success) {
+            setCookie('accessToken', response.accessToken.split('Bearer ')[1]);
+            localStorage.setItem('refreshToken', response.refreshToken);
+            return response.user; 
         }
 
         return response; 
@@ -86,7 +62,7 @@ export const logoutUser = createAsyncThunk(
             const reqBody =  {
                 token: localStorage.getItem("refreshToken")
             }
-            const response = await request(userLogout, {
+            const response = await fetchWithRefresh(userLogout, {
                 method: 'POST',
                 headers:  {
                     'Content-Type': 'application/json',
@@ -103,27 +79,7 @@ export const logoutUser = createAsyncThunk(
             
     }
 );
-export const refreshToken = createAsyncThunk(
-    'user/refresh',
-    async () => {
-        const reqBody =  {
-            "token": getCookie('refreshToken')
-         }
-         const response = await request(userToken, {
-            method: 'POST',
-            headers:  {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(reqBody),
-        })
-        if(response.success){
-            setCookie('accessToken', response.accessToken.split('Bearer ')[1], { path: '/', expires: 20 * 60 });
-            localStorage.setItem('refreshToken', response.refreshToken);
-            return response.accessToken;
-        }
-        return response;
-  }
-);
+
 export const resetPasswordUser = createAsyncThunk(
     'user/resetPassword',
     async (form) => {
@@ -159,10 +115,10 @@ export const forgotPasswordUser = createAsyncThunk(
 );
 export const getUser = createAsyncThunk(
     'user/getUser',
-    async (_, thunkAPI)  => {
+    async (_)  => {
             const accessToken = getCookie('accessToken');
             
-            const response = await request(userGet, {
+            const response = await fetchWithRefresh(userGet, {
              method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -171,22 +127,6 @@ export const getUser = createAsyncThunk(
             });
             if(response.success){
                 return response.user;
-            }
-            else if (response.message === "jwt malformed") {
-                const newAccessToken = await thunkAPI.dispatch(refreshToken());
-                console.log(newAccessToken);
-                if (newAccessToken) {
-                    response = await request(userLogin, {
-                        method: 'GET',
-                       headers: {
-                           'Content-Type': 'application/json',
-                           'Authorization': `${newAccessToken}`,
-                       },
-                       });
-                    if (response.success) {
-                        return response.user;
-                    }
-                }
             }
             return response;     
     }
@@ -200,7 +140,7 @@ export const patchUser = createAsyncThunk(
                 "password": form.password,
                 "name": form.login
             };
-            const response = await request(userPatch, {
+            const response = await fetchWithRefresh(userPatch, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -211,21 +151,6 @@ export const patchUser = createAsyncThunk(
             });
             if(response.success){
                 return response.user;
-            }
-            else if (response.message === "jwt malformed") {
-                const newAccessToken = await thunkAPI.dispatch(refreshToken()).unwrap();
-                if (newAccessToken) {
-                    response = await fetch(userLogin, {
-                        method: 'PATCH',
-                       headers: {
-                           'Content-Type': 'application/json',
-                           'Authorization': `Bearer ${newAccessToken}`,
-                         },
-                       });
-                    if (response.success) {
-                        return response.user;
-                    }
-                }
             }
         
             return response;
