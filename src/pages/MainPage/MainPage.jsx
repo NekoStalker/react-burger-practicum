@@ -7,10 +7,9 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import { Puff } from 'react-loader-spinner'
-import { useNavigate } from 'react-router-dom';
+
 function MainPage() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   const {isLoading,error} = useSelector((store) => ({
     isLoading: store.ingredients.isLoading,
     error: store.ingredients.error,

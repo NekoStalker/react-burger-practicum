@@ -18,7 +18,9 @@ function App() {
   useEffect(() => {
     dispatch(getAllIngredients());
     dispatch(resetConstructor());
-    dispatch(getUser());
+    if(localStorage.getItem("refreshToken")){
+      dispatch(getUser());
+    }
   }, [dispatch]);
 
   return (

@@ -94,8 +94,8 @@ function ProfilePagePage() {
                 ariaLabel="puff-loading"
                 wrapperClass="loader"
             />} 
-            {error && <p>Ошибка: {error.message}</p>} 
-            {!isLoading && !error && (
+            {/* {error && <p>Ошибка: {error.message}</p>} 
+            {!isLoading && !error && ( */}
         <section className={`${profileStyles.container}`}>
           <form className={`${profileStyles.form}`} onSubmit={handleSubmit}>
             <Input
@@ -130,7 +130,8 @@ function ProfilePagePage() {
             </div>
              )}
           </form >
-        </section>)}
+        </section>
+       {/* )} */}
       </main>
     </>
   );
