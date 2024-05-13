@@ -2,8 +2,9 @@ import React from "react"
 import DoneIcon from './icons/done.svg'
 import orderDetailStyles from "./OrderDetails.module.css"
 import { useSelector } from "react-redux"
+import {IOrderStore} from '../../types/orderTypes'
 function OrderDetails() {
-    const orderID = useSelector((store) => store.order.orderID);
+    const orderID = useSelector((store:IOrderStore) => store.order.orderID);
     return (
         <div className={orderDetailStyles.order_details}>
             <div className={orderDetailStyles.order_details_header}>

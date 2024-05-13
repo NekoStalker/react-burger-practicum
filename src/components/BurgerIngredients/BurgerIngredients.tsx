@@ -1,21 +1,22 @@
-import React from 'react'
-import BurgerIngredientsGroup from '../BurgerIngredientsGroup/BurgerIngredientsGroup'
-import burgerIngredientsStyles from './BurgerIngredients.module.css'
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
+import React, {useState, useRef, RefObject } from 'react'
+import BurgerIngredientsGroup from '../BurgerIngredientsGroup/BurgerIngredientsGroup';
+import burgerIngredientsStyles from './BurgerIngredients.module.css';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux'
-import IngredientDetails from '../IngredientDetails/IngredientDetails'
-import {closeModalIngredient} from '../../services/currentIngredient/currentIngredientSlice'
-import Modal from '../Modal/Modal'
-function BurgerIngredients () {
-  const ingredients = useSelector((store) => store.ingredients.allIngredients)
-  const [current, setCurrent] = React.useState('bun');
-  const bunRef = React.useRef(null);
-  const sauceRef = React.useRef(null);
-  const mainRef = React.useRef(null);
-  const containerRef = React.useRef(null);
-  const dispatch = useDispatch();
-  const openModal = useSelector((store) => store.currentIngredient.openModal)
+import { useSelector, useDispatch } from 'react-redux';
+import IngredientDetails from '../IngredientDetails/IngredientDetails';
+import {closeModalIngredient} from '../../services/currentIngredient/currentIngredientSlice';
+import Modal from '../Modal/Modal';
+import {IIngredientsStore} from '../../types/ingredientTypes';
+type IGroupIngredientName = "bun" | "sauce" | "main";
+const BurgerIngredients = () => {
+  const ingredients = useSelector((store:IIngredientsStore) => store.ingredients.allIngredients)
+  const [current, setCurrent] = useState<IGroupIngredientName>('bun');
+  const bunRef = useRef<HTMLInputElement>(null);
+  const sauceRef = useRef<HTMLInputElement>(null);
+  const mainRef = useRef<HTMLInputElement>(null);
+  const containerRef = useRef<HTMLInputElement>(null);
+
 
   const handleScroll = () => {
 
@@ -37,13 +38,13 @@ function BurgerIngredients () {
     }
 	}
   
-  const scrollToRef = (ref) => {
+  const scrollToRef = (ref: RefObject <HTMLInputElement>) => {
     if (ref && ref.current) {
       ref.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
-  const handleTabClick = (value) => {
+  const handleTabClick = (value: IGroupIngredientName) => {
     setCurrent(value);
     switch (value) {
       case 'bun':

@@ -4,13 +4,15 @@ import IngredientComposition from "../IngredientComposition/IngredientCompositio
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { setCurrentIngredient } from "../../services/currentIngredient/currentIngredientSlice";
-import { Puff } from 'react-loader-spinner'
+import { Puff } from 'react-loader-spinner';
+import {IIngredientsStore, ICurrentIngredientStore} from '../../types/ingredientTypes';
+
 function IngredientDetails() {
     const dispatch = useDispatch();
     const { ingredientId } = useParams(); 
-    const ingredient = useSelector((store) => store.currentIngredient);
-    const ingredients = useSelector((store) => store.ingredients.allIngredients);
-    const isLoading = useSelector((store) => store.ingredients.isLoading);
+    const ingredient = useSelector((store:ICurrentIngredientStore) => store.currentIngredient);
+    const ingredients = useSelector((store:IIngredientsStore) => store.ingredients.allIngredients);
+    const isLoading = useSelector((store:IIngredientsStore) => store.ingredients.isLoading);
     useEffect(() => {
         if (ingredientId) {
             const currIngredient = ingredients.find((ingredient) => ingredient._id === ingredientId)

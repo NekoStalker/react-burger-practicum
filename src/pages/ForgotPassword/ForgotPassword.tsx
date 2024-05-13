@@ -4,9 +4,12 @@ import { EmailInput,Button} from '@ya.praktikum/react-developer-burger-ui-compon
 import {forgotPasswordUser} from '../../services/user/userRequests'
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+import { TDispatch } from '../../types/storeType';
+import { IUserStore } from '../../types/userTypes';
 import AppHeader from '../../components/AppHeader/AppHeader';
+type TOnChange = (e:React.ChangeEvent<HTMLInputElement>)=>void;
 function ForgotPasswordPage() {
-  const dispatch = useDispatch();
+  const dispatch:TDispatch = useDispatch();
   const [form, setValue] = useState({ email: '', password: '',code: '' });
   const navigate = useNavigate(); 
   const loginNav = () =>{
@@ -15,14 +18,14 @@ function ForgotPasswordPage() {
   const resetPassNav = () =>{
     navigate('/reset-password');
   }
-  const {isLoading,error} = useSelector((store)=> ({
+  const {isLoading,error} = useSelector((store:IUserStore)=> ({
     isLoading: store.user.isLoading,
     error: store.user.error,
   }),shallowEqual);
-  const handleSubmit =  async (e) => {
+  const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); 
-    await dispatch(forgotPasswordUser(form))
-      .then(res => {
+     // @ts-ignore
+    await dispatch(forgotPasswordUser(form)).then(res => {
         if (!res.error) {
           resetPassNav(); 
         } else {
@@ -30,7 +33,7 @@ function ForgotPasswordPage() {
         }
       });
   };
-  const onChange = e => {
+  const onChange:TOnChange  = (e) => {
       setValue({...form,[e.target.name]: e.target.value})
   };
   return (

@@ -9,37 +9,42 @@ import {getOrderModal} from '../../services/order/orderRequests'
 import {resetConstructor} from '../../services/burgerConstructor/burgerConstructorSlice'
 import { Puff } from 'react-loader-spinner'
 import { useNavigate,useLocation } from 'react-router-dom';
-
+import {IStore, TDispatch} from '../../types/storeType';
+interface OrderResponse {
+  payload: { number: number; };
+  
+}
 function BurgerConstructorPrice() {
-    const dispatch = useDispatch();
-    const isLoggedIn  = useSelector(state => state.user.isLoggedIn);
+    const dispatch:TDispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    const {ingredients,selectedBun, price,openModal,isLoading,error, orderId} = useSelector((store)=> ({
+    const {ingredients,selectedBun, price,isLoading,isLoggedIn} = useSelector((store:IStore)=> ({
       ingredients: store.burgerConstructor.internalIngredients,
       selectedBun:  store.burgerConstructor.selectedBun,
       price: store.burgerConstructor.price,
       openModal: store.order.openModal,
       isLoading: store.order.isLoading,
-      error: store.order.error,
-      orderId: store.order.orderID
+      isLoggedIn: store.user.isLoggedIn
     }),shallowEqual);
 
     
-  const handleOpenModal = async (e) => {
-    if (!isLoggedIn) {
-      navigate('/login');
-      return;
-    }
-
-    await dispatch(getOrderModal([selectedBun, ...ingredients])).then((res) => {
-      e.preventDefault(); 
-      console.log(res);
-      dispatch(resetConstructor()); 
-      navigate(`/order/${res.payload.number}`, { state: { background: location } });
-      
-      })
+    const handleOpenModal = () => {
+      if (!isLoggedIn) {
+        navigate('/login');
+      } else {
+        processOrder();
+      }
     };
+    
+    const processOrder = async () => {
+        // @ts-ignore
+        const res: OrderResponse = await dispatch(getOrderModal([selectedBun, ...ingredients]));
+        console.log(res);
+        dispatch(resetConstructor({})); 
+        navigate(`/order/${res.payload.number}`, { state: { background: location } });
+     
+    };
+    
 
     
     return (
@@ -52,7 +57,7 @@ function BurgerConstructorPrice() {
             ariaLabel="puff-loading"
             wrapperClass={burgerConstructorPriceStyle.loader}
         />}
-        <p className="text text_type_digits-medium  mt-1 mb-1">{price} <CurrencyIcon className="pl-1" /></p>
+        <p className="text text_type_digits-medium  mt-1 mb-1">{price} <div className="pl-1"><CurrencyIcon type="primary" /> </div></p>
         <Button htmlType="button" type="primary" disabled={selectedBun.name === BUN_NOT_SELECTED} size="medium" onClick={handleOpenModal} >
             Оформить заказ
         </Button>

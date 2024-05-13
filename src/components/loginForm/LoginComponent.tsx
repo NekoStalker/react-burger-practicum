@@ -1,10 +1,14 @@
-import React, { useCallback, useState } from 'react';
-import { EmailInput,Button,PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components'
-import styles from './login.module.css'
+import React, {FC, useCallback, useState } from 'react';
+import { EmailInput,Button,PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components';
+import styles from './login.module.css';
+interface LoginState {
+  email: string;
+  password: string;
+}
 function LoginComponent() {
-    const [form, setValue] = useState({ email: '', password: '' });
+    const [form, setValue] = useState<LoginState>({ email: '', password: '' });
     
-    const onChange = e => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement> ) => {
         setValue({...form,[e.target.name]: e.target.value})
     };
     return (    

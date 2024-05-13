@@ -1,0 +1,12 @@
+import {IAllIngredientsState,ICurrentIngredientState} from "./ingredientTypes";
+import {IOrderState} from "./orderTypes";
+import {IUserState} from "./userTypes";
+import {IBurgerConstructorState} from "./burgerConstructorTypes";
+export interface IStore {
+    order: IOrderState;
+    user: IUserState;
+    burgerConstructor: IBurgerConstructorState;
+    ingredients: IAllIngredientsState;
+    currentIngredient: ICurrentIngredientState;
+}
+export type TDispatch = (action: any) => any;

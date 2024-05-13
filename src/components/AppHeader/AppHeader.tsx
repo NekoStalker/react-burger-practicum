@@ -1,9 +1,9 @@
-import React from 'react'
-import { Logo,BurgerIcon,ProfileIcon,ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import React, { FC } from 'react';
+import { Logo,BurgerIcon,ProfileIcon,ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useNavigate } from 'react-router-dom';
-import appHeaderStyles from './AppHeader.module.css'
+import appHeaderStyles from './AppHeader.module.css';
 import { NavLink } from 'react-router-dom';
-function AppHeader (){  
+const AppHeader = () =>{  
     return (
       <header className={appHeaderStyles.header}>
         <nav className={appHeaderStyles.menu}>
@@ -41,7 +41,6 @@ function AppHeader (){
           </NavLink>
         </div>
       </header>
-      
     )
 }
 export default AppHeader;

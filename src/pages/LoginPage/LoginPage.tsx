@@ -2,15 +2,16 @@ import React,{useState} from 'react';
 import loginStyles from './LoginPage.module.css';
 import { EmailInput,Button,PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate } from 'react-router-dom';
-
+import { TDispatch } from '../../types/storeType';
+import { IUserStore } from '../../types/userTypes';
 import {loginUser} from '../../services/user/userRequests'
-import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import AppHeader from '../../components/AppHeader/AppHeader';
 function LoginPage() {
   const [form, setValue] = useState({ email: '', password: '' });
   const navigate = useNavigate();  
-  const dispatch = useDispatch();
-  const {isLoading,error} = useSelector((store)=> ({
+  const dispatch:TDispatch = useDispatch();
+  const {isLoading,error} = useSelector((store: IUserStore)=> ({
     isLoading: store.user.isLoading,
     error: store.user.error,
   }),shallowEqual);
@@ -23,13 +24,13 @@ function LoginPage() {
   const maindNav = () =>{
     navigate('/');
   }
-  const onChange = e => {
+  const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
       setValue({...form,[e.target.name]: e.target.value})
   };
-  const handleSubmit =  async (e) => {
-    e.preventDefault(); 
-    await dispatch(loginUser(form))
-      .then(res => {
+  const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+     // @ts-ignore 
+    await dispatch(loginUser(form)).then(res => {
         if (!res.error) {
           maindNav(); 
         } else {
