@@ -8,7 +8,7 @@ import { TDispatch } from '../../types/storeType';
 import { IUserStore } from '../../types/userTypes';
 import AppHeader from '../../components/AppHeader/AppHeader';
 type TOnChange = (e:React.ChangeEvent<HTMLInputElement>)=>void;
-function ForgotPasswordPage() {
+const ForgotPasswordPage = () => {
   const dispatch:TDispatch = useDispatch();
   const [form, setValue] = useState({ email: '', password: '',code: '' });
   const navigate = useNavigate(); 

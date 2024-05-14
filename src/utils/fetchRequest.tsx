@@ -1,12 +1,23 @@
-import {userToken} from '../services/api'
-export const checkResponse = (res) => {
+import {userToken} from '../services/api';
+interface RequestOptions {
+  method?: string;
+  headers: Record<string, string>;
+  body?: BodyInit | null;
+}
+
+interface RefreshData {
+  success: boolean;
+  refreshToken: string;
+  accessToken: string;
+}
+export const checkResponse = (res:any) => {
     if (res.ok) {
         return res.json()
     }
     console.log(res);
     return Promise.reject(`Ошибка ${res.status}`);
 }
-export const request = async (url, options) => {
+export const request = async (url:string, options:RequestOptions) => {
     const res = await fetch(url, options);
     return checkResponse(res);
 }
@@ -22,13 +33,13 @@ export const refreshToken = () => {
   }).then(checkResponse);
 };
 
-export const fetchWithRefresh = async (url, options) => {
+export const fetchWithRefresh = async (url: string, options:RequestOptions) => {
   try {
     const res = await request(url, options);
     console.log(res);
     return res;
   } catch (err) {
-    if (err.message === "jwt expired" || err.message === "jwt malformed") {
+    if (err instanceof Error && (err.message === "jwt expired" || err.message === "jwt malformed")) {
       const refreshData = await refreshToken();
       if (!refreshData.success) {
         return Promise.reject(refreshData);

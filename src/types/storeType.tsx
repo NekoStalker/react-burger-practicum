@@ -9,4 +9,10 @@ export interface IStore {
     ingredients: IAllIngredientsState;
     currentIngredient: ICurrentIngredientState;
 }
-export type TDispatch = (action: any) => any;
+export type TDispatch = (action: any) => Promise<any> | any;
+
+export interface ApiError {
+    statusCode: number;
+    message: string;
+    details?: string;
+  }

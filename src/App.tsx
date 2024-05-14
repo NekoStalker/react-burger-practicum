@@ -6,18 +6,19 @@ import Modal from './components/Modal/Modal';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { closeModalIngredient } from '../src/services/currentIngredient/currentIngredientSlice';
-import { getAllIngredients } from '../src/services/ingredients/ingredientsRequests';
-import {resetConstructor} from '../src/services/burgerConstructor/burgerConstructorSlice'
-import {closeModalOrder} from '../src/services/order/orderSlice'
-import {getUser} from '../src/services/user/userRequests'
+import { closeModalIngredient } from './services/currentIngredient/currentIngredientSlice';
+import { getAllIngredients } from './services/ingredients/ingredientsRequests';
+import {resetConstructor} from './services/burgerConstructor/burgerConstructorSlice'
+import {closeModalOrder} from './services/order/orderSlice'
+import {getUser} from './services/user/userRequests'
 import ProtectedRouteElement from './components/ProtectedRouteElement';
 import ProtectedRoutePassword from './components/ProtectedRoutePassword';
+import { TDispatch } from './types/storeType';
 function App() {
-  const dispatch = useDispatch();
+  const dispatch: TDispatch = useDispatch() as TDispatch;
   useEffect(() => {
     dispatch(getAllIngredients());
-    dispatch(resetConstructor());
+    dispatch(resetConstructor({}));
     if(localStorage.getItem("refreshToken")){
       dispatch(getUser());
     }
@@ -33,17 +34,17 @@ function App() {
 function AppContent() {
   const location = useLocation();
   const background = location.state && location.state.background;
-  const dispatch = useDispatch(); 
+  const dispatch: TDispatch = useDispatch() as TDispatch;
   const navigate = useNavigate();
   const handleCloseModalIngredient = () => {
-    dispatch(closeModalIngredient());
+    dispatch(closeModalIngredient({}));
     navigate(-1);
   }
   const handleCloseModalOrder = () => {
     navigate(-1);
     dispatch(getAllIngredients());
-    dispatch(resetConstructor());
-    dispatch(closeModalOrder());
+    dispatch(resetConstructor({}));
+    dispatch(closeModalOrder({}));
   }
   return (
     <>
@@ -79,7 +80,7 @@ function AppContent() {
           <Route path="/ingredients/:ingredientId" element={<Modal title="Детали ингредиента" onClose={handleCloseModalIngredient}>
                                                                 <IngredientDetails />
                                                             </Modal>} />
-           <Route path="/order/:orderId" element={<Modal onClose={handleCloseModalOrder}>
+           <Route path="/order/:orderId" element={<Modal title='' onClose={handleCloseModalOrder}>
                                                     <OrderDetails />
                                                   </Modal>
             }

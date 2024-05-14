@@ -7,7 +7,7 @@ import { IUserStore } from '../../types/userTypes';
 import {loginUser} from '../../services/user/userRequests'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import AppHeader from '../../components/AppHeader/AppHeader';
-function LoginPage() {
+const LoginPage = () => {
   const [form, setValue] = useState({ email: '', password: '' });
   const navigate = useNavigate();  
   const dispatch:TDispatch = useDispatch();

@@ -3,19 +3,24 @@ import profileStyles from './ProfilePage.module.css';
 import { EmailInput,Button,PasswordInput, Input} from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate, NavLink } from 'react-router-dom';
 import { Puff } from 'react-loader-spinner';
+import { IUserStore } from '../../types/userTypes';
+import { TDispatch, ApiError} from '../../types/storeType';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {patchUser, logoutUser} from '../../services/user/userRequests'
 import AppHeader from '../../components/AppHeader/AppHeader';
-function ProfilePagePage() {
+const  ProfilePagePage = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const userData = useSelector(state => state.user.userInfo);
-  const [form, setForm] = useState({ email: '', password: '',login: '' });
-  const {isLoading,error} = useSelector((store)=> ({
+  const dispatch = useDispatch() as TDispatch;
+
+  const {isLoading,error,userData} = useSelector((store:IUserStore)=> ({
     isLoading: store.user.isLoading,
     error: store.user.error,
+    userData: store.user.userInfo
   }),shallowEqual);  
-  const onChange = e => {
+
+  const [form, setForm] = useState({ email: '', password: '',login: '' });
+
+  const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
       setForm({...form,[e.target.name]: e.target.value})
   };
   useEffect(() => {
@@ -27,7 +32,7 @@ function ProfilePagePage() {
       });
     }
   }, [userData]);
-  const handleLogout = (e) => {
+  const handleLogout = (e: React.MouseEvent<HTMLElement>) => {
     e.preventDefault();
     dispatch(logoutUser())
       .then(() => {
@@ -35,10 +40,11 @@ function ProfilePagePage() {
           navigate('/login'); 
         }, 1000); 
       })
-      .catch((error) => {
+      .catch((error: ApiError) => {
         console.error("Error during logout:", error); // Handle errors during logout
       });
   };
+  
   
   const hasFormChanged = () => {
     return (
@@ -54,9 +60,10 @@ function ProfilePagePage() {
       login: userData?.name || '',
     });
   };
-  const handleSubmit =  async (e) => {
+  const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); 
-    dispatch(patchUser(form));
+    // @ts-ignore
+    dispatch(patchUser(form) );
   };
   return (
     <>
@@ -104,14 +111,12 @@ function ProfilePagePage() {
               value={form.login}
               name={'login'}
               placeholder="Имя"
-              icon="EditIcon"
-            />
+              icon="EditIcon" onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}            />
             <EmailInput
               onChange={onChange}
               value={form.email}
               name={'email'}
               placeholder="Логин"
-              icon="EditIcon"
              />
             <PasswordInput
               onChange={onChange}
