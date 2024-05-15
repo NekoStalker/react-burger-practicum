@@ -1,22 +1,23 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import App from './components/App/App'
+import App from './App'
 import {Provider} from 'react-redux'
 import { configureStore } from '@reduxjs/toolkit'
-import ingredientsReducer from './services/ingredients/ingredientsSlice'
-import burgerConstructorReducer from './services/burgerConstructor/burgerConstructorSlice'
+import ingredientsSlice from './services/ingredients/ingredientsSlice'
+import burgerConstructorSlice from './services/burgerConstructor/burgerConstructorSlice'
+import userSlice from'./services/user/userSlice'
 import currentIngredientSlice from './services/currentIngredient/currentIngredientSlice'
 import orderSlice from './services/order/orderSlice';
 import reportWebVitals from './reportWebVitals';
-//import { rootReducer } from './services/reducers';
 
 const store = configureStore({
   reducer: {
-    ingredients: ingredientsReducer,
-    burgerConstructor: burgerConstructorReducer,
+    ingredients: ingredientsSlice,
+    burgerConstructor: burgerConstructorSlice,
     currentIngredient: currentIngredientSlice,
     order: orderSlice,
+    user: userSlice,
   }, 
 });
 const root = ReactDOM.createRoot(document.getElementById('root'));

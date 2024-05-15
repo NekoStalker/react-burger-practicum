@@ -1,6 +1,6 @@
 import {createAsyncThunk} from '@reduxjs/toolkit'
 import {BASE_URL} from '../api';
-import {request} from '../../utils/fetchRequest'
+import {request,fetchWithRefresh} from '../../utils/fetchRequest'
 export const apiOrdersAdd = `${BASE_URL}/orders`;
 export const getOrderModal = createAsyncThunk(
     'order/getOrderModal',
@@ -8,7 +8,7 @@ export const getOrderModal = createAsyncThunk(
             const reqBody =  {
                 "ingredients": Array.from(ingredients).map(element => element._id).filter(id => id),
             }
-            const respose = await request(apiOrdersAdd, {
+            const respose = await fetchWithRefresh(apiOrdersAdd, {
                 method: 'POST',
                 headers:  {
                     'Content-Type': 'application/json',

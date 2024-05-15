@@ -1,0 +1,11 @@
+main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 10vh;
+  }
+  .ingredient_container {
+    width: 640px;
+    height: 575px;
+  }
