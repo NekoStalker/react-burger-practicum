@@ -51,10 +51,10 @@ const  BurgerConstructorIngredients:FC = () => {
         <div className={burgerConstructorIngredientsStyles.hide_img}>
             <ConstructorElement
               text="Выберете ингредиенты бургера"
-              extraClass="mr-2"
               thumbnail=""
               price={0}
               isLocked={true}
+              extraClass={`mr-2 ${burgerConstructorIngredientsStyles.constructor_element}` }
           />
         </div>)
 

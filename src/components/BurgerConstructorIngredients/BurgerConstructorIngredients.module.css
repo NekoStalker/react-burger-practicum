@@ -17,6 +17,10 @@
     list-style: none;
     margin: 0;
 }
+.constructor_element span:nth-child(3) {
+    visibility: hidden;
+}
+
 .internal_item {
     display: flex;
     flex-direction: row;
