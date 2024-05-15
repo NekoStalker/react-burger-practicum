@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, FC } from "react";
 import ingredientStyle from "./IngredientPage.module.css"
 import AppHeader from "../../components/AppHeader/AppHeader";
 import IngredientDetails from "../../components/IngredientDetails/IngredientDetails";
@@ -9,9 +9,9 @@ import { IIngredientsStore } from '../../types/ingredientTypes';
 import {setCurrentIngredient} from '../../services/currentIngredient/currentIngredientSlice'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import { Outlet,useParams } from 'react-router-dom';
-const IngredientPage =  () => {
+const IngredientPage:FC =  () => {
     const params = useParams();
-    const dispatch:TDispatch = useDispatch();
+    const dispatch = useDispatch() as TDispatch;
     const { isLoading, error } = useSelector((store:IIngredientsStore) => ({
         isLoading: store.ingredients.isLoading,
         error: store.ingredients.error,

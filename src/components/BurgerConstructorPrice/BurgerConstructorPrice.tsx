@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {FC} from 'react'
 import burgerConstructorPriceStyle from './BurgerConstructorPrice.module.css'
 import Modal from '../Modal/Modal'
 import OrderDetails from '../OrderDetails/OrderDetails'
@@ -14,8 +14,8 @@ interface OrderResponse {
   payload: { number: number; };
   
 }
-function BurgerConstructorPrice() {
-    const dispatch:TDispatch = useDispatch();
+const BurgerConstructorPrice:FC = () => {
+    const dispatch = useDispatch() as TDispatch;
     const navigate = useNavigate();
     const location = useLocation();
     const {ingredients,selectedBun, price,isLoading,isLoggedIn} = useSelector((store:IStore)=> ({
@@ -28,7 +28,7 @@ function BurgerConstructorPrice() {
     }),shallowEqual);
 
     
-    const handleOpenModal = () => {
+    const handleOpenModal = ():void => {
       if (!isLoggedIn) {
         navigate('/login');
       } else {
@@ -57,7 +57,7 @@ function BurgerConstructorPrice() {
             ariaLabel="puff-loading"
             wrapperClass={burgerConstructorPriceStyle.loader}
         />}
-        <p className="text text_type_digits-medium  mt-1 mb-1">{price} <div className="pl-1"><CurrencyIcon type="primary" /> </div></p>
+        <p className="text text_type_digits-medium  mt-1 mb-1">{price} <span className="pl-1"><CurrencyIcon type="primary" /> </span></p>
         <Button htmlType="button" type="primary" disabled={selectedBun.name === BUN_NOT_SELECTED} size="medium" onClick={handleOpenModal} >
             Оформить заказ
         </Button>

@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, FC} from 'react';
 import passwordStyles from './ForgotPassword.module.css';
 import { EmailInput,Button} from '@ya.praktikum/react-developer-burger-ui-components'
 import {forgotPasswordUser} from '../../services/user/userRequests'
@@ -8,21 +8,21 @@ import { TDispatch } from '../../types/storeType';
 import { IUserStore } from '../../types/userTypes';
 import AppHeader from '../../components/AppHeader/AppHeader';
 type TOnChange = (e:React.ChangeEvent<HTMLInputElement>)=>void;
-const ForgotPasswordPage = () => {
-  const dispatch:TDispatch = useDispatch();
+const ForgotPasswordPage:FC = () => {
+  const dispatch = useDispatch() as TDispatch;
   const [form, setValue] = useState({ email: '', password: '',code: '' });
   const navigate = useNavigate(); 
-  const loginNav = () =>{
+  const loginNav = ():void =>{
     navigate('/login');
   }
-  const resetPassNav = () =>{
+  const resetPassNav = ():void =>{
     navigate('/reset-password');
   }
   const {isLoading,error} = useSelector((store:IUserStore)=> ({
     isLoading: store.user.isLoading,
     error: store.user.error,
   }),shallowEqual);
-  const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>):Promise<any> => {
     e.preventDefault(); 
      // @ts-ignore
     await dispatch(forgotPasswordUser(form)).then(res => {
@@ -33,7 +33,7 @@ const ForgotPasswordPage = () => {
         }
       });
   };
-  const onChange:TOnChange  = (e) => {
+  const onChange:TOnChange  = (e):void => {
       setValue({...form,[e.target.name]: e.target.value})
   };
   return (

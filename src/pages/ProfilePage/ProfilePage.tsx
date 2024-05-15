@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState,useEffect, FC} from 'react';
 import profileStyles from './ProfilePage.module.css';
 import { EmailInput,Button,PasswordInput, Input} from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate, NavLink } from 'react-router-dom';
@@ -8,7 +8,7 @@ import { TDispatch, ApiError} from '../../types/storeType';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {patchUser, logoutUser} from '../../services/user/userRequests'
 import AppHeader from '../../components/AppHeader/AppHeader';
-const  ProfilePagePage = () => {
+const  ProfilePagePage:FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch() as TDispatch;
 
@@ -20,7 +20,7 @@ const  ProfilePagePage = () => {
 
   const [form, setForm] = useState({ email: '', password: '',login: '' });
 
-  const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e:React.ChangeEvent<HTMLInputElement>):void => {
       setForm({...form,[e.target.name]: e.target.value})
   };
   useEffect(() => {
@@ -32,7 +32,7 @@ const  ProfilePagePage = () => {
       });
     }
   }, [userData]);
-  const handleLogout = (e: React.MouseEvent<HTMLElement>) => {
+  const handleLogout = (e: React.MouseEvent<HTMLElement>):void => {
     e.preventDefault();
     dispatch(logoutUser())
       .then(() => {
@@ -46,21 +46,21 @@ const  ProfilePagePage = () => {
   };
   
   
-  const hasFormChanged = () => {
+  const hasFormChanged = ():boolean => {
     return (
       form.email !== (userData?.email || '') ||
       form.password !== '' || 
       form.login !== (userData?.name || '')
     );
   };
-  const resetForm = () => {
+  const resetForm = ():void => {
     setForm({
       email: userData?.email || '',
       password: '',
       login: userData?.name || '',
     });
   };
-  const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>):Promise<any> => {
     e.preventDefault(); 
     // @ts-ignore
     dispatch(patchUser(form) );

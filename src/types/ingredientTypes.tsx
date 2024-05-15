@@ -11,7 +11,7 @@ export interface IIngredientState {
     image_mobile: string;
     image_large: string;
     __v?: number;
-  }
+}
 export interface ICurrentIngredientState extends IIngredientState {
   openModal: boolean;
 }

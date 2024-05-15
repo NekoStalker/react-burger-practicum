@@ -5,10 +5,10 @@ interface LoginState {
   email: string;
   password: string;
 }
-function LoginComponent() {
+const LoginComponent: FC =  () => {
     const [form, setValue] = useState<LoginState>({ email: '', password: '' });
     
-    const onChange = (e: React.ChangeEvent<HTMLInputElement> ) => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement> ):void => {
         setValue({...form,[e.target.name]: e.target.value})
     };
     return (    

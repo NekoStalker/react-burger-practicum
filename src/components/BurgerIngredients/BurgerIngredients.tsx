@@ -1,4 +1,4 @@
-import React, {useState, useRef, RefObject } from 'react'
+import React, {useState, useRef, RefObject,FC } from 'react'
 import BurgerIngredientsGroup from '../BurgerIngredientsGroup/BurgerIngredientsGroup';
 import burgerIngredientsStyles from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -9,7 +9,7 @@ import {closeModalIngredient} from '../../services/currentIngredient/currentIngr
 import Modal from '../Modal/Modal';
 import {IIngredientsStore} from '../../types/ingredientTypes';
 type IGroupIngredientName = "bun" | "sauce" | "main";
-const BurgerIngredients = () => {
+const BurgerIngredients:FC = () => {
   const ingredients = useSelector((store:IIngredientsStore) => store.ingredients.allIngredients)
   const [current, setCurrent] = useState<IGroupIngredientName>('bun');
   const bunRef = useRef<HTMLInputElement>(null);

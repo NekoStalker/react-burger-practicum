@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{FC} from 'react'
 import mainPageStyle from './MainPage.module.css'
 import AppHeader from '../../components/AppHeader/AppHeader';
 import BurgerConstructor from '../../components/BurgerConstructor/BurgerConstructor';
@@ -7,10 +7,9 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import { Puff } from 'react-loader-spinner'
-
-const MainPage = () => {
-
-  const {isLoading,error} = useSelector((store) => ({
+import { IIngredientsStore } from '../../types/ingredientTypes';
+const MainPage:FC = () => {
+  const {isLoading,error} = useSelector((store:IIngredientsStore) => ({
     isLoading: store.ingredients.isLoading,
     error: store.ingredients.error,
   }),shallowEqual);

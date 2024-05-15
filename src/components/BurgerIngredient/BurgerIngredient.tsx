@@ -1,17 +1,17 @@
-import React, {FC} from 'react'
-import burgeringredientStyles from './BurgerIngredient.module.css'
-import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
-import { useDispatch } from 'react-redux'
-import {openModalIngredient} from '../../services/currentIngredient/currentIngredientSlice'
+import React, {FC} from 'react';
+import burgeringredientStyles from './BurgerIngredient.module.css';
+import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useDispatch } from 'react-redux';
+import {openModalIngredient} from '../../services/currentIngredient/currentIngredientSlice';
 import {useDrag} from 'react-dnd';
-import {IIngredientState} from '../../types/ingredientTypes'
-
+import {IIngredientState} from '../../types/ingredientTypes';
+import {TDispatch} from '../../types/storeType';
 interface BurgerIngredientProps {
   ingredient: IIngredientState;
 }
 const BurgerIngredient: FC<BurgerIngredientProps> =({ingredient}) => {
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch() as TDispatch;
     const [{isDragged}, drag] =  useDrag(() => ({
       type: 'ingredient',
       item: ingredient,

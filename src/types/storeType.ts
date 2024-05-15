@@ -16,3 +16,10 @@ export interface ApiError {
     message: string;
     details?: string;
   }
+  export interface IProtectedRouteElement {
+    element: React.ReactNode;
+  }
+export interface IProtectedUserRouteElement extends IProtectedRouteElement{  
+  forGuest: boolean;
+  path: string;
+}

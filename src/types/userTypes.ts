@@ -8,13 +8,14 @@ export interface IResponse {
 }
 
 export interface IUserState {
-    userInfo: UserInfo;
+    userInfo: UserInfo | null; 
     isLoggedIn: boolean;
     isLoading: boolean;
     response: IResponse;
     error: string | null;
     emailSubmitted: boolean;
-}
+  }
+  
 export interface IUserStore {
     user: IUserState;
 }

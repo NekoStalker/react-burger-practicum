@@ -4,7 +4,7 @@ import BurgerConstructorIngredients from '../BurgerConstructorIngredients/Burger
 
 import BurgerConstructorPrice from '../BurgerConstructorPrice/BurgerConstructorPrice';
 
-const BurgerConstructor = () => {
+const BurgerConstructor:FC = () => {
     return (
       <section className={`${burgerConstructorStyles.burger_constructor_container}`}>
           <BurgerConstructorIngredients />

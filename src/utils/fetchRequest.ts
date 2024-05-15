@@ -10,7 +10,13 @@ interface RefreshData {
   refreshToken: string;
   accessToken: string;
 }
-export const checkResponse = (res:any) => {
+
+interface FetchResponse {
+  ok: boolean;
+  json: () => Promise<any>;
+  status: number;
+}
+export const checkResponse = (res:FetchResponse): Promise<any> => {
     if (res.ok) {
         return res.json()
     }
@@ -21,7 +27,7 @@ export const request = async (url:string, options:RequestOptions) => {
     const res = await fetch(url, options);
     return checkResponse(res);
 }
-export const refreshToken = () => {
+export const refreshToken = (): Promise<any> =>  {
   return fetch(`${userToken}`, {
     method: "POST",
     headers: {
@@ -40,7 +46,7 @@ export const fetchWithRefresh = async (url: string, options:RequestOptions) => {
     return res;
   } catch (err) {
     if (err instanceof Error && (err.message === "jwt expired" || err.message === "jwt malformed")) {
-      const refreshData = await refreshToken();
+      const refreshData:RefreshData = await refreshToken();
       if (!refreshData.success) {
         return Promise.reject(refreshData);
       }

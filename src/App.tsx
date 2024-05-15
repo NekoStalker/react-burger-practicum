@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, {FC ,useEffect } from 'react';
 import { MainPage, LoginPage, NotFound404, RegisterPage, RestorePasswordPage, ForgotPasswordPage, ProfilePagePage, IngredientPage } from './pages';
 import IngredientDetails from './components/IngredientDetails/IngredientDetails';
 import OrderDetails from './components/OrderDetails/OrderDetails';
@@ -31,7 +31,7 @@ function App() {
   );
 }
 
-function AppContent() {
+const AppContent:FC = () => {
   const location = useLocation();
   const background = location.state && location.state.background;
   const dispatch: TDispatch = useDispatch() as TDispatch;
@@ -40,7 +40,7 @@ function AppContent() {
     dispatch(closeModalIngredient({}));
     navigate(-1);
   }
-  const handleCloseModalOrder = () => {
+  const handleCloseModalOrder = ():void => {
     navigate(-1);
     dispatch(getAllIngredients());
     dispatch(resetConstructor({}));

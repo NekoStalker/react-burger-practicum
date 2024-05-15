@@ -1,28 +1,30 @@
-import React,{useState} from 'react';
+import React,{FC,useState} from 'react';
 import registerStyles from './RegisterPage.module.css';
 import { EmailInput,PasswordInput,Button,Input} from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux'
-import {registerUser} from '../../services/user/userRequests'
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import {registerUser} from '../../services/user/userRequests';
+import { IUserStore } from '../../types/userTypes';
+import { TDispatch, ApiError} from '../../types/storeType';
 import AppHeader from '../../components/AppHeader/AppHeader';
-function RegisterPage() {
+const RegisterPage:FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const {isLoading,error} = useSelector((store)=> ({
+  const dispatch = useDispatch() as TDispatch;
+  const {isLoading,error} = useSelector((store:IUserStore)=> ({
     isLoading: store.user.isLoading,
     error: store.user.error,
   }),shallowEqual);
   const [form, setValue] = useState({ email: '', password: '',login: ''});
-  const loginNav = () =>{
+  const loginNav = ():void =>{
     navigate('/login');
   } 
-  const onChange = e => {
+  const onChange = (e:React.ChangeEvent<HTMLInputElement>):void => {
       setValue({...form,[e.target.name]: e.target.value})
   };
-  const handleSubmit =  async (e) => {
-    e.preventDefault(); 
-    await dispatch(registerUser(form))
-      .then(res => {
+  const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>):Promise<any> => {
+    e.preventDefault();
+    // @ts-ignore 
+    await dispatch(registerUser(form)).then(res => {
         if (!res.error) {
           loginNav(); 
         } else {
@@ -42,8 +44,7 @@ function RegisterPage() {
               onChange={onChange}
               value={form.login}
               name={'login'}
-              placeholder="Имя"
-              
+              placeholder="Имя" onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}              
             />
             <EmailInput
               onChange={onChange}

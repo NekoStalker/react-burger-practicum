@@ -1,4 +1,4 @@
-import React,{useEffect} from "react"
+import React,{useEffect, FC} from "react"
 import ingredientDetailsStyle from './IngredientDetails.module.css'
 import IngredientComposition from "../IngredientComposition/IngredientComposition"
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,9 +6,10 @@ import { useParams } from 'react-router-dom';
 import { setCurrentIngredient } from "../../services/currentIngredient/currentIngredientSlice";
 import { Puff } from 'react-loader-spinner';
 import {IIngredientsStore, ICurrentIngredientStore} from '../../types/ingredientTypes';
+import {TDispatch} from '../../types/storeType'
 
-function IngredientDetails() {
-    const dispatch = useDispatch();
+const IngredientDetails:FC = () => {
+    const dispatch = useDispatch() as TDispatch;
     const { ingredientId } = useParams(); 
     const ingredient = useSelector((store:ICurrentIngredientStore) => store.currentIngredient);
     const ingredients = useSelector((store:IIngredientsStore) => store.ingredients.allIngredients);

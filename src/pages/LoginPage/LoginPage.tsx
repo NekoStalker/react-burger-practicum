@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, FC} from 'react';
 import loginStyles from './LoginPage.module.css';
 import { EmailInput,Button,PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate } from 'react-router-dom';
@@ -7,24 +7,24 @@ import { IUserStore } from '../../types/userTypes';
 import {loginUser} from '../../services/user/userRequests'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import AppHeader from '../../components/AppHeader/AppHeader';
-const LoginPage = () => {
+const LoginPage:FC = () => {
   const [form, setValue] = useState({ email: '', password: '' });
   const navigate = useNavigate();  
-  const dispatch:TDispatch = useDispatch();
+  const dispatch = useDispatch() as TDispatch;
   const {isLoading,error} = useSelector((store: IUserStore)=> ({
     isLoading: store.user.isLoading,
     error: store.user.error,
   }),shallowEqual);
-  const registerNav = () =>{
+  const registerNav = ():void =>{
     navigate('/register');
   }
-  const forgotPasswordNav = () =>{
+  const forgotPasswordNav = ():void =>{
     navigate('/forgot-password');
   }
-  const maindNav = () =>{
+  const maindNav = ():void =>{
     navigate('/');
   }
-  const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e:React.ChangeEvent<HTMLInputElement>):void => {
       setValue({...form,[e.target.name]: e.target.value})
   };
   const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>) => {

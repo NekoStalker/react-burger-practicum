@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback,FC } from 'react'
 import { ConstructorElement,DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerConstructorIngredientsStyles from './BurgerConstructorIngredients.module.css'
 import BurgerConstructorItem from '../BurgerConstructorItem/BurgerConstructorItem'
@@ -8,8 +8,8 @@ import {addIngredientCount,removeIngredientCount} from '../../services/ingredien
 import {useDrop} from 'react-dnd';
 import { TDispatch } from '../../types/storeType';
 import {  IBurgerConstructorStore} from '../../types/burgerConstructorTypes';
-const  BurgerConstructorIngredients = () => {
-  const dispatch:TDispatch = useDispatch();
+const  BurgerConstructorIngredients:FC = () => {
+  const dispatch = useDispatch() as TDispatch;
   const [ , drop] = useDrop({
     accept: "ingredient",
     collect: monitor => ({
@@ -25,10 +25,10 @@ const  BurgerConstructorIngredients = () => {
     selectedBun: store.burgerConstructor.selectedBun,
     internalIngredients: store.burgerConstructor.internalIngredients,
   }),shallowEqual);
-  const moveItem = (dragUid:string, hoverUid:string) => {
+  const moveItem = (dragUid:string, hoverUid:string):void => {
     dispatch(changeIngredientsOrder({fromUid:dragUid, toUid:hoverUid}));
   };
-  const removeItem = (id:string,uid:string) =>{
+  const removeItem = (id:string,uid:string):void =>{
     dispatch(removeBurgerIngredient(uid)); 
     dispatch(removeIngredientCount(id));
   };
