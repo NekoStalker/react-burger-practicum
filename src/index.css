@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+* {
+  scrollbar-width: thin; /* "auto", "thin" или "none" */
+  scrollbar-color: #8585AD transparent; /* цвет ползунка и дорожки */
+}

@@ -1,0 +1,20 @@
+.ingredients_modal {
+    width: 20vw;
+    height: 60vh;
+    min-width: 600px; ;
+    min-height: 912px;
+    text-align: left;
+}
+ .ingredients_container {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 900px;
+    margin-top: 1em;
+    margin-bottom: 0;
+    margin-right: auto;
+    margin-left: auto;
+   
+} 
+.ingredients_tab {
+    display: flex;
+}

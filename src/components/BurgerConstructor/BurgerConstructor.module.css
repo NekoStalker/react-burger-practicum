@@ -1,0 +1,38 @@
+.burgerContainer {
+    width: 20vw;
+    height: 60vh;
+    min-width: 600px; ;
+    min-height: 912px;
+}
+.burger_ingredients {
+    margin-top: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 16px;
+}
+.burger_ingredients__internal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 16px;
+    max-height: 464px;
+    overflow-y: auto;
+    list-style: none;
+    margin: 0;
+}
+.internal_item {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.burger_price {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 40px;
+    justify-content: flex-end;
+}

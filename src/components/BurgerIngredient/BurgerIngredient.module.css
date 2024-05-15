@@ -1,0 +1,18 @@
+.card_item {
+    box-sizing: border-box;
+    max-width: 272px;
+    max-height: 208px;
+    color: white;
+    text-align: center;
+
+}
+.card_item__counter {
+    position: relative;
+    z-index: 2; 
+}
+.card_item__link {
+
+}
+.card_item__img {
+
+}

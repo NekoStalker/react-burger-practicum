@@ -1,0 +1,36 @@
+.header {
+    display: flex;
+    align-items: center;
+    background-color: #1C1C21;
+    padding: 0px 30px;
+
+}
+.menu {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+}
+.menu_item {
+    width: 180px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+.list_menu {
+    justify-content: space-between;
+    display: flex;
+    list-style: none;
+
+}
+
+.login{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.logo {
+    flex: 1;
+}
