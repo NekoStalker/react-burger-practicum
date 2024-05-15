@@ -1,27 +1,28 @@
-import React from 'react';
-import burgeringredientStyles from './BurgerIngredient.module.css';
-import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import Modal from '../Modal/Modal';
-import IngredientDetails from '../IngredientDetails/IngredientDetails';
-import PropTypes from 'prop-types';
-import {ingredientType} from '../../utils/types';
+import React from 'react'
+import burgeringredientStyles from './BurgerIngredient.module.css'
+import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components"
+import PropTypes from 'prop-types'
+import { useDispatch } from 'react-redux'
+import {ingredientType} from '../../utils/types'
+import {openModalIngredient} from '../../services/currentIngredient/currentIngredientSlice'
+import {useDrag} from 'react-dnd';
 function Burgeringredient({ingredient}) {
-    const [openModal, setOpenModal] = React.useState(false);
+
+    const dispatch = useDispatch();
+    const [{isDragged}, drag] =  useDrag(() => ({
+      type: 'ingredient',
+      item: ingredient,
+      collect: (monitor) => ({
+        isDragged: !!monitor.isDragging(),
+      }),
+    }));
     const handleOpenModal = () => {
-      setOpenModal(true);
+        dispatch(openModalIngredient(ingredient));
     }
-    const handleCloseModal = () => {
-      setOpenModal(false);
-    }
-    const modal = (
-      <Modal title="Детали ингредиента" onClose={handleCloseModal}>
-        <IngredientDetails ingredient={ingredient} />
-      </Modal>
-    );
+
     return ( 
-    <li>
-       {openModal && modal}
-        <div className={burgeringredientStyles.card_item}>
+    <li >
+        <div className={`${burgeringredientStyles.card_item} ${isDragged ? burgeringredientStyles.card_opacity: ''}`} ref={drag}>
           <div className={burgeringredientStyles.card_item__counter}><Counter count={ingredient.__v} size="default" /></div>
           <a className={burgeringredientStyles.card_item__link} href="#" onClick={handleOpenModal}>
             <img className={`${burgeringredientStyles.card_item__img} mr-4 ml-4`} src={ingredient.image}  alt={ingredient.name} width="240" height="120" />

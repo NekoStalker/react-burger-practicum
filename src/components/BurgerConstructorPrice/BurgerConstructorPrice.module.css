@@ -1,0 +1,13 @@
+.burger_price {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 40px;
+    justify-content: flex-end;
+}
+.loader {
+    position: fixed; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+  }

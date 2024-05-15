@@ -1,8 +1,9 @@
-import React from "react";
+import React from "react"
 import DoneIcon from './icons/done.svg'
 import orderDetailStyles from "./OrderDetails.module.css"
-import PropTypes from 'prop-types';
-function OrderDetails({orderID, orderStatus}) {
+import { useSelector } from "react-redux"
+function OrderDetails() {
+    const orderID = useSelector((store) => store.order.orderID);
     return (
         <div className={orderDetailStyles.order_details}>
             <div className={orderDetailStyles.order_details_header}>
@@ -25,8 +26,5 @@ function OrderDetails({orderID, orderStatus}) {
         </div>
      );
 }
-OrderDetails.propTypes = {
-    orderID: PropTypes.string.isRequired,
-    orderStatus: PropTypes.string,
-}
+
 export default OrderDetails;

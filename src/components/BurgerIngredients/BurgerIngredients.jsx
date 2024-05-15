@@ -1,16 +1,28 @@
 import React from 'react'
-import BurgerIngredientsGroup from '../BurgerIngredientsGroup/BurgerIngredientsGroup';
+import BurgerIngredientsGroup from '../BurgerIngredientsGroup/BurgerIngredientsGroup'
 import burgerIngredientsStyles from './BurgerIngredients.module.css'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import PropTypes from 'prop-types';
-import {ingredientType} from '../../utils/types';
-function BurgerIngredients ({ingredients}) {
+import { useSelector, useDispatch } from 'react-redux'
+import IngredientDetails from '../IngredientDetails/IngredientDetails'
+import {closeModalIngredient} from '../../services/currentIngredient/currentIngredientSlice'
+import Modal from '../Modal/Modal'
+function BurgerIngredients () {
+  const ingredients = useSelector((store) => store.ingredients.allIngredients)
   const [current, setCurrent] = React.useState('bun');
   const bunRef = React.useRef(null);
   const sauceRef = React.useRef(null);
   const mainRef = React.useRef(null);
   const containerRef = React.useRef(null);
-
+  const dispatch = useDispatch();
+  const openModal = useSelector((store) => store.currentIngredient.openModal)
+  const handleCloseModal = () => {
+    dispatch(closeModalIngredient());
+  }
+  const modal = (
+    <Modal title="Детали ингредиента" onClose={handleCloseModal}>
+      <IngredientDetails />
+    </Modal>
+  );
   const handleScroll = () => {
 
     const containerTop = containerRef.current?.getBoundingClientRect().top || 0;
@@ -55,6 +67,7 @@ function BurgerIngredients ({ingredients}) {
   };
     return (
       <section className={burgerIngredientsStyles.ingredients_modal}>
+        {openModal && modal}
         <p className="text text text_type_main-large mt-10">
               Соберите бургер
         </p>
@@ -83,7 +96,4 @@ function BurgerIngredients ({ingredients}) {
       </section>
     );
 }
-BurgerIngredients.propTypes = {
-  ingredients: PropTypes.arrayOf(ingredientType),
-};
 export default BurgerIngredients;

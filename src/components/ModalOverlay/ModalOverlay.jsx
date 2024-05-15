@@ -1,5 +1,5 @@
-import React from "react";
-import PropTypes from 'prop-types'; // Импортируйте PropTypes
+import React from "react"
+import PropTypes from 'prop-types'
 import modalOvelayStyles from './ModalOverlay.module.css'
 function ModalOverlay({onClose,...props}) {
     return ( 
@@ -9,7 +9,7 @@ function ModalOverlay({onClose,...props}) {
      );
 }
 ModalOverlay.propTypes = {
-    onClose: PropTypes.func.isRequired, // onClose должен быть функцией и обязателен
-};
+    onClose: PropTypes.func.isRequired, 
+}
 
 export default ModalOverlay;

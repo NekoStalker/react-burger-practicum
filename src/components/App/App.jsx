@@ -1,41 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import appStyle from './App.module.css';
-import AppHeader from '../AppHeader/AppHeader';
-import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
-import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
+import React, { useState, useEffect } from 'react'
+import appStyle from './App.module.css'
+import AppHeader from '../AppHeader/AppHeader'
+import BurgerConstructor from '../BurgerConstructor/BurgerConstructor'
+import BurgerIngredients from '../BurgerIngredients/BurgerIngredients'
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+import { Puff } from 'react-loader-spinner'
+import {getAllIngredients} from '../../services/ingredients/ingredientsRequests'
 
 function App() {
-  const [ingredients, setIngredients] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const addr = "https://norma.nomoreparties.space/api/ingredients";
+  const dispatch = useDispatch();
+  const {isLoading,error} = useSelector((store) => ({
+    isLoading: store.ingredients.isLoading,
+    error: store.ingredients.error,
+  }),shallowEqual);
   useEffect(() => {
-    const getIngredientsData = async () => {
-        setIsLoading(true);
-        setError(null);
-        try {
-          const res = await fetch(addr);
-          if(!res.ok){
-            throw new Error('Ошибка запроса ингредиентов');
-          }
-          const data = await res.json();
-          setIngredients(data.data);
-        } catch (error) {
-          setError(error);
-        } finally {
-          setIsLoading(false);
-        }
-    }
-    getIngredientsData();
-  },[]);
+    dispatch(getAllIngredients())
+  },[dispatch]);
+ 
   return (
     <div className={appStyle.App}>
       <AppHeader />
+      <DndProvider backend={HTML5Backend}>
       <main className={appStyle.main}>
-        <BurgerIngredients ingredients={ingredients} />
-        <BurgerConstructor ingredients={ingredients} initPrice={0} />
+        {isLoading && <Puff
+            visible={true}
+            height="180"
+            width="180"
+            color="blue"
+            ariaLabel="puff-loading"
+            wrapperClass={appStyle.loader}
+        />} 
+        {error && <p>Ошибка: {error}</p>} 
+        {!isLoading && !error && (
+          <>
+            <BurgerIngredients />
+            <BurgerConstructor /> 
+          </>
+        )}
       </main>
-      
+      </DndProvider>
     </div>
   );
 }
