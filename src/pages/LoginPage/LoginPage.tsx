@@ -28,7 +28,7 @@ const LoginPage:FC = () => {
   const onChange = (e:React.ChangeEvent<HTMLInputElement>):void => {
       setValue({...form,[e.target.name]: e.target.value})
   };
-  const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>):Promise<any> => {
     e.preventDefault();
      // @ts-ignore 
     const res: Response = await dispatch(loginUser(form));
