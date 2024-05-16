@@ -8,6 +8,7 @@ import { TDispatch, ApiError} from '../../types/storeType';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {patchUser, logoutUser} from '../../services/user/userRequests'
 import AppHeader from '../../components/AppHeader/AppHeader';
+import {handleResponse} from "../../utils/fetchRequest";
 const  ProfilePagePage:FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch() as TDispatch;
@@ -32,18 +33,11 @@ const  ProfilePagePage:FC = () => {
       });
     }
   }, [userData]);
-  const handleLogout = (e: React.MouseEvent<HTMLElement>):void => {
+  const handleLogout = async (e: React.MouseEvent<HTMLElement>):Promise<any> => {
     e.preventDefault();
-    dispatch(logoutUser())
-      .then(() => {
-        setTimeout(() => {
-          navigate('/login'); 
-        }, 1000); 
-      })
-      .catch((error: ApiError) => {
-        console.error("Error during logout:", error); // Handle errors during logout
-      });
-  };
+    const res: Response = await dispatch(logoutUser());
+    handleResponse(res,() => navigate('/login'), "Error during logout");
+  }
   
   
   const hasFormChanged = ():boolean => {
@@ -111,7 +105,7 @@ const  ProfilePagePage:FC = () => {
               value={form.login}
               name={'login'}
               placeholder="Имя"
-              icon="EditIcon" onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}            />
+              icon="EditIcon" onPointerEnterCapture onPointerLeaveCapture  />
             <EmailInput
               onChange={onChange}
               value={form.email}

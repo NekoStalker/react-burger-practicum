@@ -3,10 +3,8 @@ import BurgerIngredientsGroup from '../BurgerIngredientsGroup/BurgerIngredientsG
 import burgerIngredientsStyles from './BurgerIngredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import IngredientDetails from '../IngredientDetails/IngredientDetails';
-import {closeModalIngredient} from '../../services/currentIngredient/currentIngredientSlice';
-import Modal from '../Modal/Modal';
+import { useSelector,  } from 'react-redux';
+
 import {IIngredientsStore} from '../../types/ingredientTypes';
 type IGroupIngredientName = "bun" | "sauce" | "main";
 const BurgerIngredients:FC = () => {

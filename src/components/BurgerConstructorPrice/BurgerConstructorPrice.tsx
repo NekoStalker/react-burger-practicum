@@ -10,10 +10,8 @@ import {resetConstructor} from '../../services/burgerConstructor/burgerConstruct
 import { Puff } from 'react-loader-spinner'
 import { useNavigate,useLocation } from 'react-router-dom';
 import {IStore, TDispatch} from '../../types/storeType';
-interface OrderResponse {
-  payload: { number: number; };
-  
-}
+import {handleResponse} from "../../utils/fetchRequest";
+
 const BurgerConstructorPrice:FC = () => {
     const dispatch = useDispatch() as TDispatch;
     const navigate = useNavigate();
@@ -37,13 +35,17 @@ const BurgerConstructorPrice:FC = () => {
     };
     
     const processOrder = async () => {
+      // @ts-ignore
+      const res: Response = await dispatch(getOrderModal([selectedBun, ...ingredients]));
+      const handleOrder = ():void =>{
         // @ts-ignore
-        const res: OrderResponse = await dispatch(getOrderModal([selectedBun, ...ingredients]));
-        console.log(res);
-        dispatch(resetConstructor({})); 
-        navigate(`/order/${res.payload.number}`, { state: { background: location } });
-     
-    };
+        dispatch(resetConstructor());
+        // @ts-ignore
+        navigate(`/order/${res.payload.order.number}`, { state: { background: location } });
+      }
+      handleResponse(res,handleOrder, "Order error")
+      
+  };
     
 
     

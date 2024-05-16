@@ -4,8 +4,9 @@ import { EmailInput,Button,PasswordInput} from '@ya.praktikum/react-developer-bu
 import { useNavigate } from 'react-router-dom';
 import { TDispatch } from '../../types/storeType';
 import { IUserStore } from '../../types/userTypes';
-import {loginUser} from '../../services/user/userRequests'
+import {loginUser} from '../../services/user/userRequests';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import {handleResponse} from '../../utils/fetchRequest';
 import AppHeader from '../../components/AppHeader/AppHeader';
 const LoginPage:FC = () => {
   const [form, setValue] = useState({ email: '', password: '' });
@@ -30,13 +31,10 @@ const LoginPage:FC = () => {
   const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
      // @ts-ignore 
-    await dispatch(loginUser(form)).then(res => {
-        if (!res.error) {
-          maindNav(); 
-        } else {
-          console.error('Login failed:', res.error);
-        }
-      });
+    const res: Response = await dispatch(loginUser(form));
+    handleResponse(res,maindNav, "Login Error");
+
+  
   };
   return (
     <>

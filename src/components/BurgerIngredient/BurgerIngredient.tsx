@@ -3,6 +3,7 @@ import burgeringredientStyles from './BurgerIngredient.module.css';
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from 'react-redux';
 import {openModalIngredient} from '../../services/currentIngredient/currentIngredientSlice';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {useDrag} from 'react-dnd';
 import {IIngredientState} from '../../types/ingredientTypes';
 import {TDispatch} from '../../types/storeType';
@@ -10,7 +11,8 @@ interface BurgerIngredientProps {
   ingredient: IIngredientState;
 }
 const BurgerIngredient: FC<BurgerIngredientProps> =({ingredient}) => {
-
+    const navigate = useNavigate();
+    const location = useLocation();
     const dispatch = useDispatch() as TDispatch;
     const [{isDragged}, drag] =  useDrag(() => ({
       type: 'ingredient',
@@ -19,8 +21,11 @@ const BurgerIngredient: FC<BurgerIngredientProps> =({ingredient}) => {
         isDragged: !!monitor.isDragging(),
       }),
     }));
-    const handleOpenModal = () => {
+    const handleOpenModal = (e:React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        e.preventDefault(); 
         dispatch(openModalIngredient(ingredient));
+        // eslint-disable-next-line no-restricted-globals
+        navigate(`/ingredients/${ingredient._id}`, { state: { background: location } });
     }
 
     return ( 

@@ -46,7 +46,7 @@ const  BurgerConstructorIngredients:FC = () => {
     <ul className={burgerConstructorIngredientsStyles.burger_ingredients__internal}>
 
       {internalIngredients.length > 0 ? (internalIngredients.map((ingredient,index) => 
-        <BurgerConstructorItem ingredient={ingredient} index={index} removeItem={removeItem} moveItem={moveItem} />
+        <BurgerConstructorItem key={ingredient.uid} ingredient={ingredient} index={index} removeItem={removeItem} moveItem={moveItem} />
       )) : (
         <div className={burgerConstructorIngredientsStyles.hide_img}>
             <ConstructorElement

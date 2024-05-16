@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import {resetPasswordUser} from '../../services/user/userRequests';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { IUserStore } from '../../types/userTypes';
+import {handleResponse} from "../../utils/fetchRequest";
 import AppHeader from '../../components/AppHeader/AppHeader';
 const RestorePasswordPage:FC = () => {
   const dispatch = useDispatch();
@@ -23,13 +24,8 @@ const RestorePasswordPage:FC = () => {
   const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>):Promise<any> => {
     e.preventDefault(); 
      // @ts-ignore 
-    await dispatch(resetPasswordUser(form)).then(res => {
-        if (!res.error) {
-          loginNav();
-        } else {
-          console.error('Restore error :', res.error);
-        }
-      });
+    const res: Response = await dispatch(resetPasswordUser(form))
+    handleResponse(res,loginNav, "Restore error");
   };
   return (
     <>
@@ -49,7 +45,7 @@ const RestorePasswordPage:FC = () => {
               onChange={onChange}
               value={form.code}
               name={'code'}
-              placeholder="Введите код из письма" onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}              
+              placeholder="Введите код из письма" onPointerEnterCapture onPointerLeaveCapture             
             />
             <Button htmlType="submit" type="primary" size="large">
               Сохранить

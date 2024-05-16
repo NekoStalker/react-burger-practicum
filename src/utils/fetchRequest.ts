@@ -20,7 +20,6 @@ export const checkResponse = (res:FetchResponse): Promise<any> => {
     if (res.ok) {
         return res.json()
     }
-    console.log(res);
     return Promise.reject(`Ошибка ${res.status}`);
 }
 export const request = async (url:string, options:RequestOptions) => {
@@ -52,11 +51,20 @@ export const fetchWithRefresh = async (url: string, options:RequestOptions) => {
       }
       localStorage.setItem("refreshToken", refreshData.refreshToken);
       localStorage.setItem("accessToken", refreshData.accessToken);
-      options.headers['Authorization'] = `Bearer ${refreshData.accessToken}`; // Ensure the Authorization scheme is correct
-      const res = await request(url, options); // Repeat the request with the new token
+      options.headers['Authorization'] = `Bearer ${refreshData.accessToken}`; 
+      const res = await request(url, options);
       return res;
     } else {
       return Promise.reject(err);
     }
   }
 };
+export async function handleResponse(response: Response, onSuccess: () => void, errorMessage: string): Promise<void> {
+  //@ts-ignore
+  if (response.payload && response.payload.success) {
+    onSuccess();
+  } else {
+    console.log(response);
+    console.error(`${errorMessage}: ${response}`);
+  }
+}

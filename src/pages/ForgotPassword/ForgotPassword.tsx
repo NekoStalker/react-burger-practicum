@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import { TDispatch } from '../../types/storeType';
 import { IUserStore } from '../../types/userTypes';
+import {handleResponse} from "../../utils/fetchRequest"
 import AppHeader from '../../components/AppHeader/AppHeader';
 type TOnChange = (e:React.ChangeEvent<HTMLInputElement>)=>void;
 const ForgotPasswordPage:FC = () => {
@@ -23,15 +24,10 @@ const ForgotPasswordPage:FC = () => {
     error: store.user.error,
   }),shallowEqual);
   const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>):Promise<any> => {
-    e.preventDefault(); 
-     // @ts-ignore
-    await dispatch(forgotPasswordUser(form)).then(res => {
-        if (!res.error) {
-          resetPassNav(); 
-        } else {
-          console.error('Restore error :', res.error);
-        }
-      });
+    e.preventDefault();
+    // @ts-ignore 
+    const res: Response = await dispatch(forgotPasswordUser(form));
+    handleResponse(res,resetPassNav, "Restore error ");
   };
   const onChange:TOnChange  = (e):void => {
       setValue({...form,[e.target.name]: e.target.value})

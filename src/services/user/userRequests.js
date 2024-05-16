@@ -50,7 +50,7 @@ export const loginUser = createAsyncThunk(
         if (response.success) {
             setCookie('accessToken', response.accessToken.split('Bearer ')[1]);
             localStorage.setItem('refreshToken', response.refreshToken);
-            return response.user; 
+            return response; 
         }
 
         return response; 

@@ -15,7 +15,7 @@ export const getOrderModal = createAsyncThunk(
                 },
                 body: JSON.stringify(reqBody),
             });
-            return respose.order;
+            return respose;
     }
 );
 

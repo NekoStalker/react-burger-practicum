@@ -25,7 +25,7 @@ export const orderSlice = createSlice({
             .addCase(getOrderModal.fulfilled, (state, action) => {
                 state.isLoading = false;
                 state.createdOrder = action.payload;
-                state.orderID = action.payload.number;
+                state.orderID = action.payload.order.number;
                 state.openModal = true;
             })
             .addCase(getOrderModal.rejected, (state, action) => {

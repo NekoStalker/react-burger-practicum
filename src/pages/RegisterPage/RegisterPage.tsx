@@ -6,6 +6,7 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {registerUser} from '../../services/user/userRequests';
 import { IUserStore } from '../../types/userTypes';
 import { TDispatch, ApiError} from '../../types/storeType';
+import {handleResponse} from "../../utils/fetchRequest";
 import AppHeader from '../../components/AppHeader/AppHeader';
 const RegisterPage:FC = () => {
   const navigate = useNavigate();
@@ -24,13 +25,8 @@ const RegisterPage:FC = () => {
   const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>):Promise<any> => {
     e.preventDefault();
     // @ts-ignore 
-    await dispatch(registerUser(form)).then(res => {
-        if (!res.error) {
-          loginNav(); 
-        } else {
-          console.error('Registration failed:', res.error);
-        }
-      });
+    const res: Response = await dispatch(registerUser(form));
+    handleResponse(res, loginNav, "Registration failed ")
   };
   return (
     <>
@@ -44,7 +40,7 @@ const RegisterPage:FC = () => {
               onChange={onChange}
               value={form.login}
               name={'login'}
-              placeholder="Имя" onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}              
+              placeholder="Имя" onPointerEnterCapture onPointerLeaveCapture              
             />
             <EmailInput
               onChange={onChange}
