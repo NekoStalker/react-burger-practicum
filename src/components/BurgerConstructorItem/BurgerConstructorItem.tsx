@@ -68,6 +68,7 @@ const  BurgerConstructorItem: FC<IBurgerConstructorProps> = ({ ingredient,index,
             price={ingredient.price}
             thumbnail={ingredient.image}
             handleClose={()=>removeItem(ingredient._id, ingredient.uid)}
+            extraClass={burgerConstructorItemStyles.item_ingredient}
           />
     </li>
   )

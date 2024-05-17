@@ -7,3 +7,7 @@
 .item_dragged { 
     visibility: hidden;
 }
+.item_ingredient {
+    box-sizing: border-box ;
+    width: 536px;
+}
