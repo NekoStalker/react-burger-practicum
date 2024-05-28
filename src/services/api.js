@@ -1,9 +1,0 @@
-export const BASE_URL = "https://norma.nomoreparties.space/api";
-export const userRegister = `${BASE_URL}/auth/register`;
-export const userLogin = `${BASE_URL}/auth/login`;
-export const userLogout = `${BASE_URL}/auth/logout`;
-export const userToken = `${BASE_URL}/auth/token`;
-export const userForgotPassword = `${BASE_URL}/password-reset`;
-export const userResetPassword= `${BASE_URL}/password-reset/reset`;
-export const userGet = `${BASE_URL}/auth/user`;
-export const userPatch = `${BASE_URL}/auth/user`;

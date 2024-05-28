@@ -38,7 +38,7 @@ export const userSlice = createSlice({
             })
             .addCase(loginUser.fulfilled, (state, action) => {
                 state.isLoading = false;
-                state.userInfo = action.payload;
+                state.userInfo = action.payload.user;
                 state.isLoggedIn = true;
             })
             .addCase(loginUser.rejected, (state, action) => {
