@@ -2,7 +2,7 @@ import React, {FC} from "react"
 import DoneIcon from './icons/done.svg'
 import orderDetailStyles from "./OrderDetails.module.css"
 import { useSelector } from "react-redux"
-import {IOrderStore} from '../../types/orderTypes'
+import {IOrderStore} from '../../services/types/orderTypes'
 const OrderDetails:FC = () => {
     const orderID = useSelector((store:IOrderStore) => store.order.orderID);
     return (

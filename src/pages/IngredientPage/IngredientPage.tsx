@@ -4,8 +4,8 @@ import AppHeader from "../../components/AppHeader/AppHeader";
 import IngredientDetails from "../../components/IngredientDetails/IngredientDetails";
 import {getAllIngredients} from '../../services/ingredients/ingredientsRequests'
 import { Puff } from 'react-loader-spinner';
-import { TDispatch } from '../../types/storeType';
-import { IIngredientsStore } from '../../types/ingredientTypes';
+import { TDispatch } from '../../services/types/storeType';
+import { IIngredientsStore } from '../../services/types/ingredientTypes';
 import {setCurrentIngredient} from '../../services/currentIngredient/currentIngredientSlice'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import { Outlet,useParams } from 'react-router-dom';

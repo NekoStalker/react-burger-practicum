@@ -4,7 +4,7 @@ import {Input, Button,PasswordInput} from '@ya.praktikum/react-developer-burger-
 import { useNavigate } from 'react-router-dom';
 import {resetPasswordUser} from '../../services/user/userRequests';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { IUserStore } from '../../types/userTypes';
+import { IUserStore } from '../../services/types/userTypes';
 import {handleResponse} from "../../utils/fetchRequest";
 import AppHeader from '../../components/AppHeader/AppHeader';
 const RestorePasswordPage:FC = () => {

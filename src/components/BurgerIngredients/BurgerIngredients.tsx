@@ -5,7 +5,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useNavigate } from 'react-router-dom';
 import { useSelector,  } from 'react-redux';
 
-import {IIngredientsStore} from '../../types/ingredientTypes';
+import {IIngredientsStore} from '../../services/types/ingredientTypes';
 type IGroupIngredientName = "bun" | "sauce" | "main";
 const BurgerIngredients:FC = () => {
   const ingredients = useSelector((store:IIngredientsStore) => store.ingredients.allIngredients)

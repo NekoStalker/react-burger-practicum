@@ -13,12 +13,12 @@ import {closeModalOrder} from './services/order/orderSlice'
 import {getUser} from './services/user/userRequests'
 import ProtectedRouteElement from './components/ProtectedRouteElement';
 import ProtectedRoutePassword from './components/ProtectedRoutePassword';
-import { TDispatch } from './types/storeType';
+import { TDispatch } from './services/types/storeType';
 function App() {
   const dispatch: TDispatch = useDispatch() as TDispatch;
   useEffect(() => {
     dispatch(getAllIngredients());
-    dispatch(resetConstructor({}));
+    dispatch(resetConstructor());
     if(localStorage.getItem("refreshToken")){
       dispatch(getUser());
     }
@@ -43,7 +43,7 @@ const AppContent:FC = () => {
   const handleCloseModalOrder = ():void => {
     navigate(-1);
     dispatch(getAllIngredients());
-    dispatch(resetConstructor({}));
+    dispatch(resetConstructor());
     dispatch(closeModalOrder({}));
   }
   return (

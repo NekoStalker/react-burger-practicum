@@ -5,8 +5,8 @@ import { useDispatch } from 'react-redux';
 import {openModalIngredient} from '../../services/currentIngredient/currentIngredientSlice';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {useDrag} from 'react-dnd';
-import {IIngredientState} from '../../types/ingredientTypes';
-import {TDispatch} from '../../types/storeType';
+import {IIngredientState} from '../../services/types/ingredientTypes';
+import {TDispatch} from '../../services/types/storeType';
 interface BurgerIngredientProps {
   ingredient: IIngredientState;
 }

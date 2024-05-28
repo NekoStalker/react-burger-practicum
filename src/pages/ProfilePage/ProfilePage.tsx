@@ -3,8 +3,8 @@ import profileStyles from './ProfilePage.module.css';
 import { EmailInput,Button,PasswordInput, Input} from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate, NavLink } from 'react-router-dom';
 import { Puff } from 'react-loader-spinner';
-import { IUserStore } from '../../types/userTypes';
-import { TDispatch, ApiError} from '../../types/storeType';
+import { IUserStore } from '../../services/types/userTypes';
+import { TDispatch, ApiError} from '../../services/types/storeType';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {patchUser, logoutUser} from '../../services/user/userRequests'
 import AppHeader from '../../components/AppHeader/AppHeader';

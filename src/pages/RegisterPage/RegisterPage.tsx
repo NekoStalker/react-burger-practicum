@@ -4,8 +4,8 @@ import { EmailInput,PasswordInput,Button,Input} from '@ya.praktikum/react-develo
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {registerUser} from '../../services/user/userRequests';
-import { IUserStore } from '../../types/userTypes';
-import { TDispatch, ApiError} from '../../types/storeType';
+import { IUserStore } from '../../services/types/userTypes';
+import { TDispatch, ApiError} from '../../services/types/storeType';
 import {handleResponse} from "../../utils/fetchRequest";
 import AppHeader from '../../components/AppHeader/AppHeader';
 const RegisterPage:FC = () => {

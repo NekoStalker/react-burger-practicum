@@ -2,7 +2,7 @@ import React,{useRef,FC,RefObject} from 'react'
 import { useDrag, useDrop, DropTargetMonitor } from 'react-dnd';
 import { ConstructorElement,DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import burgerConstructorItemStyles from './BurgerConstructorItem.module.css'
-import {IBurgerConstructorIngredient} from '../../types/burgerConstructorTypes'
+import {IBurgerConstructorIngredient} from '../../services/types/burgerConstructorTypes'
 type Identifier = ReturnType<DropTargetMonitor['getHandlerId']>;
 interface IBurgerConstructorProps {
   ingredient: IBurgerConstructorIngredient;

@@ -2,8 +2,8 @@ import React,{useState, FC} from 'react';
 import loginStyles from './LoginPage.module.css';
 import { EmailInput,Button,PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate } from 'react-router-dom';
-import { TDispatch } from '../../types/storeType';
-import { IUserStore } from '../../types/userTypes';
+import { TDispatch } from '../../services/types/storeType';
+import { IUserStore } from '../../services/types/userTypes';
 import {loginUser} from '../../services/user/userRequests';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {handleResponse} from '../../utils/fetchRequest';

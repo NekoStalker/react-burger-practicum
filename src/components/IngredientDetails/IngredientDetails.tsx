@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { setCurrentIngredient } from "../../services/currentIngredient/currentIngredientSlice";
 import { Puff } from 'react-loader-spinner';
-import {IIngredientsStore, ICurrentIngredientStore} from '../../types/ingredientTypes';
-import {TDispatch} from '../../types/storeType'
+import {IIngredientsStore, ICurrentIngredientStore,ICurrentIngredientState} from '../../services/types/ingredientTypes';
+
+import {TDispatch} from '../../services/types/storeType'
 
 const IngredientDetails:FC = () => {
     const dispatch = useDispatch() as TDispatch;
@@ -16,8 +17,11 @@ const IngredientDetails:FC = () => {
     const isLoading = useSelector((store:IIngredientsStore) => store.ingredients.isLoading);
     useEffect(() => {
         if (ingredientId) {
-            const currIngredient = ingredients.find((ingredient) => ingredient._id === ingredientId)
-            dispatch(setCurrentIngredient(currIngredient)); // Fetch the ingredient details by ID
+            const currIngredient: ICurrentIngredientState | undefined  = ingredients.find((ingredient) => ingredient._id === ingredientId) ;
+            if(currIngredient) {
+                dispatch(setCurrentIngredient(currIngredient)); 
+            }
+            
         }
       }, [ingredientId,ingredients, dispatch]); 
     return ( 

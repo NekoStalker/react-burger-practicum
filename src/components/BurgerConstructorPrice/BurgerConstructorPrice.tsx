@@ -9,7 +9,7 @@ import {getOrderModal} from '../../services/order/orderRequests'
 import {resetConstructor} from '../../services/burgerConstructor/burgerConstructorSlice'
 import { Puff } from 'react-loader-spinner'
 import { useNavigate,useLocation } from 'react-router-dom';
-import {IStore, TDispatch} from '../../types/storeType';
+import {IStore, TDispatch} from '../../services/types/storeType';
 import {handleResponse} from "../../utils/fetchRequest";
 
 const BurgerConstructorPrice:FC = () => {
@@ -38,7 +38,6 @@ const BurgerConstructorPrice:FC = () => {
       // @ts-ignore
       const res: Response = await dispatch(getOrderModal([selectedBun, ...ingredients]));
       const handleOrder = ():void =>{
-        // @ts-ignore
         dispatch(resetConstructor());
         // @ts-ignore
         navigate(`/order/${res.payload.order.number}`, { state: { background: location } });
@@ -60,7 +59,7 @@ const BurgerConstructorPrice:FC = () => {
             wrapperClass={burgerConstructorPriceStyle.loader}
         />}
         <p className="text text_type_digits-medium  mt-1 mb-1">{price} <span className="pl-1"><CurrencyIcon type="primary" /> </span></p>
-        <Button htmlType="button" type="primary" disabled={selectedBun.name === BUN_NOT_SELECTED} size="medium" onClick={handleOpenModal} >
+        <Button htmlType="button" type="primary" disabled={selectedBun && selectedBun.name === BUN_NOT_SELECTED || false} size="medium" onClick={handleOpenModal} >
             Оформить заказ
         </Button>
     </div>

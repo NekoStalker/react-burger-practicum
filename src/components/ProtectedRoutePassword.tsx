@@ -2,8 +2,8 @@ import React, { FC, ReactNode } from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { Puff } from 'react-loader-spinner';
-import { IUserStore } from '../types/userTypes';
-import {IProtectedRouteElement} from '../types/storeType'
+import { IUserStore } from '../services/types/userTypes';
+import {IProtectedRouteElement} from '../services/types/storeType'
 
 const ProtectedRoutePassword: FC<IProtectedRouteElement> = ({ element }) => {
   const emailSubmitted = useSelector((store: IUserStore) => store.user.emailSubmitted);

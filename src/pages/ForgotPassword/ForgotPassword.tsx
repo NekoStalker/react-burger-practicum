@@ -4,8 +4,8 @@ import { EmailInput,Button} from '@ya.praktikum/react-developer-burger-ui-compon
 import {forgotPasswordUser} from '../../services/user/userRequests'
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
-import { TDispatch } from '../../types/storeType';
-import { IUserStore } from '../../types/userTypes';
+import { TDispatch } from '../../services/types/storeType';
+import { IUserStore } from '../../services/types/userTypes';
 import {handleResponse} from "../../utils/fetchRequest"
 import AppHeader from '../../components/AppHeader/AppHeader';
 type TOnChange = (e:React.ChangeEvent<HTMLInputElement>)=>void;

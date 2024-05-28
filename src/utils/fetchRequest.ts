@@ -22,7 +22,7 @@ export const checkResponse = (res:FetchResponse): Promise<any> => {
     }
     return Promise.reject(`Ошибка ${res.status}`);
 }
-export const request = async (url:string, options:RequestOptions) => {
+export const request = async (url:string, options?:RequestOptions) => {
     const res = await fetch(url, options);
     return checkResponse(res);
 }

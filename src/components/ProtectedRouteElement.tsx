@@ -2,8 +2,8 @@ import React,{FC} from 'react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { Puff } from 'react-loader-spinner';
-import {IUserStore} from '../types/userTypes';
-import {IProtectedUserRouteElement} from '../types/storeType'
+import {IUserStore} from '../services/types/userTypes';
+import {IProtectedUserRouteElement} from '../services/types/storeType'
 
 
 const ProtectedRouteElement: FC<IProtectedUserRouteElement> = ({ element, forGuest , path })=> {
