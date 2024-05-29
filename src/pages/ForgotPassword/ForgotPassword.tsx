@@ -1,16 +1,16 @@
 import React,{useState, FC} from 'react';
 import passwordStyles from './ForgotPassword.module.css';
-import { EmailInput,Button} from '@ya.praktikum/react-developer-burger-ui-components'
-import {forgotPasswordUser} from '../../services/user/userRequests'
+import { EmailInput,Button} from '@ya.praktikum/react-developer-burger-ui-components';
+import {forgotPasswordUser} from '../../services/user/userRequests';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux'
-import { TDispatch } from '../../services/types/storeType';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useAppDispatch } from '../../services/types/storeType';
 import { IUserStore } from '../../services/types/userTypes';
 import {handleResponse} from "../../utils/fetchRequest"
 import AppHeader from '../../components/AppHeader/AppHeader';
 type TOnChange = (e:React.ChangeEvent<HTMLInputElement>)=>void;
 const ForgotPasswordPage:FC = () => {
-  const dispatch = useDispatch() as TDispatch;
+  const dispatch = useAppDispatch();
   const [form, setValue] = useState({ email: '', password: '',code: '' });
   const navigate = useNavigate(); 
   const loginNav = ():void =>{
@@ -23,11 +23,16 @@ const ForgotPasswordPage:FC = () => {
     isLoading: store.user.isLoading,
     error: store.user.error,
   }),shallowEqual);
-  const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>):Promise<any> => {
+  const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>):Promise<void> => {
     e.preventDefault();
-    // @ts-ignore 
-    const res: Response = await dispatch(forgotPasswordUser(form));
-    handleResponse(res,resetPassNav, "Restore error ");
+
+    const res = await dispatch(forgotPasswordUser(form)).unwrap();
+    if (res.success) {
+      resetPassNav();
+    }
+    else{
+      console.error('Restore error:', res);
+    }
   };
   const onChange:TOnChange  = (e):void => {
       setValue({...form,[e.target.name]: e.target.value})

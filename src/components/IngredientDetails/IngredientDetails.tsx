@@ -7,10 +7,10 @@ import { setCurrentIngredient } from "../../services/currentIngredient/currentIn
 import { Puff } from 'react-loader-spinner';
 import {IIngredientsStore, ICurrentIngredientStore,ICurrentIngredientState} from '../../services/types/ingredientTypes';
 
-import {TDispatch} from '../../services/types/storeType'
+import { useAppDispatch } from '../../services/types/storeType';
 
 const IngredientDetails:FC = () => {
-    const dispatch = useDispatch() as TDispatch;
+    const dispatch =  useAppDispatch();
     const { ingredientId } = useParams(); 
     const ingredient = useSelector((store:ICurrentIngredientStore) => store.currentIngredient);
     const ingredients = useSelector((store:IIngredientsStore) => store.ingredients.allIngredients);

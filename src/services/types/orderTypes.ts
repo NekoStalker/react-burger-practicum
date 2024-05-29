@@ -1,12 +1,16 @@
 export interface ICreatedOrder {
-  [key: string]: unknown;
+  name: string;
+  order: {
+      number: number;
+  };
+  success: boolean;
 }
 
 
 export interface IOrderState {
   orderID: number | null; 
   orderStatus: string;
-  createdOrder: ICreatedOrder;
+  createdOrder: ICreatedOrder | null;
   isLoading: boolean;
   error: string | null;
   openModal: boolean;

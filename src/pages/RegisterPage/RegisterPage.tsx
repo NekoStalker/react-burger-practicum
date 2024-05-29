@@ -5,28 +5,33 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {registerUser} from '../../services/user/userRequests';
 import { IUserStore } from '../../services/types/userTypes';
-import { TDispatch, ApiError} from '../../services/types/storeType';
 import {handleResponse} from "../../utils/fetchRequest";
+import { useAppDispatch } from '../../services/types/storeType';
 import AppHeader from '../../components/AppHeader/AppHeader';
 const RegisterPage:FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch() as TDispatch;
+  const dispatch = useAppDispatch();
   const {isLoading,error} = useSelector((store:IUserStore)=> ({
     isLoading: store.user.isLoading,
     error: store.user.error,
   }),shallowEqual);
-  const [form, setValue] = useState({ email: '', password: '',login: ''});
+  const [form, setValue] = useState({ email: '', password: '',name: ''});
   const loginNav = ():void =>{
     navigate('/login');
   } 
   const onChange = (e:React.ChangeEvent<HTMLInputElement>):void => {
       setValue({...form,[e.target.name]: e.target.value})
   };
-  const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>):Promise<any> => {
+  const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    // @ts-ignore 
-    const res: Response = await dispatch(registerUser(form));
-    handleResponse(res, loginNav, "Registration failed ")
+ 
+    const res = await dispatch(registerUser(form)).unwrap();
+    if (res.success) {
+      loginNav()
+    }
+    else {
+      console.error('Registration failed:', res);
+    }
   };
   return (
     <>
@@ -38,7 +43,7 @@ const RegisterPage:FC = () => {
             <Input
               type='text'
               onChange={onChange}
-              value={form.login}
+              value={form.name}
               name={'login'}
               placeholder="Имя" onPointerEnterCapture onPointerLeaveCapture              
             />

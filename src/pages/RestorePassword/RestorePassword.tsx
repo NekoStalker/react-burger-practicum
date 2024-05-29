@@ -6,9 +6,10 @@ import {resetPasswordUser} from '../../services/user/userRequests';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { IUserStore } from '../../services/types/userTypes';
 import {handleResponse} from "../../utils/fetchRequest";
+import { useAppDispatch } from '../../services/types/storeType';
 import AppHeader from '../../components/AppHeader/AppHeader';
 const RestorePasswordPage:FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [form, setValue] = useState({ password: '',code: '' });
   const navigate = useNavigate();
   const onChange = (e:React.ChangeEvent<HTMLInputElement>):void => {
@@ -21,11 +22,15 @@ const RestorePasswordPage:FC = () => {
   const loginNav = ():void =>{
     navigate('/login');
   }
-  const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>):Promise<any> => {
+  const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault(); 
-     // @ts-ignore 
-    const res: Response = await dispatch(resetPasswordUser(form))
-    handleResponse(res,loginNav, "Restore error");
+    const res = await dispatch(resetPasswordUser(form)).unwrap();
+    if (res.success) {
+      loginNav()
+    }
+    else {
+      console.error('Login failed:', res);
+    }
   };
   return (
     <>

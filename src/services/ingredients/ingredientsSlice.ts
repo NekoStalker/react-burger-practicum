@@ -38,7 +38,7 @@ export const ingredientsSlice = createSlice({
                 state.isLoading = true;
                 state.error = null;
             })
-            .addCase(getAllIngredients.fulfilled, (state, action) => {
+            .addCase(getAllIngredients.fulfilled, (state, action:PayloadAction<IIngredientState[]>) => {
                 state.isLoading = false;
                 state.allIngredients = action.payload;
             })

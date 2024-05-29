@@ -60,8 +60,8 @@ export const fetchWithRefresh = async (url: string, options:RequestOptions) => {
   }
 };
 export async function handleResponse(response: Response, onSuccess: () => void, errorMessage: string): Promise<void> {
-  //@ts-ignore
-  if (response.payload && response.payload.success) {
+  const data = await response.json();
+  if (data.payload && data.success) {
     onSuccess();
   } else {
     console.log(response);

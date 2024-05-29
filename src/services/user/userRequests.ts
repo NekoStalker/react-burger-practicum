@@ -2,15 +2,27 @@ import {createAsyncThunk} from '@reduxjs/toolkit'
 
 import {request, fetchWithRefresh} from '../../utils/fetchRequest'
 import { setCookie,deleteCookie, getCookie } from '../../utils/cookie';
-
+import {
+    TRegistrationRequest,
+    IRegistrationResponse,
+    TAuthorizationResponse,
+    TResetPasswordRequest,
+    IResetPasswordResponse,
+    TResetEmailRequest,
+    TPatchRequest,
+    TResetAuthRequest,
+    TLogoutResponse,
+    TLoginRequest,
+    TRefreshRequest,
+} from '../types/userTypes';
 import { userRegister, userLogin, userLogout, userForgotPassword, userResetPassword, userGet, userPatch } from '../api';
-export const registerUser = createAsyncThunk(
+export const registerUser = createAsyncThunk<IRegistrationResponse, TRegistrationRequest>(
     'user/register',
     async (form) => {
         const reqBody = JSON.stringify({
             "email": form.email,
             "password": form.password,
-            "name": form.login
+            "name": form.name
         });
         const registerOptions = {
             method: 'POST',
@@ -22,7 +34,6 @@ export const registerUser = createAsyncThunk(
             const accessToken = response.accessToken.split('Bearer ')[1];
             setCookie('accessToken', accessToken);
             localStorage.setItem('refreshToken', response.refreshToken);
-            return response.user;
         }
         
         return response;
@@ -30,7 +41,7 @@ export const registerUser = createAsyncThunk(
 );
 
 
-export const loginUser = createAsyncThunk(
+export const loginUser = createAsyncThunk<TAuthorizationResponse, TLoginRequest>(
     'user/login',
     async (form ) => {
         const reqBody = JSON.stringify({
@@ -46,17 +57,15 @@ export const loginUser = createAsyncThunk(
 
         const response = await fetchWithRefresh(userLogin, loginOptions);
 
-
         if (response.success) {
             setCookie('accessToken', response.accessToken.split('Bearer ')[1]);
             localStorage.setItem('refreshToken', response.refreshToken);
-            return response; 
         }
 
         return response; 
     }
 );
-export const logoutUser = createAsyncThunk(
+export const logoutUser = createAsyncThunk<TLogoutResponse>(
     'user/logout',
     async () => {
             const reqBody =  {
@@ -74,13 +83,11 @@ export const logoutUser = createAsyncThunk(
                 localStorage.removeItem('refreshToken')
             }
             
-            return response;
-            
-            
+            return response;    
     }
 );
 
-export const resetPasswordUser = createAsyncThunk(
+export const resetPasswordUser = createAsyncThunk<IResetPasswordResponse, TResetPasswordRequest>(
     'user/resetPassword',
     async (form) => {
             const reqBody =  {
@@ -97,7 +104,7 @@ export const resetPasswordUser = createAsyncThunk(
             return response;
     }
 );
-export const forgotPasswordUser = createAsyncThunk(
+export const forgotPasswordUser = createAsyncThunk<IResetPasswordResponse,TResetEmailRequest>(
     'user/forgotPassword',
     async (form) => {
             const reqBody =  {
@@ -113,7 +120,7 @@ export const forgotPasswordUser = createAsyncThunk(
             return response;
     }
 );
-export const getUser = createAsyncThunk(
+export const getUser = createAsyncThunk<IRegistrationResponse>(
     'user/getUser',
     async (_)  => {
             const accessToken = getCookie('accessToken');
@@ -125,20 +132,18 @@ export const getUser = createAsyncThunk(
                 'Authorization': `Bearer ${accessToken}`,
             },
             });
-            if(response.success){
-                return response.user;
-            }
+     
             return response;     
     }
 )
-export const patchUser = createAsyncThunk(
+export const patchUser = createAsyncThunk<IRegistrationResponse, TPatchRequest>(
     'user/patchUser',
     async (form, thunkAPI) => {
             const accessToken = getCookie('accessToken');
             const reqBody = {
                 "email": form.email,
                 "password": form.password,
-                "name": form.login
+                "name": form.name
             };
             const response = await fetchWithRefresh(userPatch, {
                 method: 'PATCH',
@@ -149,10 +154,6 @@ export const patchUser = createAsyncThunk(
                 },
                 body: JSON.stringify(reqBody),
             });
-            if(response.success){
-                return response.user;
-            }
-        
             return response;
     }
 );

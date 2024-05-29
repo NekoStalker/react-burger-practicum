@@ -4,14 +4,14 @@ import { EmailInput,Button,PasswordInput, Input} from '@ya.praktikum/react-devel
 import { useNavigate, NavLink } from 'react-router-dom';
 import { Puff } from 'react-loader-spinner';
 import { IUserStore } from '../../services/types/userTypes';
-import { TDispatch, ApiError} from '../../services/types/storeType';
+import { useAppDispatch } from '../../services/types/storeType';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {patchUser, logoutUser} from '../../services/user/userRequests'
 import AppHeader from '../../components/AppHeader/AppHeader';
 import {handleResponse} from "../../utils/fetchRequest";
 const  ProfilePagePage:FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch() as TDispatch;
+  const dispatch = useAppDispatch();
 
   const {isLoading,error,userData} = useSelector((store:IUserStore)=> ({
     isLoading: store.user.isLoading,
@@ -19,7 +19,7 @@ const  ProfilePagePage:FC = () => {
     userData: store.user.userInfo
   }),shallowEqual);  
 
-  const [form, setForm] = useState({ email: '', password: '',login: '' });
+  const [form, setForm] = useState({ email: '', password: '',name: '' });
 
   const onChange = (e:React.ChangeEvent<HTMLInputElement>):void => {
       setForm({...form,[e.target.name]: e.target.value})
@@ -29,14 +29,22 @@ const  ProfilePagePage:FC = () => {
       setForm({
         email: userData.email || '',
         password: '',
-        login: userData.name || ''
+        name: userData.name || ''
       });
     }
   }, [userData]);
-  const handleLogout = async (e: React.MouseEvent<HTMLElement>):Promise<any> => {
+  const loginNav = ():void =>{
+    navigate('/login');
+  } 
+  const handleLogout = async (e: React.MouseEvent<HTMLElement>): Promise<void> => {
     e.preventDefault();
-    const res: Response = await dispatch(logoutUser());
-    handleResponse(res,() => navigate('/login'), "Error during logout");
+    const res = await dispatch(logoutUser()).unwrap();
+    if (res.success) {
+      loginNav()
+    }
+    else {
+      console.error('Error during logout:', res);
+    }
   }
   
   
@@ -44,19 +52,18 @@ const  ProfilePagePage:FC = () => {
     return (
       form.email !== (userData?.email || '') ||
       form.password !== '' || 
-      form.login !== (userData?.name || '')
+      form.name !== (userData?.name || '')
     );
   };
   const resetForm = ():void => {
     setForm({
       email: userData?.email || '',
       password: '',
-      login: userData?.name || '',
+      name: userData?.name || '',
     });
   };
-  const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>):Promise<any> => {
+  const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); 
-    // @ts-ignore
     dispatch(patchUser(form) );
   };
   return (
@@ -102,8 +109,8 @@ const  ProfilePagePage:FC = () => {
             <Input
               type='text'
               onChange={onChange}
-              value={form.login}
-              name={'login'}
+              value={form.name}
+              name={'name'}
               placeholder="Имя"
               icon="EditIcon" onPointerEnterCapture onPointerLeaveCapture  />
             <EmailInput

@@ -6,7 +6,7 @@ export function getCookie(name: string) {
     return matches ? decodeURIComponent(matches[1]) : undefined;
   }
   
-  export function setCookie(name: string, value: string | null, props: any) {
+  export function setCookie(name: string, value: string | null, props?: any) {
     props =  {
       path: '/',
       expires: 20 * 60,        

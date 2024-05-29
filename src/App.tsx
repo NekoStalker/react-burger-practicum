@@ -1,10 +1,9 @@
 import React, {FC ,useEffect } from 'react';
-import { MainPage, LoginPage, NotFound404, RegisterPage, RestorePasswordPage, ForgotPasswordPage, ProfilePagePage, IngredientPage } from './pages';
+import { MainPage, LoginPage, NotFound404, RegisterPage, RestorePasswordPage, ForgotPasswordPage, ProfilePagePage, IngredientPage, OrderPage } from './pages';
 import IngredientDetails from './components/IngredientDetails/IngredientDetails';
 import OrderDetails from './components/OrderDetails/OrderDetails';
 import Modal from './components/Modal/Modal';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { useDispatch,useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { closeModalIngredient } from './services/currentIngredient/currentIngredientSlice';
 import { getAllIngredients } from './services/ingredients/ingredientsRequests';
@@ -13,9 +12,9 @@ import {closeModalOrder} from './services/order/orderSlice'
 import {getUser} from './services/user/userRequests'
 import ProtectedRouteElement from './components/ProtectedRouteElement';
 import ProtectedRoutePassword from './components/ProtectedRoutePassword';
-import { TDispatch } from './services/types/storeType';
+import { useAppDispatch } from './services/types/storeType';
 function App() {
-  const dispatch: TDispatch = useDispatch() as TDispatch;
+  const dispatch = useAppDispatch();
   useEffect(() => {
     dispatch(getAllIngredients());
     dispatch(resetConstructor());
@@ -34,7 +33,7 @@ function App() {
 const AppContent:FC = () => {
   const location = useLocation();
   const background = location.state && location.state.background;
-  const dispatch: TDispatch = useDispatch() as TDispatch;
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const handleCloseModalIngredient = () => {
     dispatch(closeModalIngredient({}));
@@ -44,7 +43,7 @@ const AppContent:FC = () => {
     navigate(-1);
     dispatch(getAllIngredients());
     dispatch(resetConstructor());
-    dispatch(closeModalOrder({}));
+    dispatch(closeModalOrder());
   }
   return (
     <>
@@ -72,7 +71,11 @@ const AppContent:FC = () => {
         <Route
           path="/profile"
           element={<ProtectedRouteElement element={<ProfilePagePage />} forGuest={false} path="/login" />}
-        /> 
+        />
+        <Route
+          path="/feed"
+          element={<OrderPage />} 
+        />  
         <Route path="*" element={<NotFound404 />} />
       </Routes>
       {background && (
