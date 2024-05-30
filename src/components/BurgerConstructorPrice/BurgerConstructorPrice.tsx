@@ -39,13 +39,16 @@ const BurgerConstructorPrice:FC = () => {
         return;
       }
       const orderIngredients: IIngredientState[] = [selectedBun, ...ingredients];
-      const res= await dispatch(getOrderModal(orderIngredients)).unwrap();
-      if (res.success) {
-        dispatch(resetConstructor());
-        navigate(`/order/${res.order.number}`, { state: { background: location } });
+      try
+      {
+        const res= await dispatch(getOrderModal(orderIngredients)).unwrap();
+        if (res.success) {
+          dispatch(resetConstructor());
+          navigate(`/order/${res.order.number}`, { state: { background: location } });
+        }
       }
-      else {
-        console.error('Order error:', res);
+      catch(error) {
+        console.error('Order error:', error);
       }
       
   };

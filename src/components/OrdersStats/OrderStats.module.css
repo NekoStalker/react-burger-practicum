@@ -1,20 +1,42 @@
-.ingredients_modal {
-    width: 20vw;
-    height: 60vh;
-    min-width: 600px; ;
-    min-height: 912px;
-    text-align: left;
-}
- .ingredients_container {
-    overflow-y: scroll;
-    overflow-x: hidden;
-    max-height: 900px;
-    margin-top: 1em;
-    margin-bottom: 0;
-    margin-right: auto;
-    margin-left: auto;
-   
-} 
-.ingredients_tab {
+.orderStats_section {
     display: flex;
+    flex-direction: column;
+    margin-top: 10vh;
+    text-align: left;
+    height: 80vh;
+    min-width: 600px; 
+    min-height: 912px;
+    flex: 1;
+    gap: 60px;
+
+}
+
+.orderStats_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 36px;
+}
+.orderStats_header_elem {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.orderStats_header_elem_nums {
+    margin-top: 24px;
+    color: cyan;
+}
+.orderStats_mid_compleated {
+    display: flex;
+    flex-direction: column;
+}
+.orderStats_footer_compleated {
+    display: flex;
+    flex-direction: column;
+}
+.orderStats_section  h5 {
+    text-shadow: 0px 4px 16px rgba(51, 51, 255, 0.5);
+    text-shadow: 0px 4px 16px rgba(51, 51, 255, 0.5),
+                 0px 0px 8px rgba(51, 51, 255, 0.25),
+                 0px 0px 16px rgba(51, 51, 255, 0.25);
 }

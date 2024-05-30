@@ -15,7 +15,9 @@ export interface IIngredientState {
 export interface ICurrentIngredientState extends IIngredientState {
   openModal?: boolean;
 }
-
+export type IGetAllIngredientsPayload =  {
+  data: IIngredientState[];
+}
 export interface IAllIngredientsState {
   allIngredients: IIngredientState[];
   isLoading: boolean;

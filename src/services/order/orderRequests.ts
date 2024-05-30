@@ -13,7 +13,7 @@ export const getOrderModal = createAsyncThunk<ICreatedOrder, IIngredientState[] 
             const reqBody =  {
                 "ingredients": Array.from(ingredients).map(element => element._id).filter(id => id),
             }
-            const respose = await fetchWithRefresh(apiOrdersAdd, {
+            const respose:ICreatedOrder = await fetchWithRefresh<ICreatedOrder>(apiOrdersAdd, {
                 method: 'POST',
                 headers:  {
                     'Content-Type': 'application/json',

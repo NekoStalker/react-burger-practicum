@@ -5,8 +5,11 @@
 .main {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   flex-direction: row;
   gap: 40px;
+  margin-top: 6vh;
+  margin-right: 25vw;
+  margin-left: 25vw;
 }
 

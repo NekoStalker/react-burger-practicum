@@ -24,13 +24,14 @@ const RegisterPage:FC = () => {
   };
   const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
- 
-    const res = await dispatch(registerUser(form)).unwrap();
-    if (res.success) {
-      loginNav()
+    try{
+      const res = await dispatch(registerUser(form)).unwrap();
+      if (res.success) {
+        loginNav()
+      }
     }
-    else {
-      console.error('Registration failed:', res);
+    catch(error) {
+      console.error('Registration failed:', error);
     }
   };
   return (

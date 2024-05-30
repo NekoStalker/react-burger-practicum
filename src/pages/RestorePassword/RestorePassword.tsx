@@ -23,13 +23,15 @@ const RestorePasswordPage:FC = () => {
     navigate('/login');
   }
   const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
-    e.preventDefault(); 
+    e.preventDefault();
+    try { 
     const res = await dispatch(resetPasswordUser(form)).unwrap();
-    if (res.success) {
-      loginNav()
+      if (res.success) {
+        loginNav()
+      }
     }
-    else {
-      console.error('Login failed:', res);
+    catch(error) {
+      console.error('Login failed:', error);
     }
   };
   return (

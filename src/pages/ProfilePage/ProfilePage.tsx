@@ -38,12 +38,14 @@ const  ProfilePagePage:FC = () => {
   } 
   const handleLogout = async (e: React.MouseEvent<HTMLElement>): Promise<void> => {
     e.preventDefault();
-    const res = await dispatch(logoutUser()).unwrap();
-    if (res.success) {
-      loginNav()
+    try{
+      const res = await dispatch(logoutUser()).unwrap();
+      if (res.success) {
+        loginNav()
+      }
     }
-    else {
-      console.error('Error during logout:', res);
+    catch(error) {
+      console.error('Error during logout:', error);
     }
   }
   

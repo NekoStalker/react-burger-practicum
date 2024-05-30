@@ -30,13 +30,15 @@ const LoginPage:FC = () => {
   };
   const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    const res = await dispatch(loginUser(form)).unwrap();
-    if (res.success) {
-      maindNav()
+    try {
+      const res = await dispatch(loginUser(form)).unwrap();
+      if (res.success) {
+        maindNav()
+      }
+    } catch(error) {
+      console.error('Error during login:', error);
     }
-    else {
-      console.error('Error during login:', res);
-    }
+
   };
   return (
     <>

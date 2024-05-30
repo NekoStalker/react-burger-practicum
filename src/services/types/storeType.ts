@@ -29,3 +29,18 @@ export interface IProtectedUserRouteElement extends IProtectedRouteElement{
   forGuest: boolean;
   path: string;
 }
+export interface RequestOptions extends RequestInit {
+  headers: Record<string, string>;
+}
+
+export interface RefreshData {
+  success: boolean;
+  refreshToken: string;
+  accessToken: string;
+}
+
+export interface ITokenResponse {
+  success: boolean;
+  accessToken: string;
+  refreshToken: string;
+}

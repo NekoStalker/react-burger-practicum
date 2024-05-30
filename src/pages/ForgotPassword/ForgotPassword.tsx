@@ -25,13 +25,14 @@ const ForgotPasswordPage:FC = () => {
   }),shallowEqual);
   const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>):Promise<void> => {
     e.preventDefault();
-
-    const res = await dispatch(forgotPasswordUser(form)).unwrap();
-    if (res.success) {
-      resetPassNav();
+    try{
+      const res = await dispatch(forgotPasswordUser(form)).unwrap();
+      if (res.success) {
+        resetPassNav();
+      }
     }
-    else{
-      console.error('Restore error:', res);
+    catch(error){
+      console.error('Restore error:', error);
     }
   };
   const onChange:TOnChange  = (e):void => {

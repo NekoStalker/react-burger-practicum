@@ -1,6 +1,6 @@
 import {createSlice,PayloadAction } from '@reduxjs/toolkit';
 import {getAllIngredients } from './ingredientsRequests';
-import {IAllIngredientsState,IIngredientState} from '../types/ingredientTypes';
+import {IAllIngredientsState,IIngredientState, IGetAllIngredientsPayload} from '../types/ingredientTypes';
 const initialState: IAllIngredientsState = {
     allIngredients: [],
     isLoading: false,
@@ -38,10 +38,10 @@ export const ingredientsSlice = createSlice({
                 state.isLoading = true;
                 state.error = null;
             })
-            .addCase(getAllIngredients.fulfilled, (state, action:PayloadAction<IIngredientState[]>) => {
+            .addCase(getAllIngredients.fulfilled, (state, action: PayloadAction<IGetAllIngredientsPayload>) => {
                 state.isLoading = false;
-                state.allIngredients = action.payload;
-            })
+                state.allIngredients = action.payload.data;
+              })
             .addCase(getAllIngredients.rejected, (state, action) => {
                 state.isLoading = false;
                 state.error = action.error.message || 'Failed to fetch ingredients';
