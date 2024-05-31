@@ -12,10 +12,11 @@
 }
 
 .orderStats_header {
+    margin-top: 2vh;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    gap: 36px;
+    gap: 24px;
 }
 .orderStats_header_elem {
     display: flex;

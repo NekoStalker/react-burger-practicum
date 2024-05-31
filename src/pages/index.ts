@@ -7,4 +7,5 @@ import RestorePasswordPage from './RestorePassword/RestorePassword';
 import ProfilePagePage from './ProfilePage/ProfilePage';
 import IngredientPage from './IngredientPage/IngredientPage';
 import OrderPage from './OrderPage/OrderPage';
-export {MainPage,NotFound404,LoginPage, RegisterPage,ForgotPasswordPage,RestorePasswordPage,ProfilePagePage, IngredientPage,OrderPage}
+import OrderInfoPage from './OrderInfoPage/OrderInfoPage';
+export {MainPage,NotFound404,LoginPage, RegisterPage,ForgotPasswordPage,RestorePasswordPage,ProfilePagePage, IngredientPage,OrderPage,OrderInfoPage}

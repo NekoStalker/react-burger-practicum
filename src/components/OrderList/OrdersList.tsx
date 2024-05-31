@@ -2,17 +2,21 @@ import React, {useState, useRef, RefObject,FC } from 'react'
 
 import ordersListStyles from './OrdersList.module.css';
 import OrderListItem from '../OrderListItem/OrderListItem';
-const OrdersList:FC = () => {
+interface OrderComponentProps {
+  size: 'large' | 'small';
+}
+const OrdersList:FC<OrderComponentProps> = ({size}) => {
+    const bigSize:boolean = size === 'large';
     const orders = [];
     for( let i = 0; i < 6; i++){
-      orders.push(<OrderListItem/>);
+      orders.push(<OrderListItem key={i} size={bigSize} />);
     }
     return (
-      <section className={ordersListStyles.orders_section}>
-        <p className="text text text_type_main-large">
+      <section className={size === 'large' ? ordersListStyles.orders_section : ordersListStyles.orders_section_small  }>
+        {!bigSize && <p className="text text text_type_main-large">
               Лента заказов
-        </p>
-        <div className={`${ordersListStyles.orders_container} pb-4 `} >
+        </p> }
+        <div className={size === 'large' ? `${ordersListStyles.orders_container} pb-4 ` : `${ordersListStyles.orders_container_small} pb-4 `} >
           <>
             {orders}
           </>

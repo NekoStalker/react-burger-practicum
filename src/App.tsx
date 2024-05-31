@@ -1,7 +1,7 @@
 import React, {FC ,useEffect } from 'react';
-import { MainPage, LoginPage, NotFound404, RegisterPage, RestorePasswordPage, ForgotPasswordPage, ProfilePagePage, IngredientPage, OrderPage } from './pages';
+import { MainPage, LoginPage, NotFound404, RegisterPage, RestorePasswordPage, ForgotPasswordPage, ProfilePagePage, IngredientPage, OrderPage, OrderInfoPage } from './pages';
 import IngredientDetails from './components/IngredientDetails/IngredientDetails';
-import OrderDetails from './components/OrderDetails/OrderDetails';
+import OrderDetailsModal from './components/OrderDetailsModal/OrderDetailsModal';
 import Modal from './components/Modal/Modal';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
@@ -69,13 +69,18 @@ const AppContent:FC = () => {
           element={<ProtectedRoutePassword element={<RestorePasswordPage />}  />}
         /> 
         <Route
-          path="/profile"
+          path="/profile/*"
           element={<ProtectedRouteElement element={<ProfilePagePage />} forGuest={false} path="/login" />}
         />
         <Route
           path="/feed"
           element={<OrderPage />} 
-        />  
+        />
+        <Route
+          path="/info"
+          element={<OrderInfoPage/>}
+
+        />
         <Route path="*" element={<NotFound404 />} />
       </Routes>
       {background && (
@@ -84,7 +89,7 @@ const AppContent:FC = () => {
                                                                 <IngredientDetails />
                                                             </Modal>} />
            <Route path="/order/:orderId" element={<Modal title='' onClose={handleCloseModalOrder}>
-                                                    <OrderDetails />
+                                                    <OrderDetailsModal />
                                                   </Modal>
             }
           />
