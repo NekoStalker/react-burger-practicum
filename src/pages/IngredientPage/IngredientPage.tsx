@@ -4,19 +4,19 @@ import AppHeader from "../../components/AppHeader/AppHeader";
 import IngredientDetails from "../../components/IngredientDetails/IngredientDetails";
 import {getAllIngredients} from '../../services/ingredients/ingredientsRequests'
 import { Puff } from 'react-loader-spinner';
-import { useAppDispatch } from '../../services/types/storeType';
+import { useAppDispatch , useAppSelector} from '../../store';
 import { IIngredientsStore } from '../../services/types/ingredientTypes';
 import {setCurrentIngredient} from '../../services/currentIngredient/currentIngredientSlice'
-import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+import {  shallowEqual } from 'react-redux'
 import { Outlet,useParams } from 'react-router-dom';
 const IngredientPage:FC =  () => {
     const params = useParams();
     const dispatch =  useAppDispatch();
-    const { isLoading, error } = useSelector((store:IIngredientsStore) => ({
+    const { isLoading, error } = useAppSelector((store:IIngredientsStore) => ({
         isLoading: store.ingredients.isLoading,
         error: store.ingredients.error,
     }), shallowEqual);
-    const ingredients = useSelector((store:IIngredientsStore) => store.ingredients.allIngredients);
+    const ingredients = useAppSelector((store:IIngredientsStore) => store.ingredients.allIngredients);
     const ingredient = ingredients.find(ingredient => ingredient._id === params.ingredientId);
 
     useEffect(() => {

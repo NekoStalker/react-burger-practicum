@@ -7,15 +7,15 @@ import {getOrderModal} from '../../services/order/orderRequests'
 import {resetConstructor} from '../../services/burgerConstructor/burgerConstructorSlice'
 import { Puff } from 'react-loader-spinner'
 import { useNavigate,useLocation } from 'react-router-dom';
-
-import {IStore, useAppDispatch} from '../../services/types/storeType';
+import { useAppDispatch , useAppSelector} from '../../store';
+import {IStore} from '../../services/types/storeType';
 import { IIngredientState } from '../../services/types/ingredientTypes'
 
 const BurgerConstructorPrice:FC = () => {
     const dispatch =  useAppDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    const {ingredients,selectedBun, price,isLoading,isLoggedIn} = useSelector((store:IStore)=> ({
+    const {ingredients,selectedBun, price,isLoading,isLoggedIn} = useAppSelector((store:IStore)=> ({
       ingredients: store.burgerConstructor.internalIngredients,
       selectedBun:  store.burgerConstructor.selectedBun,
       price: store.burgerConstructor.price,

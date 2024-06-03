@@ -5,11 +5,10 @@
 .main {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   flex-direction: row;
   gap: 60px;
   margin-top: 6vh;
-  margin-right: 25vw;
-  margin-left: 25vw;
+
 }
 

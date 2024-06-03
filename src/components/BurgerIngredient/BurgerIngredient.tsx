@@ -6,7 +6,8 @@ import {openModalIngredient} from '../../services/currentIngredient/currentIngre
 import { useNavigate, useLocation } from 'react-router-dom';
 import {useDrag} from 'react-dnd';
 import {IIngredientState} from '../../services/types/ingredientTypes';
-import { useAppDispatch } from '../../services/types/storeType';
+import { useAppDispatch } from '../../store';
+
 interface BurgerIngredientProps {
   ingredient: IIngredientState;
 }

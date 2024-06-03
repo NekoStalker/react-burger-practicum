@@ -4,7 +4,7 @@ import { EmailInput,Button} from '@ya.praktikum/react-developer-burger-ui-compon
 import {forgotPasswordUser} from '../../services/user/userRequests';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { useAppDispatch } from '../../services/types/storeType';
+import { useAppDispatch , useAppSelector} from '../../store';
 import { IUserStore } from '../../services/types/userTypes';
 import {handleResponse} from "../../utils/fetchRequest"
 import AppHeader from '../../components/AppHeader/AppHeader';
@@ -19,7 +19,7 @@ const ForgotPasswordPage:FC = () => {
   const resetPassNav = ():void =>{
     navigate('/reset-password');
   }
-  const {isLoading,error} = useSelector((store:IUserStore)=> ({
+  const {isLoading,error} = useAppSelector((store:IUserStore)=> ({
     isLoading: store.user.isLoading,
     error: store.user.error,
   }),shallowEqual);

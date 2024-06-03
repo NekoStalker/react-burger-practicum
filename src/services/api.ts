@@ -7,3 +7,4 @@ export const userForgotPassword:string  = `${BASE_URL}/password-reset`;
 export const userResetPassword:string = `${BASE_URL}/password-reset/reset`;
 export const userGet:string  = `${BASE_URL}/auth/user`;
 export const userPatch:string  = `${BASE_URL}/auth/user`;
+export const ordersWebSocket =  "wss://norma.nomoreparties.space/orders/all";

@@ -12,7 +12,7 @@ import {closeModalOrder} from './services/order/orderSlice'
 import {getUser} from './services/user/userRequests'
 import ProtectedRouteElement from './components/ProtectedRouteElement';
 import ProtectedRoutePassword from './components/ProtectedRoutePassword';
-import { useAppDispatch } from './services/types/storeType';
+import { useAppDispatch  } from'./store';
 function App() {
   const dispatch = useAppDispatch();
   useEffect(() => {

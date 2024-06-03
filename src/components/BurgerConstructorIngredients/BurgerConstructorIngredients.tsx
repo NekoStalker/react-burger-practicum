@@ -2,12 +2,13 @@ import React, { useCallback,FC } from 'react';
 import { ConstructorElement,DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerConstructorIngredientsStyles from './BurgerConstructorIngredients.module.css';
 import BurgerConstructorItem from '../BurgerConstructorItem/BurgerConstructorItem';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { shallowEqual } from 'react-redux';
 import {removeBurgerIngredient,addBurgerIngredient,changeIngredientsOrder,BUN_NOT_SELECTED} from '../../services/burgerConstructor/burgerConstructorSlice';
 import {addIngredientCount,removeIngredientCount} from '../../services/ingredients/ingredientsSlice';
 import {IIngredientState} from '../../services/types/ingredientTypes';
 import {useDrop} from 'react-dnd';
-import { useAppDispatch } from '../../services/types/storeType';
+
+import { useAppDispatch , useAppSelector} from '../../store';
 import {  IBurgerConstructorStore} from '../../services/types/burgerConstructorTypes';
 const  BurgerConstructorIngredients:FC = () => {
   const dispatch = useAppDispatch();
@@ -21,7 +22,7 @@ const  BurgerConstructorIngredients:FC = () => {
       dispatch(addIngredientCount(item));
   },
   });
-  const { selectedBun, internalIngredients } = useSelector(
+  const { selectedBun, internalIngredients } = useAppSelector(
     (store: IBurgerConstructorStore) => ({
         selectedBun: store.burgerConstructor.selectedBun,
         internalIngredients: store.burgerConstructor.internalIngredients,

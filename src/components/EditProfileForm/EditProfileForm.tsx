@@ -2,14 +2,14 @@ import React,{useState,useEffect, FC} from 'react';
 import profileFormStyles from './EditProfileForm.module.css';
 import { EmailInput,Button,PasswordInput, Input} from '@ya.praktikum/react-developer-burger-ui-components'
 import { IUserStore } from '../../services/types/userTypes';
-import { useAppDispatch } from '../../services/types/storeType';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useAppDispatch , useAppSelector} from '../../store';
+import {  shallowEqual } from 'react-redux';
 import {patchUser, logoutUser} from '../../services/user/userRequests'
 
 const EditProfileForm:FC = () => {
 
     const dispatch = useAppDispatch();
-    const {isLoading,error,userData} = useSelector((store:IUserStore)=> ({
+    const {isLoading,error,userData} = useAppSelector((store:IUserStore)=> ({
         isLoading: store.user.isLoading,
         error: store.user.error,
         userData: store.user.userInfo

@@ -2,17 +2,17 @@ import React,{useState, FC} from 'react';
 import loginStyles from './LoginPage.module.css';
 import { EmailInput,Button,PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../services/types/storeType';
+import { useAppDispatch , useAppSelector} from '../../store';
 import { IUserStore } from '../../services/types/userTypes';
 import {loginUser} from '../../services/user/userRequests';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import {  shallowEqual } from 'react-redux';
 import {handleResponse} from '../../utils/fetchRequest';
 import AppHeader from '../../components/AppHeader/AppHeader';
 const LoginPage:FC = () => {
   const [form, setValue] = useState({ email: '', password: '' });
   const navigate = useNavigate();  
   const dispatch = useAppDispatch();
-  const {isLoading,error} = useSelector((store: IUserStore)=> ({
+  const {isLoading,error} = useAppSelector((store: IUserStore)=> ({
     isLoading: store.user.isLoading,
     error: store.user.error,
   }),shallowEqual);

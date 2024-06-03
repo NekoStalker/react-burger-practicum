@@ -1,4 +1,5 @@
- export const data = [
+ import {IIngredientState} from '../services/types/ingredientTypes'
+ export const data: IIngredientState[] = [
     {
        "_id":"60666c42cc7b410027a1a9b1",
        "name":"Краторная булка N-200i",

@@ -1,20 +1,19 @@
 import React,{useEffect, FC} from "react"
 import ingredientDetailsStyle from './IngredientDetails.module.css'
 import IngredientComposition from "../IngredientComposition/IngredientComposition"
-import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { setCurrentIngredient } from "../../services/currentIngredient/currentIngredientSlice";
 import { Puff } from 'react-loader-spinner';
 import {IIngredientsStore, ICurrentIngredientStore,ICurrentIngredientState} from '../../services/types/ingredientTypes';
 
-import { useAppDispatch } from '../../services/types/storeType';
+import { useAppDispatch , useAppSelector} from '../../store';
 
 const IngredientDetails:FC = () => {
     const dispatch =  useAppDispatch();
     const { ingredientId } = useParams(); 
-    const ingredient = useSelector((store:ICurrentIngredientStore) => store.currentIngredient);
-    const ingredients = useSelector((store:IIngredientsStore) => store.ingredients.allIngredients);
-    const isLoading = useSelector((store:IIngredientsStore) => store.ingredients.isLoading);
+    const ingredient = useAppSelector((store:ICurrentIngredientStore) => store.currentIngredient);
+    const ingredients = useAppSelector((store:IIngredientsStore) => store.ingredients.allIngredients);
+    const isLoading = useAppSelector((store:IIngredientsStore) => store.ingredients.isLoading);
     useEffect(() => {
         if (ingredientId) {
             const currIngredient: ICurrentIngredientState | undefined  = ingredients.find((ingredient) => ingredient._id === ingredientId) ;

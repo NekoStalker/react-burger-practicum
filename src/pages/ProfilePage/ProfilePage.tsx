@@ -4,8 +4,8 @@ import EditProfileForm from '../../components/EditProfileForm/EditProfileForm';
 import { useNavigate, NavLink,Routes, Route }  from 'react-router-dom';
 import { Puff } from 'react-loader-spinner';
 import { IUserStore } from '../../services/types/userTypes';
-import { useAppDispatch } from '../../services/types/storeType';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useAppDispatch ,useAppSelector } from'../../store';
+import { shallowEqual } from 'react-redux';
 import {patchUser, logoutUser} from '../../services/user/userRequests'
 import AppHeader from '../../components/AppHeader/AppHeader';
 import OrdersList from '../../components/OrderList/OrdersList';
@@ -13,7 +13,7 @@ const  ProfilePagePage:FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  const {isLoading,error} = useSelector((store:IUserStore)=> ({
+  const {isLoading,error} = useAppSelector((store:IUserStore)=> ({
     isLoading: store.user.isLoading,
     error: store.user.error,
 

@@ -2,16 +2,16 @@ import React,{FC,useState} from 'react';
 import registerStyles from './RegisterPage.module.css';
 import { EmailInput,PasswordInput,Button,Input} from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { shallowEqual } from 'react-redux';
 import {registerUser} from '../../services/user/userRequests';
 import { IUserStore } from '../../services/types/userTypes';
 import {handleResponse} from "../../utils/fetchRequest";
-import { useAppDispatch } from '../../services/types/storeType';
+import { useAppDispatch ,useAppSelector } from'../../store';
 import AppHeader from '../../components/AppHeader/AppHeader';
 const RegisterPage:FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const {isLoading,error} = useSelector((store:IUserStore)=> ({
+  const {isLoading,error} = useAppSelector((store:IUserStore)=> ({
     isLoading: store.user.isLoading,
     error: store.user.error,
   }),shallowEqual);

@@ -3,10 +3,10 @@ import passwordStyles from './RestorePassword.module.css';
 import {Input, Button,PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate } from 'react-router-dom';
 import {resetPasswordUser} from '../../services/user/userRequests';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { shallowEqual } from 'react-redux';
 import { IUserStore } from '../../services/types/userTypes';
 import {handleResponse} from "../../utils/fetchRequest";
-import { useAppDispatch } from '../../services/types/storeType';
+import { useAppDispatch ,useAppSelector } from'../../store';
 import AppHeader from '../../components/AppHeader/AppHeader';
 const RestorePasswordPage:FC = () => {
   const dispatch = useAppDispatch();
@@ -15,7 +15,7 @@ const RestorePasswordPage:FC = () => {
   const onChange = (e:React.ChangeEvent<HTMLInputElement>):void => {
       setValue({...form,[e.target.name]: e.target.value})
   };
-  const {isLoading,error} = useSelector((store:IUserStore)=> ({
+  const {isLoading,error} = useAppSelector((store:IUserStore)=> ({
     isLoading: store.user.isLoading,
     error: store.user.error,
   }),shallowEqual);
