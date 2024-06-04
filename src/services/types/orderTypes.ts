@@ -30,7 +30,7 @@ export interface IOrder {
   updatedAt: string;
 }
 export interface ICurrentOrderState extends IOrder {
-  openModal: boolean;
+  openModal?: boolean;
 }
 export interface IOrdersResponse {
   success: boolean;

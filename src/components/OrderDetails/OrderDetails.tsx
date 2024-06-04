@@ -39,7 +39,7 @@ const OrderDetails:FC = () => {
             </div>
             <div className={`${orderDetailStyles.order_details_footer} mt-10`}>
                 <span className="text text_type_main-default text_color_inactive">{formatDate(order.createdAt)}</span>
-                <span className={orderDetailStyles.order_details_ingredient_price}><p className="text text_type_digits-default pr-2">228 </p> <CurrencyIcon  type="primary"/></span>
+                <span className={orderDetailStyles.order_details_ingredient_price}><p className="text text_type_digits-default pr-2">{price} </p> <CurrencyIcon  type="primary"/></span>
             </div>
         </section>
      );

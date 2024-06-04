@@ -53,8 +53,8 @@ const AppContent:FC = () => {
         <Route path="/ingredients" element={<IngredientPage />}>
           <Route path=":ingredientId" element={<IngredientDetails />} />
         </Route>
-        <Route path="/ingredients" element={<IngredientPage />}>
-          <Route path=":ingredientId" element={<IngredientDetails />} />
+        <Route path="/feed" element={<OrdersPage />}>
+          <Route path=":orderId" element={<IngredientDetails />} />
         </Route>
         <Route
           path="/login"
@@ -75,10 +75,6 @@ const AppContent:FC = () => {
         <Route
           path="/profile/*"
           element={<ProtectedRouteElement element={<ProfilePagePage />} forGuest={false} path="/login" />}
-        />
-        <Route
-          path="/feed"
-          element={<OrdersPage />} 
         />
         <Route
           path="/info"

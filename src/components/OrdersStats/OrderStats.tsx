@@ -6,10 +6,10 @@ import { RootState, useAppSelector } from '../../store';
 const OrderStats:FC = () => {
   const { orders, total, totalToday} = useAppSelector((state: RootState) => state.orders);
   const lastOrders = orders.filter(order => order.status === "pending").slice(0,5).map((order) => (
-    <p className="text text_type_digits-default mb-2">{order.number}</p>
+    <p key={order._id} className="text text_type_digits-default mb-2">{order.number}</p>
   ));
   const lastPrepared = orders.filter(order => order.status === "done").slice(0,5).map((order) => (
-    <p className="text text_type_digits-default mb-2">{order.number}</p>
+    <p key={order._id} className="text text_type_digits-default mb-2">{order.number}</p>
   ));
     return (
       <section className={orderStatsStyles.orderStats_section}>

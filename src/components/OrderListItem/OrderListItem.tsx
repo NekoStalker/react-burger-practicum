@@ -2,16 +2,29 @@ import React, {useState, useRef, RefObject,useEffect,FC, ReactNode } from 'react
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import orderListItemStyles from './OrderListItem.module.css';
 import { data } from '../../utils/data';
-import { AppDispatch, RootState, useAppSelector } from '../../store';
+import { AppDispatch, RootState, useAppDispatch, useAppSelector } from '../../store';
 
 import { useDispatch } from 'react-redux';
 import { IOrder } from '../../services/types/orderTypes';
 import { formatDate } from '../../utils/datetime';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { openModalOrder } from '../../services/currentOrder/currentOrderSlice';
 interface OrderListItemProps {
   order?: IOrder;
   size: boolean;
 }
 const OrderListItem:FC<OrderListItemProps> = ({order,size}) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const dispatch = useAppDispatch();
+  const handleOpenModal = (e:React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    e.preventDefault(); 
+    if(order){
+      dispatch(openModalOrder(order));
+      navigate(`/orders/${order._id}`, { state: { background: location } });
+    }
+}
+
   const { allIngredients} = useAppSelector((state: RootState) => state.ingredients);
   const orderIngredients = allIngredients.filter(ingredient => order?.ingredients.includes(ingredient._id));
   const orderIngredientsView: ReactNode = orderIngredients.map((ingredient, index) => (
@@ -36,7 +49,7 @@ const OrderListItem:FC<OrderListItemProps> = ({order,size}) => {
 
   const price = orderIngredients.reduce((acc, ingredient) => { return acc + ingredient.price}, 0);
     return (
-      <div className={size ? orderListItemStyles.order_item : orderListItemStyles.order_item_small} >
+      <div className={size ? orderListItemStyles.order_item : orderListItemStyles.order_item_small} onClick={handleOpenModal} >
         <div className={size ? orderListItemStyles.order_item__header : orderListItemStyles.order_item__header_small }>
           <span className="text text_type_digits-default">#{order?.number}</span>
           <span className="text text_type_main-default text_color_inactive">{formatDate(order?.createdAt)}</span>

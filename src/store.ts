@@ -18,6 +18,15 @@ import {
   ordersListOpen,
   ordersListClose,
 } from './services/ordersLive/actions';
+import {
+  ordersHistoryConnect,
+  ordersHistoryDisconnect,
+  orderHistoryConnecting,
+  ordersHistoryMessage,
+  ordersHistoryError,
+  ordersHistoryOpen,
+  ordersHistoryClose,
+} from './services/ordersLiveHistory/actions';
 import { socketMiddleware } from './services/middleware/customMiddleware';
 import currentOrderSlice from './services/currentOrder/currentOrderSlice';
 
@@ -30,9 +39,18 @@ const wsActions = {
   onError: ordersListError,
   onMessage: ordersListMessage,
 };
+const wsHistoryActions = {
+  wsConnect: ordersHistoryConnect,
+  wsDisconnect: ordersHistoryDisconnect,
+  wsConnecting: orderHistoryConnecting,
+  onOpen: ordersHistoryOpen,
+  onClose: ordersHistoryClose,
+  onError: ordersHistoryError,
+  onMessage: ordersHistoryMessage,
+};
+const liveOrderMiddleWare = socketMiddleware(wsActions);
 
-const liveTableMiddleWare = socketMiddleware(wsActions);
-
+const liveHistoryMiddleWare = socketMiddleware(wsHistoryActions);
 const store = configureStore({
   reducer: {
     ingredients: ingredientsSlice,
@@ -44,7 +62,7 @@ const store = configureStore({
     user: userSlice,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(liveTableMiddleWare),
+    getDefaultMiddleware().concat(liveOrderMiddleWare,liveHistoryMiddleWare),
 });
 
 export type RootState = ReturnType<typeof store.getState>;
