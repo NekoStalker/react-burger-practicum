@@ -62,6 +62,7 @@
     display: flex;
 }
 .ingredient_image {
+   
     max-width: 100%;
     max-height: 100%;
     transform: scale(1.8);
@@ -88,6 +89,7 @@
     padding-bottom: 24px;
     gap: 24px;
     justify-content: space-evenly;
+    
    
 } 
 .order_item__header_small {
@@ -108,7 +110,7 @@
 }
 .order_item__specification_ingredients_small {
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     align-items: center;
     position: relative;
     margin-left: 16px;
@@ -136,4 +138,13 @@
     transform: scale(1.8);
     display: block;
 }
+.ingredient_image_text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
+}
+.blured {
+    filter: blur(1px);
+}

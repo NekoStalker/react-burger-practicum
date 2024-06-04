@@ -23,12 +23,15 @@ export interface IOrderStore {
 export interface IOrder {
   ingredients: string[];
   _id: string;
-  status: 'done' | 'pending' | 'created'; 
+  status: string; 
+  name: string;
   number: number;
   createdAt: string;
   updatedAt: string;
 }
-
+export interface ICurrentOrderState extends IOrder {
+  openModal: boolean;
+}
 export interface IOrdersResponse {
   success: boolean;
   orders: IOrder[];

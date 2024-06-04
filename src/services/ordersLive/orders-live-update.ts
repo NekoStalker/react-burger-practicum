@@ -31,6 +31,6 @@ export const liveOrdersUpdate = (prevOrders: IOrdersState, response: IOrdersResp
         orders: response.orders,
         total: response.total,
         totalToday: response.totalToday
-    };;
+    };
 };
 

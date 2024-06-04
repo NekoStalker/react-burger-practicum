@@ -6,6 +6,6 @@ import ForgotPasswordPage from './ForgotPassword/ForgotPassword';
 import RestorePasswordPage from './RestorePassword/RestorePassword';
 import ProfilePagePage from './ProfilePage/ProfilePage';
 import IngredientPage from './IngredientPage/IngredientPage';
-import OrderPage from './OrderPage/OrderPage';
+import OrdersPage from './OrdersPage/OrdersPage';
 import OrderInfoPage from './OrderInfoPage/OrderInfoPage';
-export {MainPage,NotFound404,LoginPage, RegisterPage,ForgotPasswordPage,RestorePasswordPage,ProfilePagePage, IngredientPage,OrderPage,OrderInfoPage}
+export {MainPage,NotFound404,LoginPage, RegisterPage,ForgotPasswordPage,RestorePasswordPage,ProfilePagePage, IngredientPage,OrdersPage,OrderInfoPage}

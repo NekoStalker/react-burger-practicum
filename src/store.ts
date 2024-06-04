@@ -1,3 +1,4 @@
+
 import { configureStore } from '@reduxjs/toolkit';
 import ingredientsSlice from './services/ingredients/ingredientsSlice';
 import burgerConstructorSlice from './services/burgerConstructor/burgerConstructorSlice';
@@ -18,6 +19,7 @@ import {
   ordersListClose,
 } from './services/ordersLive/actions';
 import { socketMiddleware } from './services/middleware/customMiddleware';
+import currentOrderSlice from './services/currentOrder/currentOrderSlice';
 
 const wsActions = {
   wsConnect: ordersListConnect,
@@ -38,6 +40,7 @@ const store = configureStore({
     currentIngredient: currentIngredientSlice,
     order: orderSlice,
     orders: liveListOrder,
+    currentOrder: currentOrderSlice,
     user: userSlice,
   },
   middleware: (getDefaultMiddleware) =>
@@ -50,4 +53,5 @@ export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unk
 export const useAppDispatch = () => dispatchHook<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = selectorHook;
 export const useSelector: TypedUseSelectorHook<RootState> = selectorHook;
+
 export default store;

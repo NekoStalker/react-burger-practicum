@@ -1,5 +1,5 @@
 import React, {FC ,useEffect } from 'react';
-import { MainPage, LoginPage, NotFound404, RegisterPage, RestorePasswordPage, ForgotPasswordPage, ProfilePagePage, IngredientPage, OrderPage, OrderInfoPage } from './pages';
+import { MainPage, LoginPage, NotFound404, RegisterPage, RestorePasswordPage, ForgotPasswordPage, ProfilePagePage, IngredientPage, OrdersPage, OrderInfoPage } from './pages';
 import IngredientDetails from './components/IngredientDetails/IngredientDetails';
 import OrderDetailsModal from './components/OrderDetailsModal/OrderDetailsModal';
 import Modal from './components/Modal/Modal';
@@ -13,6 +13,7 @@ import {getUser} from './services/user/userRequests'
 import ProtectedRouteElement from './components/ProtectedRouteElement';
 import ProtectedRoutePassword from './components/ProtectedRoutePassword';
 import { useAppDispatch  } from'./store';
+import OrderInfoModal from './components/OrderInfoModal/OrderInfoModal';
 function App() {
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -52,6 +53,9 @@ const AppContent:FC = () => {
         <Route path="/ingredients" element={<IngredientPage />}>
           <Route path=":ingredientId" element={<IngredientDetails />} />
         </Route>
+        <Route path="/ingredients" element={<IngredientPage />}>
+          <Route path=":ingredientId" element={<IngredientDetails />} />
+        </Route>
         <Route
           path="/login"
           element={<ProtectedRouteElement element={<LoginPage />} forGuest={true} path="/profile" />}
@@ -74,7 +78,7 @@ const AppContent:FC = () => {
         />
         <Route
           path="/feed"
-          element={<OrderPage />} 
+          element={<OrdersPage />} 
         />
         <Route
           path="/info"
@@ -91,7 +95,12 @@ const AppContent:FC = () => {
            <Route path="/order/:orderId" element={<Modal title='' onClose={handleCloseModalOrder}>
                                                     <OrderDetailsModal />
                                                   </Modal>
-            }
+            
+          } />
+          <Route path="/feed/:number" element={<Modal title='' onClose={handleCloseModalOrder}>
+                                                    <OrderInfoModal />
+                                                  </Modal> }
+            
           />
         </Routes>
       )}

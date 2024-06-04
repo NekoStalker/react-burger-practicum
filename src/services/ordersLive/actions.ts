@@ -1,5 +1,5 @@
 import { createAction } from "@reduxjs/toolkit";
-import { ordersAction,IOrdersResponse } from '../types/orderTypes';
+import { IOrdersResponse } from '../types/orderTypes';
 export const ordersListConnect = createAction<string>('ORDERS_LIST_WS_CONNECT');
 export const ordersListDisconnect = createAction('ORDERS_LIST_WS_DISCONNECT');
 export const orderListConnecting = createAction('ORDERS_LIST_WS_CONNECTING');

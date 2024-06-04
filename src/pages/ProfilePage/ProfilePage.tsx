@@ -73,7 +73,7 @@ const  ProfilePagePage:FC = () => {
         </section>
         <Routes>
           <Route path='/' element={<EditProfileForm/>} />
-          <Route path='/orders' element={<OrdersList size="large" />} />
+          <Route path='/orders' element={<OrdersList orders={[]} size="large" />} />
         </Routes>
         
        {/* )} */}
