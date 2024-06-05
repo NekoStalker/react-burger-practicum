@@ -1,29 +1,42 @@
-import React, {FC} from "react";
+import React, {FC, useEffect} from "react";
 import orderInfoStyles from "./OrderInfoModal.module.css";
 import { shallowEqual, useSelector } from "react-redux";
-import {IOrderStore} from '../../services/types/orderTypes';
+import {IOrder, IOrderStore} from '../../services/types/orderTypes';
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { data } from "../../utils/data";
 import OrderDetailsIngredient from "../OrderDetailsIngredient/OrderDetailsIngredient";
-import { RootState, useAppSelector } from "../../store";
+import { RootState, useAppDispatch, useAppSelector } from "../../store";
 import { formatDate } from "../../utils/datetime";
+import { useParams } from "react-router-dom";
+import { setCurrentOrder } from "../../services/currentOrder/currentOrderSlice";
+import { getUniqueIngredientsWithCounts, translateOrderStatus } from "../../utils/orderFormat";
+import { IIngredientState } from "../../services/types/ingredientTypes";
 const OrderInfoModal:FC = () => {
     const order = useAppSelector((state: RootState) => state.currentOrder,shallowEqual );
     const { allIngredients} = useAppSelector((state: RootState) => state.ingredients,shallowEqual );
-    const orderIngredients = allIngredients.filter(ingredient => order?.ingredients.includes(ingredient._id));
-    const ingredients = [];
-    const price = orderIngredients.reduce((acc, ingredient) => { return acc + ingredient.price}, 0);
-    for(let i = 0; i < orderIngredients.length; i++){
-         ingredients.push(<OrderDetailsIngredient ingredient={orderIngredients[i]} count={1}/>)
-    } 
+    const orders = useAppSelector((store: RootState) => store.ordersList.orders);
+    const { number } = useParams(); 
+    const dispatch = useAppDispatch()
+    useEffect(() => {
+        if (number) {
+            const order:IOrder | undefined = orders.find((order) => order.number.toString() === number)
+            if(order)
+            dispatch(setCurrentOrder(order)); 
+        }
+      }, [number,orders, dispatch]); 
+
+    const { translatedStatus, classStatusName } = translateOrderStatus(order?.status);
+    const orderIngredients =  order.ingredients.map(id => allIngredients.find(ingredient => ingredient._id === id)).filter(ingredient => ingredient !== undefined) as IIngredientState[];;
+    const price = orderIngredients.reduce((acc, ingredient) => { return ingredient ?  acc + ingredient.price : acc + 0 }, 0);
+    const uniqueIngredientsWithCounts = getUniqueIngredientsWithCounts(orderIngredients);
+    const ingredients = uniqueIngredientsWithCounts.map((ingredient) => (
+        <OrderDetailsIngredient key={ingredient.item._id} ingredient={ingredient.item} count={ingredient.count} />
+    ));
     return (
         <section className={orderInfoStyles.order_details}>
-            <div className={orderInfoStyles.order_details_header}>
-                <h3 className={`text text_type_digits-default`}>#{order.number}</h3>
-            </div>
             <div className={`${orderInfoStyles.order_details_title} mt-10 mb-15`}>
-                <h3 className="text text_type_main-medium">{order.name}</h3>
-                <p className="text text_type_main-default">{order.status}</p>
+                <h3 className={`text text_type_main-${order.name.length > 40 ? 'small' : 'medium'}`}>{order.name}</h3>
+                <p className={`text text_type_main-default ${classStatusName}`}>{translatedStatus}</p>
             </div>
             <div className={`${orderInfoStyles.order_details_content}`}>
                 <h3 className="text text_type_main-medium mb-6">Состав:</h3>
@@ -31,8 +44,8 @@ const OrderInfoModal:FC = () => {
                     {ingredients}
                 </div>  
             </div>
-            <div className={`${orderInfoStyles.order_details_footer} mt-10`}>
-                <span className="text text_type_main-default text_color_inactive">{formatDate(order.createdAt)}</span>
+            <div className={`${orderInfoStyles.order_details_footer} mt-2`}>
+            <span className={orderInfoStyles.order_details_ingredient_date}><p className="text text_type_main-default text_color_inactive">{formatDate(order.createdAt)}</p></span>
                 <span className={orderInfoStyles.order_details_ingredient_price}><p className="text text_type_digits-default pr-2">{price} </p> <CurrencyIcon  type="primary"/></span>
             </div>
         </section>

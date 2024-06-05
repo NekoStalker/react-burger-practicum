@@ -3,17 +3,19 @@ import { MainPage, LoginPage, NotFound404, RegisterPage, RestorePasswordPage, Fo
 import IngredientDetails from './components/IngredientDetails/IngredientDetails';
 import OrderDetailsModal from './components/OrderDetailsModal/OrderDetailsModal';
 import Modal from './components/Modal/Modal';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { closeModalIngredient } from './services/currentIngredient/currentIngredientSlice';
 import { getAllIngredients } from './services/ingredients/ingredientsRequests';
 import {resetConstructor} from './services/burgerConstructor/burgerConstructorSlice'
-import {closeModalOrder} from './services/order/orderSlice'
+import {closeModalOrder} from './services/order/orderSlice';
+import { closeModalOrderDetails } from './services/currentOrder/currentOrderSlice';
 import {getUser} from './services/user/userRequests'
 import ProtectedRouteElement from './components/ProtectedRouteElement';
 import ProtectedRoutePassword from './components/ProtectedRoutePassword';
 import { useAppDispatch  } from'./store';
 import OrderInfoModal from './components/OrderInfoModal/OrderInfoModal';
+import OrderDetails from './components/OrderDetails/OrderDetails';
 function App() {
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -37,7 +39,7 @@ const AppContent:FC = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const handleCloseModalIngredient = () => {
-    dispatch(closeModalIngredient({}));
+    dispatch(closeModalIngredient());
     navigate(-1);
   }
   const handleCloseModalOrder = ():void => {
@@ -45,6 +47,10 @@ const AppContent:FC = () => {
     dispatch(getAllIngredients());
     dispatch(resetConstructor());
     dispatch(closeModalOrder());
+  }
+  const handleCloseModalOrderInfo = ():void => {
+    navigate(-1);
+    dispatch(closeModalOrderDetails());
   }
   return (
     <>
@@ -54,7 +60,7 @@ const AppContent:FC = () => {
           <Route path=":ingredientId" element={<IngredientDetails />} />
         </Route>
         <Route path="/feed" element={<OrdersPage />}>
-          <Route path=":orderId" element={<IngredientDetails />} />
+          <Route path=":number" element={<OrderDetails />} />
         </Route>
         <Route
           path="/login"
@@ -84,6 +90,7 @@ const AppContent:FC = () => {
         <Route path="*" element={<NotFound404 />} />
       </Routes>
       {background && (
+        
         <Routes>
           <Route path="/ingredients/:ingredientId" element={<Modal title="Детали ингредиента" onClose={handleCloseModalIngredient}>
                                                                 <IngredientDetails />
@@ -93,7 +100,7 @@ const AppContent:FC = () => {
                                                   </Modal>
             
           } />
-          <Route path="/feed/:number" element={<Modal title='' onClose={handleCloseModalOrder}>
+          <Route path="/feed/:number" element={<Modal title={'#'+location.pathname.split('/').pop()} onClose={handleCloseModalOrderInfo}>
                                                     <OrderInfoModal />
                                                   </Modal> }
             

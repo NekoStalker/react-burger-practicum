@@ -4,14 +4,24 @@ import EditProfileForm from '../../components/EditProfileForm/EditProfileForm';
 import { useNavigate, NavLink,Routes, Route }  from 'react-router-dom';
 import { Puff } from 'react-loader-spinner';
 import { IUserStore } from '../../services/types/userTypes';
-import { useAppDispatch ,useAppSelector } from'../../store';
+import { RootState, useAppDispatch ,useAppSelector } from'../../store';
 import { shallowEqual } from 'react-redux';
 import {patchUser, logoutUser} from '../../services/user/userRequests'
 import AppHeader from '../../components/AppHeader/AppHeader';
 import OrdersList from '../../components/OrderList/OrdersList';
+import { ordersListConnect, ordersListDisconnect } from '../../services/ordersLive/actions';
+import { ordersWebSocket } from '../../services/api';
+import { ordersHistoryConnect, ordersHistoryDisconnect } from '../../services/ordersLiveHistory/actions';
 const  ProfilePagePage:FC = () => {
   const navigate = useNavigate();
+  const { orders, status } = useAppSelector((state: RootState) => state.ordersHistory, shallowEqual);
   const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(ordersHistoryConnect("wss://norma.nomoreparties.space/orders"));
+    return () => {
+      dispatch(ordersHistoryDisconnect());
+    };
+  }, [dispatch]);
 
   const {isLoading,error} = useAppSelector((store:IUserStore)=> ({
     isLoading: store.user.isLoading,
@@ -73,7 +83,7 @@ const  ProfilePagePage:FC = () => {
         </section>
         <Routes>
           <Route path='/' element={<EditProfileForm/>} />
-          <Route path='/orders' element={<OrdersList orders={[]} size="large" />} />
+          <Route path='/orders' element={<OrdersList orders={orders} size="large" />} />
         </Routes>
         
        {/* )} */}

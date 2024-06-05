@@ -101,6 +101,11 @@
     flex-direction: row;
     align-items: center;
 }
+.order_details_ingredient_date {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
 .order_details_date {
     
 }

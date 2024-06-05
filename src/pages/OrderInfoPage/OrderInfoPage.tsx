@@ -1,29 +1,26 @@
-import React,{FC} from 'react'
+import React,{FC, useEffect} from 'react'
 import orderPageStyle from './OrderInfoPage.module.css'
 import AppHeader from '../../components/AppHeader/AppHeader';
-import OrderStats from '../../components/OrdersStats/OrderStats';
-import OrdersList from '../../components/OrderList/OrdersList';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux'
-import { Puff } from 'react-loader-spinner'
-import { IIngredientsStore } from '../../services/types/ingredientTypes';
-import OrderDetails from '../../components/OrderDetails/OrderDetails';
-const OrderInfoPage:FC = () => {
 
+import OrderDetails from '../../components/OrderDetails/OrderDetails';
+import { Outlet, useParams } from 'react-router-dom';
+import { useAppDispatch } from '../../store';
+const OrderInfoPage:FC = () => {
+  const params = useParams();
+  const dispatch =  useAppDispatch();
+  const order = params.orderId;
+  // useEffect(() => {
+
+  //     dispatch(getAllIngredients())
+    
+  // }, [dispatch, ingredient, params.ingredientId]);
+
+ 
   return (
     <div className={orderPageStyle.App}>
       <AppHeader />
       <main className={orderPageStyle.main}>
         <OrderDetails />
-        {/* {isLoading && <Puff
-            visible={true}
-            height="180"
-            width="180"
-            color="blue"
-            ariaLabel="puff-loading"
-            wrapperClass="loader"
-        />}  */}
-       
-          
       </main>
     </div>
   );

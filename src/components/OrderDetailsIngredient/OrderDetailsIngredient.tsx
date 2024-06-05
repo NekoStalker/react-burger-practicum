@@ -21,7 +21,7 @@ const OrderDetailsIngredient:FC<OrderDetailsIngredientProps> = ({ ingredient, co
           <h3 className="text text_type_main-default">{ingredient.name}</h3>
         </div>
         <div className={orderDetailsIngredientStyles.order_details_ingredient_price}>
-          <p className="text text_type_digits-default pr-2">{ingredient.price} </p> <CurrencyIcon type="primary" />
+          <p className="text text_type_digits-small pr-2">{`${count}x${ingredient.price}`} </p> <CurrencyIcon type="primary" />
         </div>
       </div>
      );

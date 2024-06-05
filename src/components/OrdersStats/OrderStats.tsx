@@ -4,7 +4,7 @@ import orderStatsStyles from './OrderStats.module.css';
 import { RootState, useAppSelector } from '../../store';
 
 const OrderStats:FC = () => {
-  const { orders, total, totalToday} = useAppSelector((state: RootState) => state.orders);
+  const { orders, total, totalToday} = useAppSelector((state: RootState) => state.ordersList);
   const lastOrders = orders.filter(order => order.status === "pending").slice(0,5).map((order) => (
     <p key={order._id} className="text text_type_digits-default mb-2">{order.number}</p>
   ));

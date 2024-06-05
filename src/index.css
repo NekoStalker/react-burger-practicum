@@ -17,7 +17,17 @@ code {
   left: 50%; 
   transform: translate(-50%, -50%); 
 }
+.text_color_white {
+  color: white;
+}
 
+.text_color_yellow {
+  color: yellow;
+}
+
+.text_color_turquoise {
+  color: turquoise;
+}
 * {
   scrollbar-width: thin; /* "auto", "thin" или "none" */
   scrollbar-color: #8585AD transparent; /* цвет ползунка и дорожки */

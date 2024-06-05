@@ -3,6 +3,7 @@ import {BASE_URL} from '../api';
 import {request,fetchWithRefresh} from '../../utils/fetchRequest'
 import {IIngredientState} from '../types/ingredientTypes';
 import {ICreatedOrder} from '../types/orderTypes';
+import { getCookie } from '../../utils/cookie';
 export const apiOrdersAdd = `${BASE_URL}/orders`;
 export const getOrderModal = createAsyncThunk<ICreatedOrder, IIngredientState[] >(
     'order/getOrderModal',
@@ -10,6 +11,7 @@ export const getOrderModal = createAsyncThunk<ICreatedOrder, IIngredientState[] 
             if (!ingredients || ingredients.length === 0) {
                 throw new Error('No ingredients provided');
             }
+            const accessToken = getCookie('accessToken');
             const reqBody =  {
                 "ingredients": Array.from(ingredients).map(element => element._id).filter(id => id),
             }
@@ -17,6 +19,7 @@ export const getOrderModal = createAsyncThunk<ICreatedOrder, IIngredientState[] 
                 method: 'POST',
                 headers:  {
                     'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`,
                 },
                 body: JSON.stringify(reqBody),
             });

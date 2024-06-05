@@ -22,13 +22,13 @@ export const currentIngredientSlice = createSlice({
         setCurrentIngredient: (state, action: PayloadAction<Partial<ICurrentIngredientState>>) => {
             return { ...state, ...action.payload };
         },
-        clearCurrentIngredient: (state, action: PayloadAction<Partial<ICurrentIngredientState>>) => {
+        clearCurrentIngredient: (state) => {
             return initialState;
         },
         openModalIngredient: (state, action: PayloadAction<Partial<ICurrentIngredientState>>) => {
             return { ...state, ...action.payload, openModal:true };
         },
-        closeModalIngredient: (state, action: PayloadAction<Partial<ICurrentIngredientState>>) => {
+        closeModalIngredient: (state) => {
             return initialState;
         },
 

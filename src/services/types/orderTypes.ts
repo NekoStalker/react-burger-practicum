@@ -6,10 +6,12 @@ export interface ICreatedOrder {
   success: boolean;
 }
 
-
+export type OrderStatusProps = {
+  status: 'created' | 'pending' | 'done' | '';
+};
 export interface IOrderState {
   orderID: number | null; 
-  orderStatus: string;
+  orderStatus: OrderStatusProps['status'];
   createdOrder: ICreatedOrder | null;
   isLoading: boolean;
   error: string | null;

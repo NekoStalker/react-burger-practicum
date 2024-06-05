@@ -6,6 +6,7 @@ import userSlice from './services/user/userSlice';
 import currentIngredientSlice from './services/currentIngredient/currentIngredientSlice';
 import orderSlice from './services/order/orderSlice';
 import liveListOrder from './services/ordersLive/reducer';
+import liveHistoryOrder from './services/ordersLiveHistory/reducer';
 import { TypedUseSelectorHook, useDispatch as dispatchHook, useSelector as selectorHook } from 'react-redux';
 import { Action } from 'redux';
 import { ThunkAction } from 'redux-thunk';
@@ -57,7 +58,8 @@ const store = configureStore({
     burgerConstructor: burgerConstructorSlice,
     currentIngredient: currentIngredientSlice,
     order: orderSlice,
-    orders: liveListOrder,
+    ordersList: liveListOrder,
+    ordersHistory: liveHistoryOrder,
     currentOrder: currentOrderSlice,
     user: userSlice,
   },

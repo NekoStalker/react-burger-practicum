@@ -9,6 +9,7 @@ import { IOrder } from '../../services/types/orderTypes';
 import { formatDate } from '../../utils/datetime';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { openModalOrder } from '../../services/currentOrder/currentOrderSlice';
+import { translateOrderStatus } from '../../utils/orderFormat';
 interface OrderListItemProps {
   order?: IOrder;
   size: boolean;
@@ -21,10 +22,10 @@ const OrderListItem:FC<OrderListItemProps> = ({order,size}) => {
     e.preventDefault(); 
     if(order){
       dispatch(openModalOrder(order));
-      navigate(`/orders/${order._id}`, { state: { background: location } });
+      navigate(`/feed/${order.number}`, { state: { background: location } });
     }
-}
-
+  }
+  const { translatedStatus, classStatusName } = translateOrderStatus(order?.status);
   const { allIngredients} = useAppSelector((state: RootState) => state.ingredients);
   const orderIngredients = allIngredients.filter(ingredient => order?.ingredients.includes(ingredient._id));
   const orderIngredientsView: ReactNode = orderIngredients.map((ingredient, index) => (
@@ -47,7 +48,7 @@ const OrderListItem:FC<OrderListItemProps> = ({order,size}) => {
     </div>
 )).slice(0, 6).reverse();
 
-  const price = orderIngredients.reduce((acc, ingredient) => { return acc + ingredient.price}, 0);
+  const price = orderIngredients.reduce((acc, ingredient) => { return ingredient.type=== "bun" ? acc + (ingredient.price * 2 ) : acc + ingredient.price }, 0);
     return (
       <div className={size ? orderListItemStyles.order_item : orderListItemStyles.order_item_small} onClick={handleOpenModal} >
         <div className={size ? orderListItemStyles.order_item__header : orderListItemStyles.order_item__header_small }>
@@ -55,9 +56,9 @@ const OrderListItem:FC<OrderListItemProps> = ({order,size}) => {
           <span className="text text_type_main-default text_color_inactive">{formatDate(order?.createdAt)}</span>
         </div>
         <div className={size ? orderListItemStyles.order_item__name : orderListItemStyles.order_item__name_small}>
-          <h3 className={`text text_type_main-${(order && order?.name.length > 36) ? 'default' : 'medium'}`}>{order?.name}</h3>
+          <h3 className={`text text_type_main-${(order && order?.name.length > 35) ? 'default' : 'medium'}`}>{order?.name}</h3>
       
-          {size && <p className="text text_type_main-small">Создан</p>}
+          {size &&    <p className={`text text_type_main-small ${classStatusName}`}>{translatedStatus}</p>}
         </div>
         <div className={size ? orderListItemStyles.order_item__specification : orderListItemStyles.order_item__specification_small }>
           <div className={size ? orderListItemStyles.order_item__specification_ingredients : orderListItemStyles.order_item__specification_ingredients_small }>

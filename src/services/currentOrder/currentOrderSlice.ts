@@ -1,5 +1,5 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import { ICurrentOrderState } from '../types/orderTypes';
+import { ICurrentOrderState, IOrder } from '../types/orderTypes';
 const initialState: ICurrentOrderState = {
     ingredients: [],
     _id: '',
@@ -14,20 +14,20 @@ export const currentOrderSlice = createSlice({
     name: 'currentOrder',
     initialState: initialState,
     reducers: {
-        setCurrentOrder: (state, action: PayloadAction<Partial<ICurrentOrderState>>) => {
+        setCurrentOrder: (state, action: PayloadAction<Partial<IOrder>>) => {
             return { ...state, ...action.payload };
         },
-        clearCurrentOrder: (state, action: PayloadAction<Partial<ICurrentOrderState>>) => {
+        clearCurrentOrder: (state) => {
             return initialState;
         },
         openModalOrder: (state, action: PayloadAction<Partial<ICurrentOrderState>>) => {
             return { ...state, ...action.payload, openModal:true };
         },
-        closeModalOrder: (state, action: PayloadAction<Partial<ICurrentOrderState>>) => {
+        closeModalOrderDetails: (state) => {
             return initialState;
         },
 
     }
 });
-export const {setCurrentOrder,clearCurrentOrder,openModalOrder,closeModalOrder } = currentOrderSlice.actions;
+export const {setCurrentOrder,clearCurrentOrder,openModalOrder,closeModalOrderDetails } = currentOrderSlice.actions;
 export default currentOrderSlice.reducer;
