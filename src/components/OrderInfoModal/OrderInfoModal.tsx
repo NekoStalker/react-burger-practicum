@@ -34,7 +34,7 @@ const OrderInfoModal:FC = () => {
     ));
     return (
         <section className={orderInfoStyles.order_details}>
-            <div className={`${orderInfoStyles.order_details_title} mt-10 mb-15`}>
+            <div className={`${orderInfoStyles.order_details_title} mt-5 mb-5`}>
                 <h3 className={`text text_type_main-${order.name.length > 40 ? 'small' : 'medium'}`}>{order.name}</h3>
                 <p className={`text text_type_main-default ${classStatusName}`}>{translatedStatus}</p>
             </div>

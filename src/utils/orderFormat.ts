@@ -1,4 +1,5 @@
 import { IIngredientState } from "../services/types/ingredientTypes";
+import { IOrder } from "../services/types/orderTypes";
 
 export const translateOrderStatus = (status: string | undefined) => {
     switch (status) {
@@ -9,13 +10,18 @@ export const translateOrderStatus = (status: string | undefined) => {
         case 'done':
             return { translatedStatus: 'Выполнен', classStatusName: 'text_color_turquoise' };
         case undefined:
-            return { translatedStatus: 'Отсутствует статус', classStatusName: '' };
+            return { translatedStatus: 'Отменен', classStatusName: 'text_color_red' };
         default:
             return { translatedStatus: 'Неизвестный статус', classStatusName: '' };
     }
 };
 
-
+export const calculateOrderPrice = (order: IOrder, ingredients: IIngredientState[]): number => {
+  return order.ingredients.reduce((total, ingredientId) => {
+      const ingredient = ingredients.find((ing) => ing._id === ingredientId);
+      return total + (ingredient ? ingredient.price : 0);
+    }, 0);
+};
 export const getUniqueIngredientsWithCounts = (ingredients: IIngredientState[]): { item: IIngredientState; count: number }[] => {
     if (!ingredients) {
       return [];

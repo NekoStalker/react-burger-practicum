@@ -16,6 +16,8 @@ import ProtectedRoutePassword from './components/ProtectedRoutePassword';
 import { useAppDispatch  } from'./store';
 import OrderInfoModal from './components/OrderInfoModal/OrderInfoModal';
 import OrderDetails from './components/OrderDetails/OrderDetails';
+import EditProfileForm from './components/EditProfileForm/EditProfileForm';
+import OrdersList from './components/OrderList/OrdersList';
 function App() {
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -64,24 +66,48 @@ const AppContent:FC = () => {
         </Route>
         <Route
           path="/login"
-          element={<ProtectedRouteElement element={<LoginPage />} forGuest={true} path="/profile" />}
+          element={
+            <ProtectedRouteElement forGuest={true}>
+              <LoginPage />
+            </ProtectedRouteElement>
+          }
         />
         <Route
           path="/register"
-          element={<ProtectedRouteElement element={<RegisterPage />} forGuest={true} path="/profile" />}
+          element={
+            <ProtectedRouteElement forGuest={true}>
+              <RegisterPage />
+            </ProtectedRouteElement>
+          }
         />
         <Route
           path="/forgot-password"
-          element={<ProtectedRouteElement element={<ForgotPasswordPage />} forGuest={true} path="/profile" />}
+          element={
+            <ProtectedRouteElement forGuest={true}>
+              <ForgotPasswordPage />
+            </ProtectedRouteElement>
+          }
         />
         <Route
           path="/reset-password"
-          element={<ProtectedRoutePassword element={<RestorePasswordPage />}  />}
-        /> 
+          element={
+            <ProtectedRoutePassword>
+              <RestorePasswordPage />
+            </ProtectedRoutePassword>
+          }
+        />
+        
         <Route
           path="/profile/*"
-          element={<ProtectedRouteElement element={<ProfilePagePage />} forGuest={false} path="/login" />}
-        />
+          element={
+            <ProtectedRouteElement>
+              <ProfilePagePage />
+            </ProtectedRouteElement>
+          }
+        >
+          <Route path="" element={<EditProfileForm />} />
+          <Route path="orders/:number" element={<OrderDetails />} />
+        </Route>
         <Route
           path="/info"
           element={<OrderInfoPage/>}
@@ -103,8 +129,11 @@ const AppContent:FC = () => {
           <Route path="/feed/:number" element={<Modal title={'#'+location.pathname.split('/').pop()} onClose={handleCloseModalOrderInfo}>
                                                     <OrderInfoModal />
                                                   </Modal> }
-            
           />
+          <Route path= "/profile/orders/:number" element={<Modal title={'#'+location.pathname.split('/').pop()} onClose={handleCloseModalOrderInfo}>
+                                                    <OrderInfoModal />
+                                                    </Modal> }
+          />                                             
         </Routes>
       )}
     </>

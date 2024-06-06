@@ -5,11 +5,11 @@ import { RootState, useAppSelector } from '../../store';
 
 const OrderStats:FC = () => {
   const { orders, total, totalToday} = useAppSelector((state: RootState) => state.ordersList);
-  const lastOrders = orders.filter(order => order.status === "pending").slice(0,5).map((order) => (
-    <p key={order._id} className="text text_type_digits-default mb-2">{order.number}</p>
+  const lastOrders = orders.filter(order => order.status === "pending").slice(0,20).map((order) => (
+    <div key={order._id} ><p className="text text_type_digits-default mb-2">{order.number}</p></div>
   ));
-  const lastPrepared = orders.filter(order => order.status === "done").slice(0,5).map((order) => (
-    <p key={order._id} className="text text_type_digits-default mb-2">{order.number}</p>
+  const lastPrepared = orders.filter(order => order.status === "done").slice(0,20).map((order) => (
+    <div key={order._id} ><p className="text text_type_digits-default mb-2">{order.number}</p></div>
   ));
     return (
       <section className={orderStatsStyles.orderStats_section}>
@@ -17,12 +17,14 @@ const OrderStats:FC = () => {
             <div className={orderStatsStyles.orderStats_header_elem }>
               <h4 className="text text_type_main-medium">Готовы:</h4>
               <div className={orderStatsStyles.orderStats_header_elem_nums }>
-              {lastPrepared}
+                {lastPrepared}
               </div>
             </div>
             <div className={orderStatsStyles.orderStats_header_elem }>
               <h4 className="text text_type_main-medium mb-6">В работе:</h4>
-              {lastOrders}
+              <div className={orderStatsStyles.orderStats_header_elem_list}>
+                {lastOrders}
+              </div>
           </div>
         </div>
           

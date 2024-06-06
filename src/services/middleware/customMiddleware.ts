@@ -17,38 +17,65 @@ export type TwsActionsTypes = {
 export const socketMiddleware = (wsActions: TwsActionsTypes): Middleware => {
   return ((store: MiddlewareAPI) => {
     let socket: WebSocket | null = null;
+    let isConnected = false;
+    let reconnectTimer = 0;
+    let url = '';
     return next => (action: AnyAction) => {
       const { dispatch } = store;
-      const { type, payload } = action;
-      const { wsConnect, wsDisconnect, wsSendMessage, wsConnecting, onOpen, onClose, onError, onMessage } = wsActions;
+      const { wsConnect, wsDisconnect, wsSendMessage, onOpen, 
+        onClose, onError, onMessage, wsConnecting } = wsActions;
+
       if (wsConnect.match(action)) {
-        socket = new WebSocket(payload);
+        console.log('connect')
+        url = action.payload;
+        socket = new WebSocket(url);
+        isConnected = true;
+        dispatch(wsConnecting());
       }
+
       if (socket) {
-        socket.onopen = event => {
+        socket.onopen = () => {
           dispatch(onOpen());
         };
 
-        socket.onerror = event => {
-          dispatch(onError(event.toString()));
+        socket.onerror = err  => {
+          console.log(err);
         };
 
         socket.onmessage = event => {
           const { data } = event;
           const parsedData = JSON.parse(data);
-
           dispatch(onMessage(parsedData));
         };
 
         socket.onclose = event => {
-          dispatch(onClose(event.code.toString()));
+          if (event.code !== 1000) {
+            console.log('error')
+            dispatch(onError(event.code.toString()));
+          }
+          console.log('close')
+          dispatch(onClose('1000'));
+
+          if (isConnected) {
+            dispatch(wsConnecting());
+            reconnectTimer = window.setTimeout(() => {
+              dispatch(wsConnect(url));
+            }, 3000)
+          }
+
         };
 
-        if (wsSendMessage?.match(action)) {
+        if (wsSendMessage && wsSendMessage.match(action)) {
+          console.log('send')
           socket.send(JSON.stringify(action.payload));
         }
+
         if (wsDisconnect.match(action)) {
-          socket.close(1000);
+          console.log('disconnect')
+          clearTimeout(reconnectTimer)
+          isConnected = false;
+          reconnectTimer = 0;
+          socket.close();
           dispatch(onClose('1000'));
         }
       }

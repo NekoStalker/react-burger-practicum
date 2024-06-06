@@ -13,7 +13,7 @@ export const getOrderModal = createAsyncThunk<ICreatedOrder, IIngredientState[] 
             }
             const accessToken = getCookie('accessToken');
             const reqBody =  {
-                "ingredients": Array.from(ingredients).map(element => element._id).filter(id => id),
+                "ingredients": Array.from(ingredients).map(element => element._id),
             }
             const respose:ICreatedOrder = await fetchWithRefresh<ICreatedOrder>(apiOrdersAdd, {
                 method: 'POST',

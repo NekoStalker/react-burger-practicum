@@ -1,10 +1,11 @@
 
 
-import {IOrder,ordersActionType,IOrdersResponse, Data, Insert, Update, Delete,ordersAction, Move,IOrdersState} from "../types/orderTypes"
+import {IOrdersResponse,IOrdersState} from "../types/orderTypes"
 
 
 
-export const liveOrdersUpdate = (prevOrders: IOrdersState, response: IOrdersResponse): IOrdersState => {
+export const liveOrdersUpdate = (prevOrders: IOrdersState, response: any): IOrdersState => {
+    console.log(response);
     return {
         ...prevOrders,
         orders: response.orders,

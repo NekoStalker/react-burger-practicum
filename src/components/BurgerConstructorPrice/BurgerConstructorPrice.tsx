@@ -38,7 +38,7 @@ const BurgerConstructorPrice:FC = () => {
         console.error('No bun selected');
         return;
       }
-      const orderIngredients: IIngredientState[] = [selectedBun, ...ingredients];
+      const orderIngredients: IIngredientState[] = [selectedBun, ...ingredients, selectedBun];
       try
       {
         const res= await dispatch(getOrderModal(orderIngredients)).unwrap();

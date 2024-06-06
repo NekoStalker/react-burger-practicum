@@ -31,8 +31,14 @@ export interface IOrder {
   createdAt: string;
   updatedAt: string;
 }
-export interface ICurrentOrderState extends IOrder {
+export interface ICalcOrder extends IOrder {
+  calcIngredients?: Map<string, number>,
+  price? : number,
+}
+export interface ICurrentOrderState extends ICalcOrder {
   openModal?: boolean;
+  error?: string | null;
+  isLoading: boolean;
 }
 export interface IOrdersResponse {
   success: boolean;

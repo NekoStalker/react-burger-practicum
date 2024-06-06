@@ -4,7 +4,7 @@
     flex-direction: column;
     box-sizing: border-box;
     width: 852px;    
-    height: 246px;
+    min-height: 246px;
     background-color: #2f2f37;
     border: 1px solid #1C1C21;
     border-radius: 40px;
@@ -38,7 +38,7 @@
 }
 .order_item__specification_ingredients {
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     align-items: center;
     position: relative;
     margin-left: 16px;
@@ -75,7 +75,7 @@
     flex-direction: column;
     box-sizing: border-box;
     width: 584px;    
-    height: 214px;
+    min-height: 214px;
     background-color: #2f2f37;
     border: 1px solid #1C1C21;
     border-radius: 40px;

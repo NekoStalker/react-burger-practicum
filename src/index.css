@@ -28,6 +28,9 @@ code {
 .text_color_turquoise {
   color: turquoise;
 }
+.text_color_red {
+  color: red;
+}
 * {
   scrollbar-width: thin; /* "auto", "thin" или "none" */
   scrollbar-color: #8585AD transparent; /* цвет ползунка и дорожки */

@@ -31,7 +31,7 @@ import {
 import { socketMiddleware } from './services/middleware/customMiddleware';
 import currentOrderSlice from './services/currentOrder/currentOrderSlice';
 
-const wsActions = {
+const wsListActions = {
   wsConnect: ordersListConnect,
   wsDisconnect: ordersListDisconnect,
   wsConnecting: orderListConnecting,
@@ -49,7 +49,7 @@ const wsHistoryActions = {
   onError: ordersHistoryError,
   onMessage: ordersHistoryMessage,
 };
-const liveOrderMiddleWare = socketMiddleware(wsActions);
+const liveOrderMiddleWare = socketMiddleware(wsListActions);
 
 const liveHistoryMiddleWare = socketMiddleware(wsHistoryActions);
 const store = configureStore({

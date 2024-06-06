@@ -8,12 +8,19 @@ import { Puff } from 'react-loader-spinner';
 import { useAppDispatch, RootState, useAppSelector } from '../../store';
 import { ordersListConnect, ordersListDisconnect, ordersListMessage } from '../../services/ordersLive/actions';
 import { ordersWebSocket } from '../../services/api';
-import { WebsocketStatus } from '../../services/types/orderTypes';
+import { ICalcOrder, WebsocketStatus } from '../../services/types/orderTypes';
 import { Outlet, useMatch } from 'react-router-dom';
 import classNames from 'classnames';
+import { calculateOrderPrice } from '../../utils/orderFormat';
 const OrdersPage: FC = () => {
   const dispatch = useAppDispatch();
   const { orders, status, error } = useAppSelector((state: RootState) => state.ordersList, shallowEqual);
+  const ingredients = useAppSelector((state: RootState) =>state.ingredients.allIngredients, shallowEqual);
+  const ordersWithPrices:ICalcOrder[] = orders.map((order) => ({
+    ...order,
+    price: calculateOrderPrice(order, ingredients),
+  }))
+  .sort((a, b) => b.number - a.number);
   const match = useMatch('/feed/:number');
 
   useEffect(() => {
@@ -44,7 +51,7 @@ const OrdersPage: FC = () => {
             )}
             {status !== WebsocketStatus.OFFLINE && !error && (
               <>
-                <OrdersList orders={orders} size="small" />
+                <OrdersList orders={ordersWithPrices} size="small" />
                 <OrderStats />
               </>
             )}

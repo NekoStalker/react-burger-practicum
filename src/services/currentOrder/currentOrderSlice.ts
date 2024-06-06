@@ -1,5 +1,6 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import { ICurrentOrderState, IOrder } from '../types/orderTypes';
+import {fetchOrderById} from './currentOrderRequests'
 const initialState: ICurrentOrderState = {
     ingredients: [],
     _id: '',
@@ -9,12 +10,14 @@ const initialState: ICurrentOrderState = {
     createdAt: '',
     updatedAt: '',
     openModal: false,
+    isLoading: false,
+    error: '',
 };
 export const currentOrderSlice = createSlice({
     name: 'currentOrder',
     initialState: initialState,
     reducers: {
-        setCurrentOrder: (state, action: PayloadAction<Partial<IOrder>>) => {
+        setCurrentOrder: (state, action: PayloadAction<Partial<ICurrentOrderState>>) => {
             return { ...state, ...action.payload };
         },
         clearCurrentOrder: (state) => {
@@ -26,8 +29,23 @@ export const currentOrderSlice = createSlice({
         closeModalOrderDetails: (state) => {
             return initialState;
         },
-
+    },
+    extraReducers: (builder) => {
+        builder
+          .addCase(fetchOrderById.pending, (state) => {
+            state.isLoading = true;
+            state.error = null;
+          })
+          .addCase(fetchOrderById.fulfilled, (state, action: PayloadAction<IOrder>) => {
+            state.isLoading = false;
+            return { ...state, ...action.payload };
+          })
+          .addCase(fetchOrderById.rejected, (state, action: PayloadAction<any>) => {
+            state.isLoading = false;
+            state.error = action.payload;
+          });
     }
+    
 });
 export const {setCurrentOrder,clearCurrentOrder,openModalOrder,closeModalOrderDetails } = currentOrderSlice.actions;
 export default currentOrderSlice.reducer;

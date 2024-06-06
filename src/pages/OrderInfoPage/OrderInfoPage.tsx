@@ -7,8 +7,7 @@ import { Outlet, useParams } from 'react-router-dom';
 import { useAppDispatch } from '../../store';
 const OrderInfoPage:FC = () => {
   const params = useParams();
-  const dispatch =  useAppDispatch();
-  const order = params.orderId;
+
   // useEffect(() => {
 
   //     dispatch(getAllIngredients())

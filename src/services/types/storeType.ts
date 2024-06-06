@@ -19,7 +19,7 @@ export interface ApiError {
     details?: string;
   }
   export interface IProtectedRouteElement {
-    element: React.ReactNode;
+    children?: React.ReactNode | JSX.Element;
   }
 export interface IProtectedUserRouteElement extends IProtectedRouteElement{  
   forGuest: boolean;

@@ -30,7 +30,7 @@ export const liveHistoryOrder = createReducer(initialState, (builder) => {
       state.error = null;
     })
     .addCase(ordersHistoryError, (state, action) => {
-      state.error = action.payload;
+      state.error = action.payload.toString();
     })
     .addCase(ordersHistoryClose, (state) => {
       state.status = WebsocketStatus.OFFLINE;
