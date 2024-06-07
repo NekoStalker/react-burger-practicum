@@ -1,6 +1,7 @@
-import {createSlice} from '@reduxjs/toolkit'
-const initialState = {
-    _id: -1,
+import {PayloadAction, createSlice} from '@reduxjs/toolkit';
+import {ICurrentIngredientState} from '../types/ingredientTypes';
+const initialState: ICurrentIngredientState = {
+    _id: '',
     name: '',
     type: '',
     proteins: -1,
@@ -13,21 +14,21 @@ const initialState = {
     image_large: '',
     __v: -1,
     openModal: false,
-}
+};
 export const currentIngredientSlice = createSlice({
     name: 'currentIngredient',
     initialState: initialState,
     reducers: {
-        setCurrentIngredient: (state, action) => {
+        setCurrentIngredient: (state, action: PayloadAction<Partial<ICurrentIngredientState>>) => {
             return { ...state, ...action.payload };
         },
-        clearCurrentIngredient: (state, action) => {
+        clearCurrentIngredient: (state) => {
             return initialState;
         },
-        openModalIngredient: (state, action) => {
+        openModalIngredient: (state, action: PayloadAction<Partial<ICurrentIngredientState>>) => {
             return { ...state, ...action.payload, openModal:true };
         },
-        closeModalIngredient: (state, action) => {
+        closeModalIngredient: (state) => {
             return initialState;
         },
 

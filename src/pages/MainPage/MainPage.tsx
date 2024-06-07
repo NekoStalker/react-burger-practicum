@@ -7,7 +7,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { useSelector, useDispatch, shallowEqual } from 'react-redux'
 import { Puff } from 'react-loader-spinner'
-import { IIngredientsStore } from '../../types/ingredientTypes';
+import { IIngredientsStore } from '../../services/types/ingredientTypes';
 const MainPage:FC = () => {
   const {isLoading,error} = useSelector((store:IIngredientsStore) => ({
     isLoading: store.ingredients.isLoading,

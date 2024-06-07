@@ -1,6 +1,6 @@
 import {IIngredientState} from './ingredientTypes';
 export interface IBurgerConstructorState {
-    selectedBun: IIngredientState;
+    selectedBun: IIngredientState | null;
     price: number;
     internalIngredients:  IBurgerConstructorIngredient[];
 }

@@ -1,9 +1,11 @@
-import {createSlice} from '@reduxjs/toolkit'
-import {getOrderModal} from './orderRequests'
-const initialState = {
+import {ICreatedOrder,IOrderState} from '../types/orderTypes';
+import {createSlice,PayloadAction} from '@reduxjs/toolkit';
+import {getOrderModal} from './orderRequests';
+
+const initialState: IOrderState = {
     orderID: -1,
     orderStatus: "",
-    createdOrder: {},
+    createdOrder: null,
     isLoading: false,
     error: null,
     openModal: false,
@@ -12,7 +14,7 @@ export const orderSlice = createSlice({
     name: 'order',
     initialState,
     reducers: {
-        closeModalOrder: (state, action) => {
+        closeModalOrder: (state) => {
             return initialState;
         },
     },
@@ -22,7 +24,7 @@ export const orderSlice = createSlice({
                 state.isLoading = true;
                 state.error = null;
             })
-            .addCase(getOrderModal.fulfilled, (state, action) => {
+            .addCase(getOrderModal.fulfilled, (state, action:PayloadAction<ICreatedOrder>) => {
                 state.isLoading = false;
                 state.createdOrder = action.payload;
                 state.orderID = action.payload.order.number;
@@ -30,7 +32,7 @@ export const orderSlice = createSlice({
             })
             .addCase(getOrderModal.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.payload;
+                state.error = action.error.message || 'Failed to create order';
             })
     }
 });

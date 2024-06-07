@@ -3,29 +3,36 @@ import passwordStyles from './RestorePassword.module.css';
 import {Input, Button,PasswordInput} from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate } from 'react-router-dom';
 import {resetPasswordUser} from '../../services/user/userRequests';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-import { IUserStore } from '../../types/userTypes';
+import { shallowEqual } from 'react-redux';
+import { IUserStore } from '../../services/types/userTypes';
 import {handleResponse} from "../../utils/fetchRequest";
+import { useAppDispatch ,useAppSelector } from'../../store';
 import AppHeader from '../../components/AppHeader/AppHeader';
 const RestorePasswordPage:FC = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [form, setValue] = useState({ password: '',code: '' });
   const navigate = useNavigate();
   const onChange = (e:React.ChangeEvent<HTMLInputElement>):void => {
       setValue({...form,[e.target.name]: e.target.value})
   };
-  const {isLoading,error} = useSelector((store:IUserStore)=> ({
+  const {isLoading,error} = useAppSelector((store:IUserStore)=> ({
     isLoading: store.user.isLoading,
     error: store.user.error,
   }),shallowEqual);
   const loginNav = ():void =>{
     navigate('/login');
   }
-  const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>):Promise<any> => {
-    e.preventDefault(); 
-     // @ts-ignore 
-    const res: Response = await dispatch(resetPasswordUser(form))
-    handleResponse(res,loginNav, "Restore error");
+  const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+    e.preventDefault();
+    try { 
+    const res = await dispatch(resetPasswordUser(form)).unwrap();
+      if (res.success) {
+        loginNav()
+      }
+    }
+    catch(error) {
+      console.error('Login failed:', error);
+    }
   };
   return (
     <>

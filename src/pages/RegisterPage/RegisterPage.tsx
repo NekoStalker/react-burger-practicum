@@ -2,31 +2,37 @@ import React,{FC,useState} from 'react';
 import registerStyles from './RegisterPage.module.css';
 import { EmailInput,PasswordInput,Button,Input} from '@ya.praktikum/react-developer-burger-ui-components'
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { shallowEqual } from 'react-redux';
 import {registerUser} from '../../services/user/userRequests';
-import { IUserStore } from '../../types/userTypes';
-import { TDispatch, ApiError} from '../../types/storeType';
+import { IUserStore } from '../../services/types/userTypes';
 import {handleResponse} from "../../utils/fetchRequest";
+import { useAppDispatch ,useAppSelector } from'../../store';
 import AppHeader from '../../components/AppHeader/AppHeader';
 const RegisterPage:FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch() as TDispatch;
-  const {isLoading,error} = useSelector((store:IUserStore)=> ({
+  const dispatch = useAppDispatch();
+  const {isLoading,error} = useAppSelector((store:IUserStore)=> ({
     isLoading: store.user.isLoading,
     error: store.user.error,
   }),shallowEqual);
-  const [form, setValue] = useState({ email: '', password: '',login: ''});
+  const [form, setValue] = useState({ email: '', password: '',name: ''});
   const loginNav = ():void =>{
     navigate('/login');
   } 
   const onChange = (e:React.ChangeEvent<HTMLInputElement>):void => {
       setValue({...form,[e.target.name]: e.target.value})
   };
-  const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>):Promise<any> => {
+  const handleSubmit =  async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
-    // @ts-ignore 
-    const res: Response = await dispatch(registerUser(form));
-    handleResponse(res, loginNav, "Registration failed ")
+    try{
+      const res = await dispatch(registerUser(form)).unwrap();
+      if (res.success) {
+        loginNav()
+      }
+    }
+    catch(error) {
+      console.error('Registration failed:', error);
+    }
   };
   return (
     <>
@@ -38,8 +44,8 @@ const RegisterPage:FC = () => {
             <Input
               type='text'
               onChange={onChange}
-              value={form.login}
-              name={'login'}
+              value={form.name}
+              name={'name'}
               placeholder="Имя" onPointerEnterCapture onPointerLeaveCapture              
             />
             <EmailInput

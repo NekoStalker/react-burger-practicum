@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import modalStyles from './Modal.module.css';
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
+
 interface IModal {
     onClose: () => void;
     children: React.ReactNode;
@@ -10,8 +11,6 @@ interface IModal {
 }
 const Modal: FC<IModal> = ({onClose, title, children}) => {
     const [modalRoot, setModalRoot] = useState<HTMLElement | null>(null);
-    
-
     useEffect(() => {
         const element = document.getElementById('modal-root');
         setModalRoot(element); 

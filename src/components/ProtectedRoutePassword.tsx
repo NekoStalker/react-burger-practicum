@@ -1,14 +1,15 @@
 import React, { FC, ReactNode } from 'react';
-import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 import { Puff } from 'react-loader-spinner';
-import { IUserStore } from '../types/userTypes';
-import {IProtectedRouteElement} from '../types/storeType'
+import { IUserStore } from '../services/types/userTypes';
+import {IProtectedRouteElement} from '../services/types/storeType'
+import { RootState, useAppSelector } from '../store';
 
-const ProtectedRoutePassword: FC<IProtectedRouteElement> = ({ element }) => {
-  const emailSubmitted = useSelector((store: IUserStore) => store.user.emailSubmitted);
-  const user = useSelector((store: IUserStore) => store.user.userInfo);
-  const isLoading = useSelector((store: IUserStore) => store.user.isLoading);
+
+const ProtectedRoutePassword: FC<IProtectedRouteElement> = ({ children }) => {
+  const emailSubmitted = useAppSelector((store: RootState) => store.user.emailSubmitted);
+  const user = useAppSelector((store: RootState) => store.user.userInfo);
+  const isLoading = useAppSelector((store: RootState) => store.user.isLoading);
 
   if (isLoading) {
     return <Puff height="180" width="180" color="blue" ariaLabel="puff-loading" wrapperClass="loader" />;
@@ -22,7 +23,7 @@ const ProtectedRoutePassword: FC<IProtectedRouteElement> = ({ element }) => {
     return <Navigate to="/" replace />;
   }
 
-  return <>{element}</>; 
+  return <>{children}</>;
 };
 
 export default ProtectedRoutePassword;

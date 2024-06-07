@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import Burgeringredient from '../BurgerIngredient/BurgerIngredient';
 import BurgerIngredientsGroupStyle from './BurgerIngredientsGroup.module.css';
-import {IIngredientState} from '../../types/ingredientTypes';
+import {IIngredientState} from '../../services/types/ingredientTypes';
 
 
 interface BurgerIngredientsGroupProps {

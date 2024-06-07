@@ -1,0 +1,115 @@
+.order_details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    text-align: center;
+    max-width: 640px;
+    height: 550px;
+    padding: 20px; /* Add padding if needed for spacing */
+}
+
+.order_details_header {
+    display: flex;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+.order_details_number {
+    font-size: 18px;
+    color: #00d1ff;
+}
+
+.order_details_title {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+    align-self: stretch; 
+}
+
+
+.order_details_status {
+    text-align: center;
+    color: #00ff00;
+    margin-bottom: 20px;
+}
+
+.order_details_content {
+    display: flex;
+    align-self: start;
+    margin-bottom: 20px;
+    flex-direction: column;
+    align-self: stretch; 
+    text-align: left;
+}
+
+
+.order_details_ingredient {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 16px;
+}
+.order_details_ingredient_container {
+    gap: 16px;
+    display: flex;
+    align-self: start;
+    flex-direction: column;
+    align-self: stretch; 
+    text-align: left;
+    margin-right: 24px;
+    max-height: 312px;
+    overflow-y: auto;
+}
+.order_details_ingredient_item {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%; 
+    background: #131316;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+    inset 0px 0px 0px 2px #801AB2;
+}
+
+.order_details_ingredient_image {
+    max-width: 100%;
+    max-height: 100%;
+    transform: scale(1.8);
+    display: block;
+}
+
+
+.order_details_footer {
+    align-self: normal; 
+    display: flex;
+    flex-grow: 1; 
+    justify-content: space-between; 
+    height: auto; 
+}  
+.order_details_ingredient_name {
+    text-align: left;
+    min-width: 414px;
+}
+.order_details_ingredient_price {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.order_details_ingredient_date {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.order_details_date {
+    
+}
+
+.order_details_price {
+   
+}

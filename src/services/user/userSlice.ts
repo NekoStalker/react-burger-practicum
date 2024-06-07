@@ -1,16 +1,17 @@
-import {createSlice} from '@reduxjs/toolkit'
-import {registerUser,loginUser,resetPasswordUser,forgotPasswordUser,logoutUser,getUser,patchUser} from './userRequests'
-const initialState = {
+import {createSlice,PayloadAction} from '@reduxjs/toolkit';
+import {registerUser,loginUser,resetPasswordUser,forgotPasswordUser,logoutUser,getUser,patchUser} from './userRequests';
+import {IUserState,IRegistrationResponse,TAuthorizationResponse,IResetPasswordResponse, IRefreshTokenResponse} from '../types/userTypes'
+const initialState: IUserState = {
     userInfo: null,
     isLoggedIn: false,
     isLoading: false,
-    response: null,
     error: null,
-    emailSubmitted: false, 
+    emailSubmitted: false,
+    message: "",
 }
 export const userSlice = createSlice({
     name: 'user',
-    initialState: initialState,
+    initialState,
     reducers: {
         resetError: (state) => {
             state.error = null
@@ -22,54 +23,53 @@ export const userSlice = createSlice({
                 state.isLoading = true;
                 state.error = null;
             })
-            .addCase(registerUser.fulfilled, (state, action) => {
+            .addCase(registerUser.fulfilled, (state, action: PayloadAction<IRegistrationResponse>) => {
                 state.isLoading = false;
-                state.userInfo = action.payload;
+                state.userInfo = action.payload.user;
                 state.isLoggedIn = true;
             })
             .addCase(registerUser.rejected, (state, action) => {
                 state.isLoading = false;
-                console.log(action);
-                state.error = action.error || 'Ошибка регистрации';
+                state.error = action.error.message || 'Ошибка регистрации';
             })
             .addCase(loginUser.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
             })
-            .addCase(loginUser.fulfilled, (state, action) => {
+            .addCase(loginUser.fulfilled, (state, action: PayloadAction<TAuthorizationResponse>) => {
                 state.isLoading = false;
                 state.userInfo = action.payload.user;
                 state.isLoggedIn = true;
             })
             .addCase(loginUser.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.error || 'Ошибка авторизации';
+                state.error = action.error.message || 'Ошибка авторизации';
             })
             .addCase(forgotPasswordUser.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
             })
-            .addCase(forgotPasswordUser.fulfilled, (state, action) => {
+            .addCase(forgotPasswordUser.fulfilled, (state, action: PayloadAction<IResetPasswordResponse>) => {
                 state.isLoading = false;
                 state.emailSubmitted = true;
-                state.response = action.payload
+                state.message = action.payload.message;
             })
             .addCase(forgotPasswordUser.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.error || 'Ошибка восстановления пароля';
+                state.error = action.error.message || 'Ошибка восстановления пароля';
             })
             .addCase(resetPasswordUser.pending, (state) => {
                 state.isLoading = true;
                 state.emailSubmitted = false;
                 state.error = null;
             })
-            .addCase(resetPasswordUser.fulfilled, (state, action) => {
+            .addCase(resetPasswordUser.fulfilled, (state, action: PayloadAction<IResetPasswordResponse>) => {
                 state.isLoading = false;
-                state.response = action.payload;
+                state.message = action.payload.message;
             })
             .addCase(resetPasswordUser.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.error || 'Ошибка восстановления пароля';
+                state.error = action.error.message || 'Ошибка восстановления пароля';
             })
             .addCase(logoutUser.pending, (state) => {
                 state.isLoading = true;
@@ -81,37 +81,37 @@ export const userSlice = createSlice({
             })
             .addCase(logoutUser.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.error || 'Ошибка  выхода';
+                state.error = action.error.message || 'Ошибка  выхода';
             })
             .addCase(getUser.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
             })
-            .addCase(getUser.fulfilled, (state, action) => {
+            .addCase(getUser.fulfilled, (state, action: PayloadAction<IRefreshTokenResponse>) => {
                 state.isLoading = false;
                 state.isLoggedIn = true;
-                state.userInfo = action.payload;
+                state.userInfo = action.payload.user;
             })
             .addCase(getUser.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.error || 'Ошибка обновления сессии';
+                state.error = action.error.message  || 'Ошибка обновления сессии';
             })
             .addCase(patchUser.pending, (state) => {
                 state.isLoading = true;
                 state.error = null;
             })
-            .addCase(patchUser.fulfilled, (state, action) => {
+            .addCase(patchUser.fulfilled, (state, action: PayloadAction<IRefreshTokenResponse>) => {
                 state.isLoading = false;
-                state.userInfo = action.payload;
+                state.userInfo = action.payload.user;
             })
             .addCase(patchUser.rejected, (state, action) => {
                 state.isLoading = false;
-                state.error = action.error || 'Ошибка обновления данных';
+                state.error = action.error.message || 'Ошибка обновления данных';
             })
            
 
     }
 });
-export const {setUser} = userSlice.actions;
+export const {resetError} = userSlice.actions;
 
 export default userSlice.reducer;

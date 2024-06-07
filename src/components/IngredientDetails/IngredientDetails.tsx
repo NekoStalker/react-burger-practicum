@@ -1,23 +1,26 @@
 import React,{useEffect, FC} from "react"
 import ingredientDetailsStyle from './IngredientDetails.module.css'
 import IngredientComposition from "../IngredientComposition/IngredientComposition"
-import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { setCurrentIngredient } from "../../services/currentIngredient/currentIngredientSlice";
 import { Puff } from 'react-loader-spinner';
-import {IIngredientsStore, ICurrentIngredientStore} from '../../types/ingredientTypes';
-import {TDispatch} from '../../types/storeType'
+import {ICurrentIngredientState} from '../../services/types/ingredientTypes';
+
+import {  useAppDispatch , useAppSelector} from '../../store';
 
 const IngredientDetails:FC = () => {
-    const dispatch = useDispatch() as TDispatch;
+    const dispatch =  useAppDispatch();
     const { ingredientId } = useParams(); 
-    const ingredient = useSelector((store:ICurrentIngredientStore) => store.currentIngredient);
-    const ingredients = useSelector((store:IIngredientsStore) => store.ingredients.allIngredients);
-    const isLoading = useSelector((store:IIngredientsStore) => store.ingredients.isLoading);
+    const ingredient = useAppSelector((store) => store.currentIngredient);
+    const ingredients = useAppSelector((store) => store.ingredients.allIngredients);
+    const isLoading = useAppSelector((store) => store.ingredients.isLoading);
     useEffect(() => {
         if (ingredientId) {
-            const currIngredient = ingredients.find((ingredient) => ingredient._id === ingredientId)
-            dispatch(setCurrentIngredient(currIngredient)); // Fetch the ingredient details by ID
+            const currIngredient: ICurrentIngredientState | undefined  = ingredients.find((ingredient) => ingredient._id === ingredientId) ;
+            if(currIngredient) {
+                dispatch(setCurrentIngredient(currIngredient)); 
+            }
+            
         }
       }, [ingredientId,ingredients, dispatch]); 
     return ( 

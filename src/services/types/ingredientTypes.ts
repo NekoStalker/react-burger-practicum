@@ -1,7 +1,7 @@
 export interface IIngredientState {
     _id: string;
     name: string;
-    type: 'main'| 'sauce'|'bun';
+    type: 'main'| 'sauce'|'bun'| '';
     proteins: number;
     fat: number;
     carbohydrates: number;
@@ -10,12 +10,14 @@ export interface IIngredientState {
     image: string;
     image_mobile: string;
     image_large: string;
-    __v?: number;
+    __v: number | 0;
 }
 export interface ICurrentIngredientState extends IIngredientState {
-  openModal: boolean;
+  openModal?: boolean;
 }
-
+export type IGetAllIngredientsPayload =  {
+  data: IIngredientState[];
+}
 export interface IAllIngredientsState {
   allIngredients: IIngredientState[];
   isLoading: boolean;

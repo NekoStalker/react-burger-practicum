@@ -1,22 +1,23 @@
-import {createSlice,nanoid } from '@reduxjs/toolkit'
-import update from 'immutability-helper'
+import {PayloadAction, createSlice,nanoid } from '@reduxjs/toolkit';
+import {IBurgerConstructorState, IBurgerConstructorIngredient} from '../types/burgerConstructorTypes';
+import {IIngredientState} from '../types/ingredientTypes';
+import update from 'immutability-helper';
 export const BUN_NOT_SELECTED = "Выберете булки";
-function updatePrice(state) {
-    const bunPrice = state.selectedBun.name !== BUN_NOT_SELECTED ? state.selectedBun.price * 2 : 0;
-    state.price = state.internalIngredients.reduce((acc, ingredient) => acc + ingredient.price, bunPrice);
-
+function updatePrice(state: IBurgerConstructorState) {
+  const bunPrice =  state.selectedBun && state.selectedBun?.name !== BUN_NOT_SELECTED ? state.selectedBun?.price * 2 : 0;
+  state.price = state.internalIngredients.reduce((acc, ingredient) => acc + ingredient.price, bunPrice || 0);
 }
-
+const initialState:IBurgerConstructorState = {
+  selectedBun: null,
+  price: 0,
+  internalIngredients: [],
+}
 export const burgerConstructor = createSlice({
     name: 'burgerConstructor',
-    initialState: {
-        selectedBun: {},
-        price: 0,
-        internalIngredients: [],
-    },
+    initialState,
     reducers: {
         addBurgerIngredient: {
-            reducer(state, action) {
+            reducer(state:IBurgerConstructorState, action: PayloadAction<{ ingredient: IBurgerConstructorIngredient }>)  {
               if(action.payload.ingredient.type === "bun"){
                 state.selectedBun = action.payload.ingredient;
               } else {
@@ -25,12 +26,12 @@ export const burgerConstructor = createSlice({
             
               updatePrice(state);
             },
-              prepare(ingredient) {
+              prepare(ingredient: IIngredientState) {
               return { payload: { ingredient: { ...ingredient, uid: nanoid() } } };
           },
         },
    
-        removeBurgerIngredient: (state, action) => {
+        removeBurgerIngredient: (state: IBurgerConstructorState, action: PayloadAction<string>) => {
             state.internalIngredients = state.internalIngredients.filter((ingredient) => ingredient.uid !== action.payload);
             updatePrice(state);
         },
@@ -46,8 +47,21 @@ export const burgerConstructor = createSlice({
               });
             state.internalIngredients = newConstructorIngredients;
         },
-        resetConstructor: (state) => {
-            state.selectedBun = { "name":BUN_NOT_SELECTED,"type":"bun"};
+        resetConstructor: (state: IBurgerConstructorState) => {
+            state.selectedBun = {
+              _id: '',
+              name: BUN_NOT_SELECTED,
+              type: 'bun',
+              proteins: -1,
+              fat: -1,
+              carbohydrates: -1,
+              calories: -1,
+              price: 0,
+              image: '',
+              image_mobile: '',
+              image_large: '',
+              __v: -1, 
+            };
             state.internalIngredients = [];
             state.price = 0;
         }

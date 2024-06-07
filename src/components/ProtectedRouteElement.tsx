@@ -1,28 +1,40 @@
-import React,{FC} from 'react';
-import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import React, { FC } from 'react';
+
+import { Navigate, useLocation, RouteProps } from 'react-router-dom';
 import { Puff } from 'react-loader-spinner';
-import {IUserStore} from '../types/userTypes';
-import {IProtectedUserRouteElement} from '../types/storeType'
+import {  useAppSelector } from '../store';
 
+type TProtectedRouteProps = RouteProps & {
+  forGuest?: boolean;
+  children?: React.ReactNode | JSX.Element;
+};
 
-const ProtectedRouteElement: FC<IProtectedUserRouteElement> = ({ element, forGuest , path })=> {
-  const user = useSelector((store: IUserStore) => store.user.userInfo);
-  const isLoading = useSelector((store: IUserStore) => store.user.isLoading);
-  const error = useSelector((store: IUserStore) => store.user.error);
+const ProtectedRouteElement: FC<TProtectedRouteProps> = ({
+  children,
+  forGuest = false,
+  ...rest
+}) => {
+  const user = useAppSelector((store) => store.user.userInfo);
+  const isLoading = useAppSelector((store) => store.user.isLoading);
+  const error = useAppSelector((store) => store.user.error);
+  const location = useLocation();
 
   if (isLoading) {
     return <Puff height="180" width="180" color="blue" ariaLabel="puff-loading" wrapperClass="loader" />;
   }
 
-  if (forGuest && user) {
-    return <Navigate to={path} replace />;
-  }
 
   if (!forGuest && !user) {
-    return <Navigate to={path} replace />;
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
-  return <>{element}</>; 
-}
+
+  if (forGuest && user) {
+    const { from } = (location.state as { from?: Location }) || { from: { pathname: '/' } };
+    if (from)
+    return <Navigate to={from.pathname} replace />;
+  }
+
+  return <>{children}</>;
+};
 
 export default ProtectedRouteElement;
