@@ -1,8 +1,8 @@
 import React, {useState, useRef, RefObject,useEffect,FC, ReactNode } from 'react'
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import orderListItemStyles from './OrderListItem.module.css';
 import { data } from '../../utils/data';
-import { AppDispatch, RootState, useAppDispatch, useAppSelector } from '../../store';
+import {  useAppDispatch, useAppSelector } from '../../store';
 
 import { useDispatch } from 'react-redux';
 import { ICalcOrder, IOrder } from '../../services/types/orderTypes';
@@ -29,7 +29,7 @@ const OrderListItem:FC<OrderListItemProps> = ({order,size}) => {
     }
   }
   const { translatedStatus, classStatusName } = translateOrderStatus(order?.status);
-  const { allIngredients} = useAppSelector((state: RootState) => state.ingredients);
+  const { allIngredients} = useAppSelector((state) => state.ingredients);
   const orderIngredients = allIngredients.filter(ingredient => order?.ingredients.includes(ingredient._id));
   const orderIngredientsView: ReactNode = orderIngredients.map((ingredient, index) => (
     <div
@@ -55,7 +55,7 @@ const OrderListItem:FC<OrderListItemProps> = ({order,size}) => {
       <div className={size ? orderListItemStyles.order_item : orderListItemStyles.order_item_small} onClick={handleOpenModal} >
         <div className={size ? orderListItemStyles.order_item__header : orderListItemStyles.order_item__header_small }>
           <span className="text text_type_digits-default">#{order?.number}</span>
-          <span className="text text_type_main-default text_color_inactive">{formatDate(order?.createdAt)}</span>
+          <span className="text text_type_main-default text_color_inactive"><FormattedDate date={new Date(order?.createdAt || '')} /></span>
         </div>
         <div className={size ? orderListItemStyles.order_item__name : orderListItemStyles.order_item__name_small}>
           <h3 className={`text text_type_main-${( (!size && order &&  order?.name.length > 34) || (order &&  order?.name.length > 100)) ? 'default' : 'medium'}`}>{order?.name}</h3>

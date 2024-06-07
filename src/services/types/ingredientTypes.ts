@@ -10,7 +10,7 @@ export interface IIngredientState {
     image: string;
     image_mobile: string;
     image_large: string;
-    __v?: number;
+    __v: number | 0;
 }
 export interface ICurrentIngredientState extends IIngredientState {
   openModal?: boolean;

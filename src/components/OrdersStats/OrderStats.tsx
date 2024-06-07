@@ -1,10 +1,10 @@
 import React, {useState, useRef, RefObject,FC } from 'react'
 
 import orderStatsStyles from './OrderStats.module.css';
-import { RootState, useAppSelector } from '../../store';
+import { useAppSelector } from '../../store';
 
 const OrderStats:FC = () => {
-  const { orders, total, totalToday} = useAppSelector((state: RootState) => state.ordersList);
+  const { orders, total, totalToday} = useAppSelector((state) => state.ordersList);
   const lastOrders = orders.filter(order => order.status === "pending").slice(0,20).map((order) => (
     <div key={order._id} ><p className="text text_type_digits-default mb-2">{order.number}</p></div>
   ));

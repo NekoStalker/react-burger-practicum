@@ -2,7 +2,7 @@ import React, { FC, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import {
   MainPage, LoginPage, NotFound404, RegisterPage, RestorePasswordPage,
-  ForgotPasswordPage, ProfilePagePage, IngredientPage, OrdersPage, OrderInfoPage
+  ForgotPasswordPage, ProfilePagePage, IngredientPage, OrdersPage
 } from '../../pages';
 import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import OrderDetailsModal from '../OrderDetailsModal/OrderDetailsModal';
@@ -105,7 +105,6 @@ const App: FC = () => {
           <Route path="" element={<EditProfileForm />} />
           <Route path="orders/:number" element={<OrderDetails />} />
         </Route>
-        <Route path="/info" element={<OrderInfoPage />} />
         <Route path="*" element={<NotFound404 />} />
       </Routes>
       {background && (

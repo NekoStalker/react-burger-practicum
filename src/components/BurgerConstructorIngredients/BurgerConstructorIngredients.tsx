@@ -23,7 +23,7 @@ const  BurgerConstructorIngredients:FC = () => {
   },
   });
   const { selectedBun, internalIngredients } = useAppSelector(
-    (store: RootState) => ({
+    (store) => ({
         selectedBun: store.burgerConstructor.selectedBun,
         internalIngredients: store.burgerConstructor.internalIngredients,
     }),

@@ -6,14 +6,14 @@ import { setCurrentIngredient } from "../../services/currentIngredient/currentIn
 import { Puff } from 'react-loader-spinner';
 import {ICurrentIngredientState} from '../../services/types/ingredientTypes';
 
-import { RootState, useAppDispatch , useAppSelector} from '../../store';
+import {  useAppDispatch , useAppSelector} from '../../store';
 
 const IngredientDetails:FC = () => {
     const dispatch =  useAppDispatch();
     const { ingredientId } = useParams(); 
-    const ingredient = useAppSelector((store:RootState) => store.currentIngredient);
-    const ingredients = useAppSelector((store:RootState) => store.ingredients.allIngredients);
-    const isLoading = useAppSelector((store:RootState) => store.ingredients.isLoading);
+    const ingredient = useAppSelector((store) => store.currentIngredient);
+    const ingredients = useAppSelector((store) => store.ingredients.allIngredients);
+    const isLoading = useAppSelector((store) => store.ingredients.isLoading);
     useEffect(() => {
         if (ingredientId) {
             const currIngredient: ICurrentIngredientState | undefined  = ingredients.find((ingredient) => ingredient._id === ingredientId) ;

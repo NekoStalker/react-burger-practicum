@@ -1,10 +1,10 @@
 import React, {FC} from "react"
 import DoneIcon from './icons/done.svg'
 import orderDetailStyles from "./OrderDetailsModal.module.css"
-import { RootState, useAppSelector } from "../../store"
+import {  useAppSelector } from "../../store"
 
 const OrderDetailsModal:FC = () => {
-    const orderID = useAppSelector((store: RootState) => store.order.orderID);
+    const orderID = useAppSelector((store) => store.order.orderID);
     return (
         <div className={orderDetailStyles.order_details}>
             <div className={orderDetailStyles.order_details_header}>

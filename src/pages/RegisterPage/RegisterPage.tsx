@@ -45,7 +45,7 @@ const RegisterPage:FC = () => {
               type='text'
               onChange={onChange}
               value={form.name}
-              name={'login'}
+              name={'name'}
               placeholder="Имя" onPointerEnterCapture onPointerLeaveCapture              
             />
             <EmailInput

@@ -7,14 +7,14 @@ import {getOrderModal} from '../../services/order/orderRequests'
 import {resetConstructor} from '../../services/burgerConstructor/burgerConstructorSlice'
 import { Puff } from 'react-loader-spinner'
 import { useNavigate,useLocation } from 'react-router-dom';
-import { RootState, useAppDispatch , useAppSelector} from '../../store';
+import { useAppDispatch , useAppSelector} from '../../store';
 import { IIngredientState } from '../../services/types/ingredientTypes'
 
 const BurgerConstructorPrice:FC = () => {
     const dispatch =  useAppDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    const {ingredients,selectedBun, price,isLoading,isLoggedIn} = useAppSelector((store:RootState)=> ({
+    const {ingredients,selectedBun, price,isLoading,isLoggedIn} = useAppSelector((store)=> ({
       ingredients: store.burgerConstructor.internalIngredients,
       selectedBun:  store.burgerConstructor.selectedBun,
       price: store.burgerConstructor.price,

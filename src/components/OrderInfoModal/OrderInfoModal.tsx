@@ -2,19 +2,18 @@ import React, {FC, useEffect} from "react";
 import orderInfoStyles from "./OrderInfoModal.module.css";
 import { shallowEqual, useSelector } from "react-redux";
 import {IOrder, IOrderStore} from '../../services/types/orderTypes';
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import { data } from "../../utils/data";
 import OrderDetailsIngredient from "../OrderDetailsIngredient/OrderDetailsIngredient";
-import { RootState, useAppDispatch, useAppSelector } from "../../store";
-import { formatDate } from "../../utils/datetime";
+import { useAppDispatch, useAppSelector } from "../../store";
 import { useParams } from "react-router-dom";
 import { setCurrentOrder } from "../../services/currentOrder/currentOrderSlice";
 import { getUniqueIngredientsWithCounts, translateOrderStatus } from "../../utils/orderFormat";
 import { IIngredientState } from "../../services/types/ingredientTypes";
 const OrderInfoModal:FC = () => {
-    const order = useAppSelector((state: RootState) => state.currentOrder,shallowEqual );
-    const { allIngredients} = useAppSelector((state: RootState) => state.ingredients,shallowEqual );
-    const orders = useAppSelector((store: RootState) => store.ordersList.orders);
+    const order = useAppSelector((state) => state.currentOrder,shallowEqual );
+    const { allIngredients} = useAppSelector((state) => state.ingredients,shallowEqual );
+    const orders = useAppSelector((store) => store.ordersList.orders);
     const { number } = useParams(); 
     const dispatch = useAppDispatch()
     useEffect(() => {
@@ -45,7 +44,7 @@ const OrderInfoModal:FC = () => {
                 </div>  
             </div>
             <div className={`${orderInfoStyles.order_details_footer} mt-2`}>
-            <span className={orderInfoStyles.order_details_ingredient_date}><p className="text text_type_main-default text_color_inactive">{formatDate(order.createdAt)}</p></span>
+            <span className={orderInfoStyles.order_details_ingredient_date}><p className="text text_type_main-default text_color_inactive"><FormattedDate date={new Date(order?.createdAt || '')} /></p></span>
                 <span className={orderInfoStyles.order_details_ingredient_price}><p className="text text_type_digits-default pr-2">{price} </p> <CurrencyIcon  type="primary"/></span>
             </div>
         </section>

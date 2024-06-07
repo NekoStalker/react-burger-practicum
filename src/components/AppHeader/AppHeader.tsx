@@ -4,7 +4,7 @@ import appHeaderStyles from './AppHeader.module.css';
 import { NavLink } from 'react-router-dom';
 import { RootState, useAppSelector } from '../../store';
 const AppHeader:FC = () =>{
-  const user = useAppSelector((store: RootState) => store.user.userInfo);
+
     return (
       <header className={appHeaderStyles.header}>
         <nav className={appHeaderStyles.menu}>
@@ -17,26 +17,16 @@ const AppHeader:FC = () =>{
               </>
               )}
               </NavLink>
-              {user ?
-                <NavLink to="/profile/orders"  className={`ml-2 pl-5 pr-5 pt-4 pb-4 ${appHeaderStyles.menu_item}` }>
+    
+              <NavLink to="/feed/"  className={`ml-2 pl-5 pr-5 pt-4 pb-4 ${appHeaderStyles.menu_item}` }>
                 {({ isActive }) => (
                 <>
                   <ListIcon  type={isActive ? 'primary' : 'secondary'} />
                   <span  className='pl-2 text text_type_main-default text_color_inactive'>Лента заказов</span>
                   </>
                 )}
-                </NavLink> :
-                  <NavLink to="/feed/"  className={`ml-2 pl-5 pr-5 pt-4 pb-4 ${appHeaderStyles.menu_item}` }>
-                  {({ isActive }) => (
-                  <>
-                    <ListIcon  type={isActive ? 'primary' : 'secondary'} />
-                    <span  className='pl-2 text text_type_main-default text_color_inactive'>Лента заказов</span>
-                    </>
-                  )}
-                  </NavLink>
+              </NavLink>
             
-              }
- 
             </ul>
         </nav>
         <div className={appHeaderStyles.logo}>

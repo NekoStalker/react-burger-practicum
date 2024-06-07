@@ -1,8 +1,8 @@
 import React, { FC } from 'react';
-import { useSelector } from 'react-redux';
+
 import { Navigate, useLocation, RouteProps } from 'react-router-dom';
 import { Puff } from 'react-loader-spinner';
-import { RootState } from '../store';
+import {  useAppSelector } from '../store';
 
 type TProtectedRouteProps = RouteProps & {
   forGuest?: boolean;
@@ -14,9 +14,9 @@ const ProtectedRouteElement: FC<TProtectedRouteProps> = ({
   forGuest = false,
   ...rest
 }) => {
-  const user = useSelector((store: RootState) => store.user.userInfo);
-  const isLoading = useSelector((store: RootState) => store.user.isLoading);
-  const error = useSelector((store: RootState) => store.user.error);
+  const user = useAppSelector((store) => store.user.userInfo);
+  const isLoading = useAppSelector((store) => store.user.isLoading);
+  const error = useAppSelector((store) => store.user.error);
   const location = useLocation();
 
   if (isLoading) {
