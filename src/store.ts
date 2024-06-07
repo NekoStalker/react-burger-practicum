@@ -53,7 +53,7 @@ const wsHistoryActions = {
 };
 const liveOrderMiddleWare = socketMiddleware(wsListActions);
 
-const liveHistoryMiddleWare = socketMiddleware(wsHistoryActions);
+const liveHistoryMiddleWare = socketMiddleware(wsHistoryActions, true);
 const store = configureStore({
   reducer: {
     ingredients: ingredientsSlice,
