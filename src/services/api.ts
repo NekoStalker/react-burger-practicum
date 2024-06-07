@@ -9,4 +9,4 @@ export const userGet:string  = `${BASE_URL}/auth/user`;
 export const userPatch:string  = `${BASE_URL}/auth/user`;
 export const ordersWebSocket:string =  "wss://norma.nomoreparties.space/orders/all";
 export const historyWebSocket:string =  "wss://norma.nomoreparties.space/orders";
-export const getOrder:string = "GET https://norma.nomoreparties.space/api/orders/"
+export const getOrder:string = "https://norma.nomoreparties.space/api/orders/"

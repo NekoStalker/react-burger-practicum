@@ -18,6 +18,7 @@ import {
   ordersListError,
   ordersListOpen,
   ordersListClose,
+  TOrdersListActions,
 } from './services/ordersLive/actions';
 import {
   ordersHistoryConnect,
@@ -27,6 +28,7 @@ import {
   ordersHistoryError,
   ordersHistoryOpen,
   ordersHistoryClose,
+  TOrdersHistoryActions,
 } from './services/ordersLiveHistory/actions';
 import { socketMiddleware } from './services/middleware/customMiddleware';
 import currentOrderSlice from './services/currentOrder/currentOrderSlice';
@@ -69,6 +71,7 @@ const store = configureStore({
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+export type AppActions = TOrdersHistoryActions | TOrdersListActions  ;
 export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, Action<string>>;
 export const useAppDispatch = () => dispatchHook<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = selectorHook;

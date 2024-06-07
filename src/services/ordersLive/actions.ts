@@ -7,3 +7,10 @@ export const ordersListMessage = createAction<IOrdersResponse>('ORDERS_LIST_WS_M
 export const ordersListError = createAction<string>('ORDERS_LIST_WS_ERROR');
 export const ordersListOpen = createAction('ORDERS_LIST_WS_OPEN');
 export const ordersListClose = createAction<string, 'ORDERS_LIST_WS_CLOSE'>('ORDERS_LIST_WS_CLOSE');
+export type TOrdersListActions = ReturnType<typeof ordersListConnect>
+                                | ReturnType<typeof ordersListDisconnect>
+                                | ReturnType<typeof orderListConnecting>
+                                | ReturnType<typeof ordersListMessage>
+                                | ReturnType<typeof ordersListError>
+                                | ReturnType<typeof ordersListOpen>
+                                | ReturnType<typeof ordersListClose>;

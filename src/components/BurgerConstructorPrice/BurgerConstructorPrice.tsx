@@ -1,21 +1,20 @@
 import React, {FC} from 'react'
 import burgerConstructorPriceStyle from './BurgerConstructorPrice.module.css'
 import {Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useSelector, useDispatch, shallowEqual } from 'react-redux'
+import {  shallowEqual } from 'react-redux'
 import {BUN_NOT_SELECTED} from '../../services/burgerConstructor/burgerConstructorSlice'
 import {getOrderModal} from '../../services/order/orderRequests'
 import {resetConstructor} from '../../services/burgerConstructor/burgerConstructorSlice'
 import { Puff } from 'react-loader-spinner'
 import { useNavigate,useLocation } from 'react-router-dom';
-import { useAppDispatch , useAppSelector} from '../../store';
-import {IStore} from '../../services/types/storeType';
+import { RootState, useAppDispatch , useAppSelector} from '../../store';
 import { IIngredientState } from '../../services/types/ingredientTypes'
 
 const BurgerConstructorPrice:FC = () => {
     const dispatch =  useAppDispatch();
     const navigate = useNavigate();
     const location = useLocation();
-    const {ingredients,selectedBun, price,isLoading,isLoggedIn} = useAppSelector((store:IStore)=> ({
+    const {ingredients,selectedBun, price,isLoading,isLoggedIn} = useAppSelector((store:RootState)=> ({
       ingredients: store.burgerConstructor.internalIngredients,
       selectedBun:  store.burgerConstructor.selectedBun,
       price: store.burgerConstructor.price,

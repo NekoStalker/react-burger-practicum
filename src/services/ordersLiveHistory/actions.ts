@@ -7,3 +7,11 @@ export const ordersHistoryMessage = createAction<IOrdersResponse>('ORDERS_Histor
 export const ordersHistoryError = createAction<string>('ORDERS_History_WS_ERROR');
 export const ordersHistoryOpen = createAction('ORDERS_History_WS_OPEN');
 export const ordersHistoryClose = createAction<string, 'ORDERS_History_WS_CLOSE'>('ORDERS_History_WS_CLOSE');
+
+export type TOrdersHistoryActions = ReturnType<typeof ordersHistoryConnect>
+                                   | ReturnType<typeof ordersHistoryDisconnect>
+                                   | ReturnType<typeof orderHistoryConnecting>
+                                   | ReturnType<typeof ordersHistoryMessage>
+                                   | ReturnType<typeof ordersHistoryError>
+                                   | ReturnType<typeof ordersHistoryOpen>
+                                   | ReturnType<typeof ordersHistoryClose>;

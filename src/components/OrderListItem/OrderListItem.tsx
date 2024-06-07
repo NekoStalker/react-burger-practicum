@@ -22,10 +22,10 @@ const OrderListItem:FC<OrderListItemProps> = ({order,size}) => {
     e.preventDefault(); 
     if(order){
       dispatch(openModalOrder(order));
-      
       size ?  
       navigate(`/profile/orders/${order.number}`, { state: { background: location } }) : 
       navigate(`/feed/${order.number}`, { state: { background: location } });
+      sessionStorage.setItem('userNavigation', 'true');
     }
   }
   const { translatedStatus, classStatusName } = translateOrderStatus(order?.status);

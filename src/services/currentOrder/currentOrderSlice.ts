@@ -1,5 +1,5 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import { ICurrentOrderState, IOrder } from '../types/orderTypes';
+import { ICurrentOrderState, IOrder, IOrderGet } from '../types/orderTypes';
 import {fetchOrderById} from './currentOrderRequests'
 const initialState: ICurrentOrderState = {
     ingredients: [],
@@ -36,9 +36,9 @@ export const currentOrderSlice = createSlice({
             state.isLoading = true;
             state.error = null;
           })
-          .addCase(fetchOrderById.fulfilled, (state, action: PayloadAction<IOrder>) => {
+          .addCase(fetchOrderById.fulfilled, (state, action: PayloadAction<IOrderGet>) => {
             state.isLoading = false;
-            return { ...state, ...action.payload };
+            Object.assign(state, action.payload.orders[0]);
           })
           .addCase(fetchOrderById.rejected, (state, action: PayloadAction<any>) => {
             state.isLoading = false;

@@ -30,6 +30,11 @@ export interface IOrder {
   number: number;
   createdAt: string;
   updatedAt: string;
+  owner?: string;
+}
+export interface IOrderGet {
+  success: boolean;
+  orders: IOrder[];
 }
 export interface ICalcOrder extends IOrder {
   calcIngredients?: Map<string, number>,

@@ -8,7 +8,7 @@ import {addIngredientCount,removeIngredientCount} from '../../services/ingredien
 import {IIngredientState} from '../../services/types/ingredientTypes';
 import {useDrop} from 'react-dnd';
 
-import { useAppDispatch , useAppSelector} from '../../store';
+import { RootState, useAppDispatch , useAppSelector} from '../../store';
 import {  IBurgerConstructorStore} from '../../services/types/burgerConstructorTypes';
 const  BurgerConstructorIngredients:FC = () => {
   const dispatch = useAppDispatch();
@@ -23,7 +23,7 @@ const  BurgerConstructorIngredients:FC = () => {
   },
   });
   const { selectedBun, internalIngredients } = useAppSelector(
-    (store: IBurgerConstructorStore) => ({
+    (store: RootState) => ({
         selectedBun: store.burgerConstructor.selectedBun,
         internalIngredients: store.burgerConstructor.internalIngredients,
     }),

@@ -14,6 +14,7 @@ import { getUniqueIngredientsWithCounts, translateOrderStatus } from "../../util
 import { IIngredientState } from "../../services/types/ingredientTypes";
 import { fetchOrderById } from "../../services/currentOrder/currentOrderRequests";
 import { Puff } from "react-loader-spinner";
+import { ordersListDisconnect } from "../../services/ordersLive/actions";
 const OrderDetails:FC = () => {
     const match = useMatch('/profile/orders/:number');
     const orders = useAppSelector((store: RootState) => store.ordersList.orders);
@@ -22,20 +23,21 @@ const OrderDetails:FC = () => {
     const dispatch = useAppDispatch()
     const order = useAppSelector((state: RootState) => state.currentOrder,shallowEqual );
     const { allIngredients} = useAppSelector((state: RootState) => state.ingredients,shallowEqual );
+
     useEffect(() => {
-        if (number) {
+    if (number) {
             const order: IOrder | undefined = match 
-              ? ordersHist.find((order) => order.number.toString() === number)
-              : orders.find((order) => order.number.toString() === number);
-          
+            ? ordersHist.find((order) => order.number.toString() === number)
+            : orders.find((order) => order.number.toString() === number);
+      
             if (order) {
-              dispatch(setCurrentOrder(order));
+            dispatch(setCurrentOrder(order));
+            } else {
+             dispatch(fetchOrderById(number));
+             dispatch(ordersListDisconnect());
             }
-            else {
-                dispatch(fetchOrderById(number));
-            }
-          }
-      }, [number, orders, dispatch, match, ordersHist]); 
+        }
+    }, [number, orders, ordersHist, match, dispatch]);
     const { translatedStatus, classStatusName } = translateOrderStatus(order.status);
       const orderIngredients =  order.ingredients.map(id => allIngredients.find(ingredient => ingredient._id === id)).filter(ingredient => ingredient !== undefined) as IIngredientState[];;
       const price = orderIngredients.reduce((acc, ingredient) => { return ingredient ?  acc + ingredient.price : acc + 0 }, 0);
@@ -43,7 +45,7 @@ const OrderDetails:FC = () => {
       const ingredients = uniqueIngredientsWithCounts.map((ingredient) => (
           <OrderDetailsIngredient key={ingredient.item._id} ingredient={ingredient.item} count={ingredient.count} />
       ));
-    if (order.isLoading){
+    if (order.isLoading || !order){
         return (
             <Puff
               visible={true}
