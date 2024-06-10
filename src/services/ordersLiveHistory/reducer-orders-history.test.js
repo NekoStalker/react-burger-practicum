@@ -1,19 +1,19 @@
 import reducer, { initialState } from './reducer';
 import { WebsocketStatus } from '../types/orderTypes';
 import {
-  orderListConnecting,
-  ordersListMessage,
-  ordersListError,
-  ordersListOpen,
-  ordersListClose
+  orderHistoryConnecting,
+  ordersHistoryMessage,
+  ordersHistoryError,
+  ordersHistoryOpen,
+  ordersHistoryClose
 } from './actions';
-describe('liveListOrder reducer', () => {
+describe('liveHistoryOrder reducer', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual(initialState);
   });
 
   it('should handle connecting to WS action', () => {
-    const action = orderListConnecting();
+    const action = orderHistoryConnecting();
     const expectedState = {
       ...initialState,
       status: WebsocketStatus.CONNECTING
@@ -22,7 +22,7 @@ describe('liveListOrder reducer', () => {
   });
 
   it('should handle open WS action', () => {
-    const action = ordersListOpen();
+    const action = ordersHistoryOpen();
     const expectedState = {
       ...initialState,
       status: WebsocketStatus.ONLINE,
@@ -33,7 +33,7 @@ describe('liveListOrder reducer', () => {
 
   it('should handle WS Error action', () => {
     const error = 'WebSocket error';
-    const action = ordersListError(error);
+    const action = ordersHistoryError(error);
     const expectedState = {
       ...initialState,
       error
@@ -42,7 +42,7 @@ describe('liveListOrder reducer', () => {
   });
 
   it('should handle WS close action', () => {
-    const action = ordersListClose();
+    const action = ordersHistoryClose();
     const expectedState = {
       ...initialState,
       status: WebsocketStatus.OFFLINE
@@ -74,7 +74,7 @@ describe('liveListOrder reducer', () => {
       total: 100,
       totalToday: 10
     };
-    const action = ordersListMessage(payload);
+    const action = ordersHistoryMessage(payload);
     const expectedState = {
       ...initialState,
       orders: payload.orders,

@@ -1,0 +1,146 @@
+import configureMockStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
+
+import reducer, {
+  initialState,
+  setCurrentOrder,
+  clearCurrentOrder,
+  openModalOrder,
+  closeModalOrderDetails
+} from './currentOrderSlice';
+import fetchMock from 'fetch-mock';
+import { fetchOrderById } from './currentOrderRequests';
+
+const middlewares = [thunk];
+const mockStore = configureMockStore(middlewares);
+const testOrder = {
+  ingredients: ['ingredient1', 'ingredient2'],
+  _id: 'order1',
+  status: 'done',
+  name: 'Test Order',
+  number: 1,
+  createdAt: '2021-01-01T00:00:00Z',
+  updatedAt: '2021-01-01T00:00:00Z',
+  openModal: false,
+  isLoading: false,
+  error: ''
+};
+
+describe('currentOrderSlice reducer', () => {
+  it('should return the initial state', () => {
+    expect(reducer(undefined, { type: 'unknown' })).toEqual(initialState);
+  });
+
+  it('should handle setCurrentOrder action', () => {
+    const payload = testOrder;
+    const expectedState = {
+      ...initialState,
+      ...payload
+    };
+    expect(reducer(initialState, setCurrentOrder(payload))).toEqual(expectedState);
+  });
+
+  it('should handle clearCurrentOrder action', () => {
+    const modifiedState = {
+      ...initialState,
+      ...testOrder
+    };
+    expect(reducer(modifiedState, clearCurrentOrder())).toEqual(initialState);
+  });
+
+  it('should handle openModalOrder action', () => {
+    const payload = {
+      ...testOrder,
+      openModal: true
+    };
+    const expectedState = {
+      ...initialState,
+      ...payload
+    };
+    expect(reducer(initialState, openModalOrder(payload))).toEqual(expectedState);
+  });
+
+  it('should handle closeModalOrderDetails action', () => {
+    const modifiedState = {
+      ...initialState,
+      ...testOrder,
+      openModal: true
+    };
+    expect(reducer(modifiedState, closeModalOrderDetails())).toEqual(initialState);
+  });
+
+  it('should handle fetchOrderById.pending action', () => {
+    const action = { type: fetchOrderById.pending.type };
+    const expectedState = {
+      ...initialState,
+      isLoading: true,
+      error: null
+    };
+    expect(reducer(initialState, action)).toEqual(expectedState);
+  });
+
+  it('should handle fetchOrderById.fulfilled action', () => {
+    const payload = { orders: [testOrder] };
+    const action = { type: fetchOrderById.fulfilled.type, payload };
+    const expectedState = {
+      ...initialState,
+      ...testOrder,
+      isLoading: false
+    };
+    expect(reducer(initialState, action)).toEqual(expectedState);
+  });
+
+  it('should handle fetchOrderById.rejected action', () => {
+    const error = 'Failed to fetch order';
+    const action = { type: fetchOrderById.rejected.type, error: { message: error } };
+    const expectedState = {
+      ...initialState,
+      isLoading: false,
+      error: error
+    };
+    expect(reducer(initialState, action)).toEqual(expectedState);
+  });
+});
+
+describe('fetchOrderById async actions', () => {
+  afterEach(() => {
+    fetchMock.restore();
+  });
+
+  it('creates fetchOrderById.fulfilled when fetching order has been done', async () => {
+    const store = mockStore({});
+    const orderId = 'order1';
+    const payload = { orders: [testOrder] };
+
+    fetchMock.getOnce(`http://example.com/orders/${orderId}`, {
+      body: payload,
+      headers: { 'content-type': 'application/json' }
+    });
+
+    const expectedActions = [
+      { type: fetchOrderById.pending.type },
+      { type: fetchOrderById.fulfilled.type, payload }
+    ];
+
+    await store.dispatch(fetchOrderById(orderId));
+    expect(store.getActions()).toEqual(expectedActions);
+  });
+
+  it('creates fetchOrderById.rejected when fetching order fails', async () => {
+    const store = mockStore({});
+    const orderId = 'order1';
+    const error = 'Failed to fetch order';
+
+    fetchMock.getOnce(`http://example.com/orders/${orderId}`, {
+      throws: new Error(error)
+    });
+
+    const expectedActions = [
+      { type: fetchOrderById.pending.type },
+      { type: fetchOrderById.rejected.type, error: { message: error } }
+    ];
+
+    await store.dispatch(fetchOrderById(orderId));
+    expect(store.getActions()).toEqual(expectedActions);
+  });
+});

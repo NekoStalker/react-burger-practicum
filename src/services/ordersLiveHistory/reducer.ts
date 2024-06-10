@@ -12,7 +12,7 @@ import {
   ordersHistoryClose
 } from './actions';
 
-const initialState: IOrdersState = {
+export const initialState: IOrdersState = {
   orders: [],
   total: 0,
   totalToday: 0,
@@ -35,8 +35,7 @@ export const liveHistoryOrder = createReducer(initialState, (builder) => {
     .addCase(ordersHistoryClose, (state) => {
       state.status = WebsocketStatus.OFFLINE;
     })
-    .addCase(ordersHistoryMessage, (state, action) => {
-        
+    .addCase(ordersHistoryMessage, (state, action) => { 
       const updatedState = liveOrdersUpdate(state, action.payload);
       return { ...state, ...updatedState };
     });
