@@ -13,7 +13,7 @@ const AppHeader:FC = () =>{
               {({ isActive }) => (
               <>
                 <BurgerIcon type={isActive ? 'primary' : 'secondary'} /> 
-                <span className='pl-2 text text_type_main-default'>Конструктор</span>
+                <span  className='pl-2 text text_type_main-default'>Конструктор</span>
               </>
               )}
               </NavLink>

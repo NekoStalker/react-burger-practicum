@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import './commands';
 
 export const appSelectors = {
@@ -27,3 +28,20 @@ export const appSelectors = {
 };
 
 Cypress.appSelectors = appSelectors;
+=======
+// cypress/support/index.js
+
+
+import './commands';
+
+export const appSelectors = {
+    ingredientCards: '.ingredient-card', // Замените на ваш актуальный селектор
+    constructorContainer: '.constructor-container', // Замените на ваш актуальный селектор
+    topBun: '.constructor-bun-top', // Замените на ваш актуальный селектор
+    bottomBun: '.constructor-bun-bottom', // Замените на ваш актуальный селектор
+    innerItems: '.constructor-inner-items' // Замените на ваш актуальный селектор
+};
+
+// Добавьте селекторы в глобальную область видимости Cypress, если это необходимо
+Cypress.appSelectors = appSelectors;
+>>>>>>> f3b7673 (minor)
