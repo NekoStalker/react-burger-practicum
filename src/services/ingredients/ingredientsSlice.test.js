@@ -36,7 +36,7 @@ describe('ingredientsSlice reducer', () => {
       expect(reducer(undefined, { type: 'unknown' })).toEqual(initialState);
     });
   
-    it('should handle addIngredient action', () => {
+    it('should handle Add Ingredient action', () => {
       const payload = testIngredient;
       const expectedState = {
         ...initialState,
@@ -45,7 +45,7 @@ describe('ingredientsSlice reducer', () => {
       expect(reducer(initialState, addIngredient(payload))).toEqual(expectedState);
     });
   
-    it('should handle removeIngredient action', () => {
+    it('should handle Remove Ingredient action', () => {
       const initialStateWithIngredients = {
         ...initialState,
         allIngredients: testIngredients,
@@ -57,7 +57,7 @@ describe('ingredientsSlice reducer', () => {
       expect(reducer(initialStateWithIngredients, removeIngredient(testIngredient._id))).toEqual(expectedState);
     });
   
-    it('should handle addIngredientCount action', () => {
+    it('should handle Add Ingredient Count action', () => {
       const initialStateWithIngredients = {
         ...initialState,
         allIngredients: testIngredients,
@@ -70,7 +70,7 @@ describe('ingredientsSlice reducer', () => {
       expect(reducer(initialStateWithIngredients, addIngredientCount(testIngredient))).toEqual(expectedState);
     });
   
-    it('should handle removeIngredientCount action', () => {
+    it('should handle Remove Ingredient Count action', () => {
       const initialStateWithIngredients = {
         ...initialState,
         allIngredients: testIngredients,
@@ -86,47 +86,54 @@ describe('ingredientsSlice reducer', () => {
   
 
 describe('async actions', () => {
-    afterEach(() => {
-      fetchMock.restore();
-    });
-  
-    it('creates getAllIngredients.fulfilled when fetching ingredients has been done', async () => {
-      const ingredientsData = testIngredients;
-  
-      fetchMock.getOnce(apiIngredientsAddr, {
-        body: ingredientsData,
-        headers: { 'content-type': 'application/json' }
-      });
-  
-      const expectedActions = [
-        { type: getAllIngredients.pending.type },
-        { type: getAllIngredients.fulfilled.type, payload: ingredientsData }
-      ];
-  
-      const store = mockStore({ allIngredients: [], isLoading: false, error: null });
-  
-      await store.dispatch(getAllIngredients());
-  
-      expect(store.getActions()).toEqual(expectedActions);
-    });
-  
-    it('creates getAllIngredients.rejected when fetching ingredients fails', async () => {
-      const error = 'Failed to fetch ingredients';
-  
-      fetchMock.getOnce(apiIngredientsAddr, {
-        throws: new Error(error)
-      });
-  
-  
-      const store = mockStore({ allIngredients: [], isLoading: false, error: null });
-  
-      await store.dispatch(getAllIngredients());
-  
-      const actions = store.getActions();
-      expect(actions[0].type).toBe(getAllIngredients.pending.type);
-      expect(actions[1].type).toBe(getAllIngredients.rejected.type);
-      expect(actions[1].error.message).toBe(error);
-    });
+  afterEach(() => {
+    fetchMock.restore();
   });
+
+  it('creates getAllIngredients.fulfilled when fetching ingredients has been done action', async () => {
+    const ingredientsData = { data: testIngredients };
+
+    fetchMock.getOnce(apiIngredientsAddr, {
+      body: ingredientsData,
+      headers: { 'content-type': 'application/json' }
+    });
+
+    const store = mockStore({ allIngredients: [], isLoading: false, error: null });
+
+    await store.dispatch(getAllIngredients());
+
+    const actions = store.getActions();
+    expect(actions[0]).toEqual(expect.objectContaining({
+      type: getAllIngredients.pending.type,
+    }));
+    expect(actions[1]).toEqual(expect.objectContaining({
+      type: getAllIngredients.fulfilled.type,
+      payload: ingredientsData,
+    }));
+  });
+
+  it('creates getAllIngredients.rejected when fetching ingredients fails action', async () => {
+    const error = 'Failed to fetch ingredients';
+
+    fetchMock.getOnce(apiIngredientsAddr, {
+      throws: new Error(error)
+    });
+
+    const store = mockStore({ allIngredients: [], isLoading: false, error: null });
+
+    await store.dispatch(getAllIngredients());
+
+    const actions = store.getActions();
+    expect(actions[0]).toEqual(expect.objectContaining({
+      type: getAllIngredients.pending.type,
+    }));
+    expect(actions[1]).toEqual(expect.objectContaining({
+      type: getAllIngredients.rejected.type,
+      error: expect.objectContaining({
+        message: error,
+      }),
+    }));
+  });
+});
 
   

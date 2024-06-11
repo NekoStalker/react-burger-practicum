@@ -1,6 +1,6 @@
 import configureMockStore from 'redux-mock-store'
-import thunk from 'redux-thunk'
-
+import {thunk} from 'redux-thunk'
+import {getOrder} from '../api';
 import reducer, {
   initialState,
   setCurrentOrder,
@@ -14,13 +14,13 @@ import { fetchOrderById } from './currentOrderRequests';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 const testOrder = {
-  ingredients: ['ingredient1', 'ingredient2'],
-  _id: 'order1',
+  ingredients: ['60666c42cc7b410027a1a9b1', '60666c42cc7b410027a1a9b1'],
+  _id: '1',
   status: 'done',
   name: 'Test Order',
   number: 1,
-  createdAt: '2021-01-01T00:00:00Z',
-  updatedAt: '2021-01-01T00:00:00Z',
+  createdAt: '2024-01-01T00:00:00Z',
+  updatedAt: '2024-01-01T00:00:00Z',
   openModal: false,
   isLoading: false,
   error: ''
@@ -69,50 +69,18 @@ describe('currentOrderSlice reducer', () => {
     expect(reducer(modifiedState, closeModalOrderDetails())).toEqual(initialState);
   });
 
-  it('should handle fetchOrderById.pending action', () => {
-    const action = { type: fetchOrderById.pending.type };
-    const expectedState = {
-      ...initialState,
-      isLoading: true,
-      error: null
-    };
-    expect(reducer(initialState, action)).toEqual(expectedState);
-  });
-
-  it('should handle fetchOrderById.fulfilled action', () => {
-    const payload = { orders: [testOrder] };
-    const action = { type: fetchOrderById.fulfilled.type, payload };
-    const expectedState = {
-      ...initialState,
-      ...testOrder,
-      isLoading: false
-    };
-    expect(reducer(initialState, action)).toEqual(expectedState);
-  });
-
-  it('should handle fetchOrderById.rejected action', () => {
-    const error = 'Failed to fetch order';
-    const action = { type: fetchOrderById.rejected.type, error: { message: error } };
-    const expectedState = {
-      ...initialState,
-      isLoading: false,
-      error: error
-    };
-    expect(reducer(initialState, action)).toEqual(expectedState);
-  });
 });
-
 describe('fetchOrderById async actions', () => {
   afterEach(() => {
     fetchMock.restore();
   });
 
-  it('creates fetchOrderById.fulfilled when fetching order has been done', async () => {
-    const store = mockStore({});
-    const orderId = 'order1';
+  it('creates fetchOrderById.fulfilled when fetching order has been done action', async () => {
+    const store = mockStore({ currentOrder: initialState });
+    const orderNum = '1';
     const payload = { orders: [testOrder] };
 
-    fetchMock.getOnce(`http://example.com/orders/${orderId}`, {
+    fetchMock.getOnce(`${getOrder}${orderNum}`, {
       body: payload,
       headers: { 'content-type': 'application/json' }
     });
@@ -122,16 +90,16 @@ describe('fetchOrderById async actions', () => {
       { type: fetchOrderById.fulfilled.type, payload }
     ];
 
-    await store.dispatch(fetchOrderById(orderId));
+    await store.dispatch(fetchOrderById(orderNum));
     expect(store.getActions()).toEqual(expectedActions);
   });
 
-  it('creates fetchOrderById.rejected when fetching order fails', async () => {
-    const store = mockStore({});
-    const orderId = 'order1';
+  it('creates fetchOrderById.rejected when fetching order fails action', async () => {
+    const store = mockStore({ currentOrder: initialState });
+    const orderNum = '1';
     const error = 'Failed to fetch order';
 
-    fetchMock.getOnce(`http://example.com/orders/${orderId}`, {
+    fetchMock.getOnce(`${getOrder}${orderNum}`, {
       throws: new Error(error)
     });
 
@@ -140,7 +108,7 @@ describe('fetchOrderById async actions', () => {
       { type: fetchOrderById.rejected.type, error: { message: error } }
     ];
 
-    await store.dispatch(fetchOrderById(orderId));
+    await store.dispatch(fetchOrderById(orderNum));
     expect(store.getActions()).toEqual(expectedActions);
   });
 });

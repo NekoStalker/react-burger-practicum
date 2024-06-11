@@ -1,4 +1,3 @@
-// currentIngredientSlice.test.js
 import reducer, {
     initialState,
     setCurrentIngredient,

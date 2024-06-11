@@ -7,8 +7,21 @@ function updatePrice(state: IBurgerConstructorState) {
   const bunPrice =  state.selectedBun && state.selectedBun?.name !== BUN_NOT_SELECTED ? state.selectedBun?.price * 2 : 0;
   state.price = state.internalIngredients.reduce((acc, ingredient) => acc + ingredient.price, bunPrice || 0);
 }
-const initialState:IBurgerConstructorState = {
-  selectedBun: null,
+export const initialState:IBurgerConstructorState = {
+  selectedBun: {
+    _id: '',
+    name: BUN_NOT_SELECTED,
+    type: 'bun',
+    proteins: -1,
+    fat: -1,
+    carbohydrates: -1,
+    calories: -1,
+    price: 0,
+    image: '',
+    image_mobile: '',
+    image_large: '',
+    __v: -1, 
+  },
   price: 0,
   internalIngredients: [],
 }
@@ -48,22 +61,7 @@ export const burgerConstructor = createSlice({
             state.internalIngredients = newConstructorIngredients;
         },
         resetConstructor: (state: IBurgerConstructorState) => {
-            state.selectedBun = {
-              _id: '',
-              name: BUN_NOT_SELECTED,
-              type: 'bun',
-              proteins: -1,
-              fat: -1,
-              carbohydrates: -1,
-              calories: -1,
-              price: 0,
-              image: '',
-              image_mobile: '',
-              image_large: '',
-              __v: -1, 
-            };
-            state.internalIngredients = [];
-            state.price = 0;
+          return initialState;
         }
     }
 });
