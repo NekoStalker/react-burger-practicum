@@ -43,6 +43,7 @@ const  BurgerConstructorIngredients:FC = () => {
         ${selectedBun && selectedBun.name === BUN_NOT_SELECTED ? burgerConstructorIngredientsStyles.hide_img : ''}`}
     >
         <ConstructorElement
+            data-cy="constructor-bun-top"
             type="top"
             isLocked={true}
             text={`${selectedBun && selectedBun.name} (верх)`}
@@ -50,7 +51,7 @@ const  BurgerConstructorIngredients:FC = () => {
             thumbnail={`${selectedBun && selectedBun.image}`}
             extraClass={`mr-2 ${selectedBun && selectedBun.price == 0 ? burgerConstructorIngredientsStyles.constructor_element : ''}`}
         />
-        <ul className={burgerConstructorIngredientsStyles.burger_ingredients__internal}>
+        <ul data-cy="constructor-ingredients-container" className={burgerConstructorIngredientsStyles.burger_ingredients__internal}>
             {internalIngredients.length > 0 ? (
                 internalIngredients.map((ingredient, index) => (
                     <BurgerConstructorItem
@@ -74,6 +75,7 @@ const  BurgerConstructorIngredients:FC = () => {
             )}
         </ul>
         <ConstructorElement
+            data-cy="constructor-bun-bottom"
             type="bottom"
             isLocked={true}
             text={`${selectedBun && selectedBun.name} (низ)`}

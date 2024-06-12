@@ -7,8 +7,8 @@ const OrderDetailsModal:FC = () => {
     const orderID = useAppSelector((store) => store.order.orderID);
     return (
         <div className={orderDetailStyles.order_details}>
-            <div className={orderDetailStyles.order_details_header}>
-                <h3 className={`text text_type_digits-large`}>{orderID}</h3>
+            <div className={orderDetailStyles.order_details_header} >
+                <h3 className={`text text_type_digits-large`} data-cy="order-number">{orderID}</h3>
                 <p className="text text_type_main-medium mt-4">
                     идентификатор заказа
                 </p>

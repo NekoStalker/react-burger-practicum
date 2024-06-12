@@ -29,7 +29,7 @@ const BurgerIngredient: FC<BurgerIngredientProps> =({ingredient}) => {
     }
 
     return ( 
-          <li>
+          <li  data-cy={`burger-ingredient-${ingredient.type}`}>
               <div className={`${burgeringredientStyles.card_item} ${isDragged ? burgeringredientStyles.card_opacity: ''}`} ref={drag}>
               <div className={burgeringredientStyles.card_item__counter}><Counter count={ingredient.__v || 0} size="default" /></div>
               <a className={burgeringredientStyles.card_item__link} href="#" onClick={handleOpenModal}>
