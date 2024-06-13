@@ -2,17 +2,18 @@ import { appSelectors } from '../support/index';
 
 describe("Drag and Drop Functionality", () => {
   beforeEach(() => {
+    cy.intercept('GET', 'https://norma.nomoreparties.space/api/ingredients', { fixture: 'ingredients.json' }).as('getIngredients');
+    
     cy.visit('/');
     cy.viewport(1400, 1000);
   });
 
   describe('Dragging ingredients into the constructor', () => {
     it('Dragging the bun', () => {
-      // Wait for the first ingredient to load
-      cy.wait(1000);
+      cy.wait(5000);
 
 
-      cy.get(appSelectors.ingredients.main).trigger('click');
+      cy.get(appSelectors.ingredients.main).first().trigger('click');
       cy.wait(1000);
       cy.get(appSelectors.modal.ingredientName).should('not.be.empty');
       cy.get(appSelectors.modal.close).trigger('click');

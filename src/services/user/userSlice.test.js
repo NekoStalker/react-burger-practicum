@@ -2,15 +2,18 @@ import configureMockStore from 'redux-mock-store'
 import {thunk} from 'redux-thunk';
 import fetchMock from 'fetch-mock';
 import reducer, {
+    resetError,
     initialState,
+  } from './userSlice';
+  import {
     registerUser,
     loginUser,
     forgotPasswordUser,
     resetPasswordUser,
     logoutUser,
     getUser,
-    patchUser
-  } from './userSlice';
+    patchUser,
+} from './userRequests';
   import {
     userRegister,
     userLogin,
@@ -19,7 +22,7 @@ import reducer, {
     userResetPassword,
     userGet,
     userPatch,
-    resetError
+
   } from '../api';
 
 const middlewares = [thunk];
@@ -220,13 +223,12 @@ describe('Асинхронные экшены userSlice', () => {
         }),
       }));
     });
-  
     it('создает logoutUser.fulfilled при успешном логауте', async () => {
-      const store = mockStore(initialState);
-  
       fetchMock.postOnce(userLogout, {
+        body: {},
         headers: { 'content-type': 'application/json' }
       });
+      const store = mockStore(initialState);
   
       await store.dispatch(logoutUser());
   
