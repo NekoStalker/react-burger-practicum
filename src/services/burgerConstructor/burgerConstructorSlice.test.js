@@ -57,6 +57,7 @@ import reducer, {
     image_mobile: "https://code.s3.yandex.net/react/code/bun-01-mobile.png",
     image_large: "https://code.s3.yandex.net/react/code/bun-01-large.png",
     __v: 0,
+    uid: 'test-bun',
   };
   
   const testBurger = {
@@ -70,16 +71,14 @@ import reducer, {
       expect(reducer(undefined, { type: 'unknown' })).toEqual(initialState);
     });
   
-    it('should handle addBurgerIngredient action for non-bun', () => {
+    it('should handle addBurgerIngredient action for bun', () => {
         const expectedState = {
           ...initialState,
-          internalIngredients: [expect.objectContaining({
-            ...testIng1,
-            uid: expect.any(String),
-          })],
-          price: testIng1.price,
+          internalIngredients: [],
+          selectedBun: {...selectedBun, uid: expect.any(String)},
+          price: selectedBun.price*2,
         };
-        expect(reducer(initialState, addBurgerIngredient(testIng1))).toEqual(expectedState);
+        expect(reducer(initialState, addBurgerIngredient(selectedBun))).toEqual(expectedState);
       });    
     it('should handle addBurgerIngredient action for non-bun', () => {
         const expectedState = {

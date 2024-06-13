@@ -51,11 +51,12 @@ describe('currentOrderSlice reducer', () => {
   it('should handle openModalOrder action', () => {
     const payload = {
       ...testOrder,
-      openModal: true
+     
     };
     const expectedState = {
       ...initialState,
-      ...payload
+      ...payload,
+      openModal: true
     };
     expect(reducer(initialState, openModalOrder(payload))).toEqual(expectedState);
   });
@@ -76,39 +77,46 @@ describe('fetchOrderById async actions', () => {
   });
 
   it('creates fetchOrderById.fulfilled when fetching order has been done action', async () => {
-    const store = mockStore({ currentOrder: initialState });
-    const orderNum = '1';
-    const payload = { orders: [testOrder] };
-
-    fetchMock.getOnce(`${getOrder}${orderNum}`, {
+    const store = mockStore(initialState);
+    const payload = { success: true, orders: [testOrder] };
+  
+    fetchMock.getOnce(`${getOrder}${testOrder.id}`, {
       body: payload,
-      headers: { 'content-type': 'application/json' }
+      headers: { 'content-type': 'application/json' },
     });
-
-    const expectedActions = [
-      { type: fetchOrderById.pending.type },
-      { type: fetchOrderById.fulfilled.type, payload }
-    ];
-
-    await store.dispatch(fetchOrderById(orderNum));
-    expect(store.getActions()).toEqual(expectedActions);
+  
+    await store.dispatch(fetchOrderById(testOrder.id));
+  
+    const actions = store.getActions();
+    expect(actions[0]).toEqual(expect.objectContaining({
+      type: fetchOrderById.pending.type,
+    }));
+    expect(actions[1]).toEqual(expect.objectContaining({
+      type: fetchOrderById.fulfilled.type,
+      payload,
+    }));
   });
+  
 
   it('creates fetchOrderById.rejected when fetching order fails action', async () => {
-    const store = mockStore({ currentOrder: initialState });
-    const orderNum = '1';
+    const store = mockStore(initialState);
     const error = 'Failed to fetch order';
-
-    fetchMock.getOnce(`${getOrder}${orderNum}`, {
-      throws: new Error(error)
+  
+    fetchMock.getOnce(`${getOrder}${testOrder.id}`, {
+      throws: new Error(error),
     });
-
-    const expectedActions = [
-      { type: fetchOrderById.pending.type },
-      { type: fetchOrderById.rejected.type, error: { message: error } }
-    ];
-
-    await store.dispatch(fetchOrderById(orderNum));
-    expect(store.getActions()).toEqual(expectedActions);
-  });
+  
+    await store.dispatch(fetchOrderById(testOrder.id));
+  
+    const actions = store.getActions();
+    expect(actions[0]).toEqual(expect.objectContaining({
+      type: fetchOrderById.pending.type,
+    }));
+    expect(actions[1]).toEqual(expect.objectContaining({
+      type: fetchOrderById.rejected.type,
+      error: expect.objectContaining({
+        message: error,
+      }),
+    }));
+  });  
 });

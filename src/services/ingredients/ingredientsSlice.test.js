@@ -98,7 +98,7 @@ describe('async actions', () => {
       headers: { 'content-type': 'application/json' }
     });
 
-    const store = mockStore({ allIngredients: [], isLoading: false, error: null });
+    const store = mockStore(initialState);
 
     await store.dispatch(getAllIngredients());
 
@@ -116,10 +116,10 @@ describe('async actions', () => {
     const error = 'Failed to fetch ingredients';
 
     fetchMock.getOnce(apiIngredientsAddr, {
-      throws: new Error(error)
+      throws: new Error(error),
     });
 
-    const store = mockStore({ allIngredients: [], isLoading: false, error: null });
+    const store = mockStore(initialState);
 
     await store.dispatch(getAllIngredients());
 

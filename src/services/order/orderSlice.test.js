@@ -64,7 +64,7 @@ describe('orderSlice async actions', () => {
       headers: { 'content-type': 'application/json' },
     });
 
-    const store = mockStore({ order: initialState });
+    const store = mockStore(initialState);
 
     await store.dispatch(getOrderModal([testIngredient]));
 
@@ -85,7 +85,7 @@ describe('orderSlice async actions', () => {
       throws: new Error(error),
     });
 
-    const store = mockStore({ order: initialState });
+    const store = mockStore(initialState);
 
     await store.dispatch(getOrderModal([testIngredient]));
 
