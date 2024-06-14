@@ -35,10 +35,10 @@ const Modal: FC<IModal> = ({onClose, title, children}) => {
         (
         <>    
             <ModalOverlay onClose={onClose} />
-            <div className={modalStyles.modal}>
+            <div className={modalStyles.modal} data-cy="modal-container">
                     <div className={`${modalStyles.modal_header}`}>
                         <h2 className="text text_type_main-large">{title}</h2>
-                        <button type="button"  className={modalStyles.modal_close_button} onClick={onClose}><CloseIcon  type="primary"/></button>
+                        <button type="button" data-cy="close-button"  className={modalStyles.modal_close_button} onClick={onClose}><CloseIcon  type="primary"/></button>
                     </div>
                     <div className={modalStyles.modal_body}>
                         {children}

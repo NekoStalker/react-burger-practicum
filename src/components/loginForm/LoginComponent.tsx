@@ -23,14 +23,16 @@ const LoginComponent: FC =  () => {
               placeholder="Логин"
               isIcon={true}
               extraClass="mb-2"
+              data-cy="email"
              />
              <PasswordInput
                 onChange={onChange}
                 value={form.password}
                 name={'password'}
                 extraClass="mb-2"
+                data-cy="password"
             />
-            <Button htmlType="button" type="primary" size="large">
+            <Button htmlType="button" type="primary" size="large"  data-cy="login-button">
               Вход
             </Button>
           </form >

@@ -36,7 +36,7 @@ const IngredientDetails:FC = () => {
          {!isLoading  && 
          <>
         <div className={ingredientDetailsStyle.ingredient_image}><img src={ingredient.image_large}  alt={ingredient.name} /></div>
-        <h3  className={`${ingredientDetailsStyle.ingredient_image} text text_type_main-medium mb-8 mt-4`} >{ingredient.name}</h3>
+        <h3  className={`${ingredientDetailsStyle.ingredient_image} text text_type_main-medium mb-8 mt-4`} data-cy="ingredient-name">{ingredient.name}</h3>
         <ul className={`${ingredientDetailsStyle.ingredient_compositions} mb-15`}>
             <IngredientComposition composition = {"Калории,ккал"} value={ingredient.calories}></IngredientComposition>
             <IngredientComposition composition = {"Белки, г"} value={ingredient.proteins}></IngredientComposition>

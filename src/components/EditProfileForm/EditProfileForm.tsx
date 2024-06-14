@@ -56,18 +56,22 @@ const EditProfileForm:FC = () => {
               value={form.name}
               name={'name'}
               placeholder="Имя"
-              icon="EditIcon" onPointerEnterCapture onPointerLeaveCapture  />
+              icon="EditIcon" onPointerEnterCapture onPointerLeaveCapture  
+              data-cy="name"
+              />
             <EmailInput
               onChange={onChange}
               value={form.email}
               name={'email'}
               placeholder="Логин"
+              data-cy="email"
              />
             <PasswordInput
               onChange={onChange}
               value={form.password}
               name={'password'}
               icon="EditIcon"
+              data-cy="password"
             />
              {hasFormChanged() && (
             <div className={`${profileFormStyles.form_button}`} >

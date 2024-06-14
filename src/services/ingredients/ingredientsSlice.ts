@@ -1,7 +1,7 @@
 import {createSlice,PayloadAction } from '@reduxjs/toolkit';
 import {getAllIngredients } from './ingredientsRequests';
 import {IAllIngredientsState,IIngredientState, IGetAllIngredientsPayload} from '../types/ingredientTypes';
-const initialState: IAllIngredientsState = {
+export const initialState: IAllIngredientsState = {
     allIngredients: [],
     isLoading: false,
     error: null
@@ -19,10 +19,8 @@ export const ingredientsSlice = createSlice({
             return state
         },
         addIngredientCount: (state, action: PayloadAction<IIngredientState>) => {
-            console.log(action.payload);
-            console.log(state.allIngredients.length);
             const findElem = state.allIngredients.find((ingredient) => ingredient._id === action.payload._id)
-            console.log(findElem?.__v);
+    
             if(action && action.payload.type !== "bun" && findElem ){
                 findElem.__v +=1;
             }

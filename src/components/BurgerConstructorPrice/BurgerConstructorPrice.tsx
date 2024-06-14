@@ -65,7 +65,7 @@ const BurgerConstructorPrice:FC = () => {
             wrapperClass={burgerConstructorPriceStyle.loader}
         />}
         <p className="text text_type_digits-medium  mt-1 mb-1">{price} <span className="pl-1"><CurrencyIcon type="primary" /> </span></p>
-        <Button htmlType="button" type="primary" disabled={selectedBun && selectedBun.name === BUN_NOT_SELECTED || false} size="medium" onClick={handleOpenModal} >
+        <Button data-cy="send-order" htmlType="button" type="primary" disabled={selectedBun && selectedBun.name === BUN_NOT_SELECTED || false} size="medium" onClick={handleOpenModal} >
             Оформить заказ
         </Button>
     </div>

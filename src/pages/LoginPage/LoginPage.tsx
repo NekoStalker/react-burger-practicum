@@ -52,13 +52,15 @@ const LoginPage:FC = () => {
               value={form.email}
               name={'email'}
               placeholder="E-mail"
+              data-cy="email"
              />
              <PasswordInput
                 onChange={onChange}
                 value={form.password}
                 name={'password'}
+                data-cy="password"
             />
-            <Button htmlType="submit" type="primary" size="large">
+            <Button htmlType="submit" type="primary" size="large"  data-cy="login-button">
               Войти
             </Button>
           </form >

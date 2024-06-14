@@ -2,7 +2,7 @@ import {ICreatedOrder,IOrderState} from '../types/orderTypes';
 import {createSlice,PayloadAction} from '@reduxjs/toolkit';
 import {getOrderModal} from './orderRequests';
 
-const initialState: IOrderState = {
+export const initialState: IOrderState = {
     orderID: -1,
     orderStatus: "",
     createdOrder: null,

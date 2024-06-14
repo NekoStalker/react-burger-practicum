@@ -60,7 +60,7 @@ const  BurgerConstructorItem: FC<IBurgerConstructorProps> = ({ ingredient,index,
   }));
   drag(drop(ref))
   return (
-    <li ref={ref}  className={`${burgerConstructorItemStyles.item} ${isDragged ? burgerConstructorItemStyles.item_dragged : ''}`}  data-handler-id={handlerId}>
+    <li ref={ref}  data-cy={`burger-ingredient-${ingredient.type}`}  className={`${burgerConstructorItemStyles.item} ${isDragged ? burgerConstructorItemStyles.item_dragged : ''}`}  data-handler-id={handlerId}>
           <DragIcon type="primary" />
           <ConstructorElement
             isLocked={false}
@@ -69,6 +69,7 @@ const  BurgerConstructorItem: FC<IBurgerConstructorProps> = ({ ingredient,index,
             thumbnail={ingredient.image}
             handleClose={()=>removeItem(ingredient._id, ingredient.uid)}
             extraClass={burgerConstructorItemStyles.item_ingredient}
+            data-cy="constructor-item"
           />
     </li>
   )

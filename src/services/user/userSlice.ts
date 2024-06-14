@@ -1,7 +1,7 @@
 import {createSlice,PayloadAction} from '@reduxjs/toolkit';
 import {registerUser,loginUser,resetPasswordUser,forgotPasswordUser,logoutUser,getUser,patchUser} from './userRequests';
 import {IUserState,IRegistrationResponse,TAuthorizationResponse,IResetPasswordResponse, IRefreshTokenResponse} from '../types/userTypes'
-const initialState: IUserState = {
+export const initialState: IUserState = {
     userInfo: null,
     isLoggedIn: false,
     isLoading: false,

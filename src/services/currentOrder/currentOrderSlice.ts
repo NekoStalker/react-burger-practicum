@@ -1,7 +1,7 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import { ICurrentOrderState, IOrder, IOrderGet } from '../types/orderTypes';
 import {fetchOrderById} from './currentOrderRequests'
-const initialState: ICurrentOrderState = {
+export const initialState: ICurrentOrderState = {
     ingredients: [],
     _id: '',
     status: '', 

@@ -25,7 +25,6 @@ export const refreshToken = (): Promise<ITokenResponse> => {
 export const fetchWithRefresh = async <T>(url: string, options: RequestOptions): Promise<T> => {
   try {
     const res: T = await request<T>(url, options);
-    console.log(res);
     return res;
   } catch (err) {
     if (err instanceof Error && (err.message === "jwt expired" || err.message === "jwt malformed")) {
@@ -49,7 +48,6 @@ export async function handleResponse(response: Response, onSuccess: () => void, 
   if (data.payload && data.success) {
     onSuccess();
   } else {
-    console.log(response);
     console.error(`${errorMessage}: ${response}`);
   }
 }
