@@ -26,12 +26,12 @@ const testOrder = {
   error: ''
 };
 
-describe('currentOrderSlice reducer', () => {
-  it('should return the initial state', () => {
+describe('редьюсер currentOrderSlice', () => {
+  it('должен возвращать начальное состояние', () => {
     expect(reducer(undefined, { type: 'unknown' })).toEqual(initialState);
   });
 
-  it('should handle setCurrentOrder action', () => {
+  it('должен обрабатывать действие setCurrentOrder', () => {
     const payload = testOrder;
     const expectedState = {
       ...initialState,
@@ -40,7 +40,7 @@ describe('currentOrderSlice reducer', () => {
     expect(reducer(initialState, setCurrentOrder(payload))).toEqual(expectedState);
   });
 
-  it('should handle clearCurrentOrder action', () => {
+  it('должен обрабатывать действие clearCurrentOrder', () => {
     const modifiedState = {
       ...initialState,
       ...testOrder
@@ -48,7 +48,7 @@ describe('currentOrderSlice reducer', () => {
     expect(reducer(modifiedState, clearCurrentOrder())).toEqual(initialState);
   });
 
-  it('should handle openModalOrder action', () => {
+  it('должен обрабатывать действие openModalOrder', () => {
     const payload = {
       ...testOrder,
      
@@ -61,7 +61,7 @@ describe('currentOrderSlice reducer', () => {
     expect(reducer(initialState, openModalOrder(payload))).toEqual(expectedState);
   });
 
-  it('should handle closeModalOrderDetails action', () => {
+  it('должен обрабатывать действие closeModalOrderDetails', () => {
     const modifiedState = {
       ...initialState,
       ...testOrder,
@@ -71,12 +71,12 @@ describe('currentOrderSlice reducer', () => {
   });
 
 });
-describe('fetchOrderById async actions', () => {
+describe('асинхронные действия fetchOrderById', () => {
   afterEach(() => {
     fetchMock.restore();
   });
 
-  it('creates fetchOrderById.fulfilled when fetching order has been done action', async () => {
+  it('создает fetchOrderById.fulfilled при успешном выполнении запроса заказа', async () => {
     const store = mockStore(initialState);
     const payload = { success: true, orders: [testOrder] };
   
@@ -98,9 +98,9 @@ describe('fetchOrderById async actions', () => {
   });
   
 
-  it('creates fetchOrderById.rejected when fetching order fails action', async () => {
+  it('создает fetchOrderById.rejected при ошибке выполнения запроса заказа', async () => {
     const store = mockStore(initialState);
-    const error = 'Failed to fetch order';
+    const error = 'Ошибка выполнения заказа';
   
     fetchMock.getOnce(`${getOrder}${testOrder.id}`, {
       throws: new Error(error),

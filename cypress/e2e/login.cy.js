@@ -1,17 +1,32 @@
-import { selectors } from '../support/index';
+import { appSelectors } from '../support/index';
 
 describe('UI тесты', () => {
   beforeEach(() => {
     cy.visit('/login');
     cy.viewport(1400, 1000);
+    cy.intercept('POST', 'https://norma.nomoreparties.space/api/auth/login', {
+      success: true,
+      body: { success: true, accessToken: 'fakeAccessToken', refreshToken: 'fakeRefreshToken',  "user": {
+        "email": "drevan777@gmail.com",
+        "name": "gfhfghfgh"
+    } }
+    }).as('postLogin');
   });
 
-  it('Должно отображаться имя пользователя после логина', () => {
-    const email = 'karvraburcar@kpjprd.rs';
-    const password = 'beograd';
-    cy.get(selectors.login.emailField).type(email);
-    cy.get(selectors.login.passwordField).type(password);
-    cy.get(selectors.login.loginButton).click();
+  it('Должен авторизоваться в системе', () => {
+    const email = 'drevan777@gmail.com';
+    const password = 'Test123';
+    cy.get(appSelectors.login.emailField)
+    .should('be.visible')
+    .type(email);
 
+  cy.get(appSelectors.login.passwordField)
+    .should('be.visible')
+    .type(password);
+
+  cy.get(appSelectors.login.loginButton)
+    .should('be.visible')
+    .click();
   });
+
 });

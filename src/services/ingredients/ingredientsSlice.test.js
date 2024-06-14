@@ -31,12 +31,12 @@ const testIngredient =    {
 
 const testIngredients = [testIngredient];
 
-describe('ingredientsSlice reducer', () => {
-    it('should return the initial state', () => {
+describe('редьюсер ingredientsSlice', () => {
+    it('должен возвращать начальное состояние', () => {
       expect(reducer(undefined, { type: 'unknown' })).toEqual(initialState);
     });
   
-    it('should handle Add Ingredient action', () => {
+    it('должен обрабатывать действие Add Ingredient', () => {
       const payload = testIngredient;
       const expectedState = {
         ...initialState,
@@ -45,7 +45,7 @@ describe('ingredientsSlice reducer', () => {
       expect(reducer(initialState, addIngredient(payload))).toEqual(expectedState);
     });
   
-    it('should handle Remove Ingredient action', () => {
+    it('должен обрабатывать действие Remove Ingredient', () => {
       const initialStateWithIngredients = {
         ...initialState,
         allIngredients: testIngredients,
@@ -57,7 +57,7 @@ describe('ingredientsSlice reducer', () => {
       expect(reducer(initialStateWithIngredients, removeIngredient(testIngredient._id))).toEqual(expectedState);
     });
   
-    it('should handle Add Ingredient Count action', () => {
+    it('должен обрабатывать действие Add Ingredient Count', () => {
       const initialStateWithIngredients = {
         ...initialState,
         allIngredients: testIngredients,
@@ -70,7 +70,7 @@ describe('ingredientsSlice reducer', () => {
       expect(reducer(initialStateWithIngredients, addIngredientCount(testIngredient))).toEqual(expectedState);
     });
   
-    it('should handle Remove Ingredient Count action', () => {
+    it('должен обрабатывать действие Remove Ingredient Count', () => {
       const initialStateWithIngredients = {
         ...initialState,
         allIngredients: testIngredients,
@@ -85,12 +85,12 @@ describe('ingredientsSlice reducer', () => {
 });
   
 
-describe('async actions', () => {
+describe('асинхронные действия', () => {
   afterEach(() => {
     fetchMock.restore();
   });
 
-  it('creates getAllIngredients.fulfilled when fetching ingredients has been done action', async () => {
+  it('создает getAllIngredients.fulfilled при успешном выполнении запроса ингредиентов', async () => {
     const ingredientsData = { data: testIngredients };
 
     fetchMock.getOnce(apiIngredientsAddr, {
@@ -112,7 +112,7 @@ describe('async actions', () => {
     }));
   });
 
-  it('creates getAllIngredients.rejected when fetching ingredients fails action', async () => {
+  it('создает getAllIngredients.rejected при ошибке выполнения запроса ингредиентов', async () => {
     const error = 'Failed to fetch ingredients';
 
     fetchMock.getOnce(apiIngredientsAddr, {

@@ -118,7 +118,7 @@ describe('Асинхронные экшены userSlice', () => {
   
     it('создает loginUser.rejected при неудачном логине', async () => {
       const store = mockStore(initialState);
-      const error = 'Login failed';
+      const error = 'Ошибка авторизации';
   
       fetchMock.postOnce(userLogin, {
         throws: new Error(error),
@@ -161,7 +161,7 @@ describe('Асинхронные экшены userSlice', () => {
   
     it('создает forgotPasswordUser.rejected при неудачной отправке email для восстановления пароля', async () => {
       const store = mockStore(initialState);
-      const error = 'Failed to send password reset email';
+      const error = 'Ошибка восстановления пароля';
   
       fetchMock.postOnce(userForgotPassword, {
         throws: new Error(error),
@@ -183,7 +183,7 @@ describe('Асинхронные экшены userSlice', () => {
   
     it('создает resetPasswordUser.fulfilled при успешном восстановлении пароля', async () => {
       const store = mockStore(initialState);
-      const payload = { message: 'Password reset successful' };
+      const payload = { message: 'Password successfully reset' };
   
       fetchMock.postOnce(userResetPassword, {
         body: payload,
@@ -204,7 +204,7 @@ describe('Асинхронные экшены userSlice', () => {
   
     it('создает resetPasswordUser.rejected при неудачном восстановлении пароля', async () => {
       const store = mockStore(initialState);
-      const error = 'Failed to reset password';
+      const error = 'Ошибка восстановления пароля';
   
       fetchMock.postOnce(userResetPassword, {
         throws: new Error(error),
@@ -243,7 +243,7 @@ describe('Асинхронные экшены userSlice', () => {
   
     it('создает logoutUser.rejected при неудачном логауте', async () => {
       const store = mockStore(initialState);
-      const error = 'Logout failed';
+      const error = 'Ошибка  выхода';
   
       fetchMock.postOnce(userLogout, {
         throws: new Error(error),
@@ -286,7 +286,7 @@ describe('Асинхронные экшены userSlice', () => {
   
     it('создает getUser.rejected при неудачной проверке авторизации', async () => {
       const store = mockStore(initialState);
-      const error = 'Authorization check failed';
+      const error = 'Ошибка обновления сессии';
   
       fetchMock.getOnce(userGet, {
         throws: new Error(error),
@@ -329,7 +329,7 @@ describe('Асинхронные экшены userSlice', () => {
   
     it('создает patchUser.rejected при неудачном обновлении пользователя', async () => {
       const store = mockStore(initialState);
-      const error = 'Update failed';
+      const error = 'Ошибка обновления данных';
   
       fetchMock.patchOnce(userPatch, {
         throws: new Error(error),

@@ -5,7 +5,6 @@ import reducer, {
     resetConstructor,
     initialState,
   } from './burgerConstructorSlice';
-  import { BUN_NOT_SELECTED } from './burgerConstructorSlice';
   import { nanoid } from 'nanoid';
 
   jest.mock('nanoid', () => ({
@@ -66,12 +65,12 @@ import reducer, {
     internalIngredients: [{ ...testIng1 },{ ...testIng2 }],
   };
   
-  describe('burgerConstructor reducer', () => {
-    it('should return the initial state', () => {
+  describe('Тесты для редьюсера burgerConstructor ', () => {
+    it('должен возвращать начальное состояние', () => {
       expect(reducer(undefined, { type: 'unknown' })).toEqual(initialState);
     });
   
-    it('should handle addBurgerIngredient action for bun', () => {
+    it('должен обрабатывать действие addBurgerIngredient для ингредиента булочка', () => {
         const expectedState = {
           ...initialState,
           internalIngredients: [],
@@ -80,7 +79,7 @@ import reducer, {
         };
         expect(reducer(initialState, addBurgerIngredient(selectedBun))).toEqual(expectedState);
       });    
-    it('should handle addBurgerIngredient action for non-bun', () => {
+    it('должен обрабатывать действие addBurgerIngredient для ингредиента, который не булочка', () => {
         const expectedState = {
             ...initialState,
             internalIngredients: [expect.objectContaining({
@@ -91,7 +90,7 @@ import reducer, {
         };
         expect(reducer(initialState, addBurgerIngredient(testIng1))).toEqual(expectedState);
       });
-      it('should handle removeBurgerIngredient action', () => {
+      it('должен обрабатывать действие removeBurgerIngredient', () => {
         const initialStateWithIngredients = {
           ...initialState,
           internalIngredients: [testIng1, testIng2],
@@ -104,7 +103,7 @@ import reducer, {
         };
         expect(reducer(initialStateWithIngredients, removeBurgerIngredient('test-uid1'))).toEqual(expectedState);
       });
-    it('should handle change Ingredients Order action', () => {
+    it('должен обрабатывать действие changeIngredientsOrder', () => {
         const initialStateWithIngredients = {
           ...initialState,
           internalIngredients: [testIng1, testIng2],
@@ -115,7 +114,7 @@ import reducer, {
         };
         expect(reducer(initialStateWithIngredients, changeIngredientsOrder({ fromUid: 'test-uid1', toUid: 'test-uid2' }))).toEqual(expectedState);
       });
-    it('should handle reset constructor action', () => {
+    it('должен обрабатывать действие resetConstructor', () => {
       const modifiedState = {
         ...testBurger
       };

@@ -27,12 +27,12 @@ const testIngredient = {
   uid: "RkAPuWqwON2psNdI7ijUL"
 };
 
-describe('orderSlice reducer', () => {
-  it('should return the initial state', () => {
+describe('редьюсер orderSlice', () => {
+  it('должен возвращать начальное состояние', () => {
     expect(reducer(undefined, { type: 'unknown' })).toEqual(initialState);
   });
 
-  it('should handle closeModalOrder action', () => {
+  it('должен обрабатывать действие closeModalOrder', () => {
     const modifiedState = {
       orderID: 123,
       orderStatus: "completed",
@@ -47,12 +47,12 @@ describe('orderSlice reducer', () => {
 
 });
 
-describe('orderSlice async actions', () => {
+describe('асинхронные действия orderSlice', () => {
   afterEach(() => {
     fetchMock.restore();
   });
 
-  it('creates getOrderModal.fulfilled when fetching order has been done action', async () => {
+  it('создает getOrderModal.fulfilled при успешном выполнении запроса на создание заказа', async () => {
     const createdOrder = {
       name: "Test Order",
       order: { number: 123 },
@@ -78,7 +78,7 @@ describe('orderSlice async actions', () => {
     }));
   });
 
-  it('creates getOrderModal.rejected when fetching order fails action', async () => {
+  it('создает getOrderModal.rejected при ошибке выполнения запроса на создание заказа', async () => {
     const error = 'Failed to create order';
 
     fetchMock.postOnce(apiOrdersAdd, {

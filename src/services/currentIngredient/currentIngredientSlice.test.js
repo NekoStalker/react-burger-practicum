@@ -21,12 +21,12 @@ import reducer, {
     "__v": 0
   };
   
-  describe('currentIngredientSlice reducer', () => {
-    it('should return the initial state', () => {
+  describe('редьюсер currentIngredientSlice', () => {
+    it('должен возвращать начальное состояние', () => {
       expect(reducer(undefined, { type: 'unknown' })).toEqual(initialState);
     });
   
-    it('should handle setCurrentIngredient action', () => {
+    it('должен обрабатывать действие setCurrentIngredient', () => {
       const payload = testI;
       const expectedState = {
         ...initialState,
@@ -35,7 +35,7 @@ import reducer, {
       expect(reducer(initialState, setCurrentIngredient(payload))).toEqual(expectedState);
     });
   
-    it('should handle clearCurrentIngredient action', () => {
+    it('должен обрабатывать действие clearCurrentIngredient', () => {
       const modifiedState = {
         ...initialState,
         ...testI
@@ -43,7 +43,7 @@ import reducer, {
       expect(reducer(modifiedState, clearCurrentIngredient())).toEqual(initialState);
     });
   
-    it('should handle openModalIngredient action', () => {
+    it('должен обрабатывать действие openModalIngredient', () => {
       const payload = testI;
       const expectedState = {
         ...initialState,
@@ -53,7 +53,7 @@ import reducer, {
       expect(reducer(initialState, openModalIngredient(payload))).toEqual(expectedState);
     });
   
-    it('should handle closeModalIngredient action', () => {
+    it('должен обрабатывать действие closeModalIngredient', () => {
       const modifiedState = {
         ...initialState,
         ...testI,

@@ -24,12 +24,12 @@ const orders = [
     updatedAt: '2024-06-10T10:24:58.689Z',
     number: 42039
   }];
-describe('liveListOrder reducer', () => {
-  it('should return the initial state', () => {
+describe('редьюсер liveListOrder', () => {
+  it('должен возвращать начальное состояние', () => {
     expect(reducer(undefined, {})).toEqual(initialState);
   });
 
-  it('should handle connecting to WS action', () => {
+  it('должен обрабатывать действие подключения к WS', () => {
     const action = orderListConnecting();
     const expectedState = {
       ...initialState,
@@ -38,7 +38,7 @@ describe('liveListOrder reducer', () => {
     expect(reducer(initialState, action)).toEqual(expectedState);
   });
 
-  it('should handle open WS action', () => {
+  it('должен обрабатывать действие открытия WS', () => {
     const action = ordersListOpen();
     const expectedState = {
       ...initialState,
@@ -48,7 +48,7 @@ describe('liveListOrder reducer', () => {
     expect(reducer(initialState, action)).toEqual(expectedState);
   });
 
-  it('should handle WS Error action', () => {
+  it('должен обрабатывать действие ошибки WS', () => {
     const error = 'WebSocket error';
     const action = ordersListError(error);
     const expectedState = {
@@ -58,7 +58,7 @@ describe('liveListOrder reducer', () => {
     expect(reducer(initialState, action)).toEqual(expectedState);
   });
 
-  it('should handle WS close action', () => {
+  it('должен обрабатывать действие закрытия WS', () => {
     const action = ordersListClose();
     const expectedState = {
       ...initialState,
@@ -67,7 +67,7 @@ describe('liveListOrder reducer', () => {
     expect(reducer(initialState, action)).toEqual(expectedState);
   });
 
-  it('should handle WS message action', () => {
+  it('должен обрабатывать действие сообщения WS', () => {
     const payload = {
       ordersList: {
         orders: orders,
