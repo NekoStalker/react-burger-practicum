@@ -56,6 +56,7 @@ const App: FC = () => {
     <>
       <Routes location={background || location}>
         <Route path="/" element={<MainPage />} />
+        <Route path="/react-burger-practicum/index.html" element={<MainPage />} />
         <Route path="/ingredients" element={<IngredientPage />}>
           <Route path=":ingredientId" element={<IngredientDetails />} />
         </Route>
